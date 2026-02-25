@@ -1,17 +1,17 @@
 export const personalInfo = {
-  name: "Alex Chen",
-  role: "ML Engineer / Full Stack Developer / Open Source Contributor",
+  name: "Aman Rawat",
+  role: "ML Engineer / Open Source Contributor",
   bio: "Building intelligent systems at the intersection of machine learning and software engineering. Deploying production-grade ML models and crafting seamless user experiences that make complex technology accessible.",
-  email: "alex.chen@example.com",
-  resumeUrl: "#",
+  email: "amansinghrawat992752@gmail.com",
+  resumeUrl: "https://drive.google.com/drive/u/1/recent",
   openToOpportunities: true,
 }
 
 export const socialLinks = [
-  { platform: "GitHub", url: "https://github.com/alexchen", command: "github --open" },
-  { platform: "LinkedIn", url: "https://linkedin.com/in/alexchen", command: "linkedin --connect" },
-  { platform: "X / Twitter", url: "https://twitter.com/alexchen", command: "twitter --follow" },
-  { platform: "Email", url: "mailto:alex.chen@example.com", command: "mail --send" },
+  { platform: "GitHub", url: "https://github.com/ASR134", command: "github --open" },
+  { platform: "LinkedIn", url: "https://www.linkedin.com/in/aman-singh-rawat-758160328/", command: "linkedin --connect" },
+  { platform: "X / Twitter", url: "https://x.com/AmanRawat196850", command: "twitter --follow" },
+  { platform: "Email", url: "amansinghrawat992752@gmail.com", command: "mail --send" },
 ]
 
 export const techStackLine = "python \u00b7 pytorch \u00b7 react \u00b7 next.js \u00b7 fastapi \u00b7 docker \u00b7 typescript \u00b7 postgresql"
@@ -91,6 +91,13 @@ export const techStack: TechStackCategory[] = [
     ],
   },
   {
+    title: "Web Apps & Dashboards",
+    color: "#b787f2",
+    skills: [
+      { label: "Streamlit", iconSlug: "streamlit" },
+    ],
+  },
+  {
     title: "Data Science & ML",
     color: "#00C2FF",
     skills: [
@@ -103,15 +110,8 @@ export const techStack: TechStackCategory[] = [
     ],
   },
   {
-    title: "Web Apps & Dashboards",
-    color: "#A78BFA",
-    skills: [
-      { label: "Streamlit", iconSlug: "streamlit" },
-    ],
-  },
-  {
     title: "Backend & APIs",
-    color: "#4D9EFF",
+    color: "#e1e86e",
     skills: [
       { label: "FastAPI", iconSlug: "fastapi" },
       { label: "Pydantic", iconSlug: "pydantic" },
@@ -120,12 +120,12 @@ export const techStack: TechStackCategory[] = [
   },
   {
     title: "Tools & Platforms",
-    color: "#FFB547",
+    color: "#00FF87",
     skills: [
       { label: "Jupyter", iconSlug: "jupyter" },
       { label: "Git", iconSlug: "git" },
       { label: "GitHub", iconSlug: "github" },
-      { label: "VS Code", iconSlug: "visualstudiocode" },
+      { label: "Spyder", iconSlug: "spyder" },
       { label: "Linux", iconSlug: "linux" },
     ],
   },

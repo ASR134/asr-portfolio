@@ -45,8 +45,8 @@ export function ContactSection() {
 
       <div className="mx-auto max-w-5xl">
         {/* Header */}
-        <div className="mb-14">
-          <div className="mb-4 flex items-center gap-3">
+        <div className="mb-14 text-center">
+          <div className="mb-4 flex items-center justify-center gap-3">
             <div className="h-px w-10 bg-terminal-green/40" aria-hidden="true" />
             <span className="font-mono text-sm tracking-[0.3em] text-terminal-green/70 uppercase">
               <span className="font-semibold text-terminal-green">{"05"}</span>
@@ -59,7 +59,7 @@ export function ContactSection() {
             <br />
             <span className="text-terminal-green">{"together."}</span>
           </h2>
-          <p className="mt-4 max-w-lg font-mono text-sm leading-relaxed text-muted-foreground">
+          <p className="mt-4 mx-auto max-w-lg font-mono text-sm leading-relaxed text-muted-foreground">
             {"Currently open for collaboration, freelance work, and full-time opportunities. Always excited to discuss ML, systems architecture, or your next big idea."}
           </p>
         </div>
@@ -127,7 +127,7 @@ export function ContactSection() {
         </div>
 
         {/* Bottom status bar */}
-        <div className="mt-12 flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
+        <div className="mt-12 flex flex-col items-center justify-center gap-6 sm:flex-row sm:justify-between sm:items-center">
           {/* Status */}
           {personalInfo.openToOpportunities && (
             <div className="flex items-center gap-4">

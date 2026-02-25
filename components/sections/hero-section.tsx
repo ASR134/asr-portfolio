@@ -4,11 +4,11 @@ import { personalInfo, techStackLine } from "@/data/portfolio"
 import { useEffect, useState } from "react"
 
 const bootLines = [
-  { text: "booting system...", delay: 0 },
-  { text: "loading modules...", delay: 400 },
-  { text: "establishing connection...", delay: 800 },
-  { text: `user: ${personalInfo.name.toLowerCase().replace(" ", "_")} [verified]`, delay: 1200 },
-  { text: "status: online", delay: 1600 },
+  { text: "booting system...", delay: 200 },
+  { text: "loading modules...", delay: 2000 },
+  { text: "establishing connection...", delay: 2400 },
+  { text: `user: ${personalInfo.name.toLowerCase().replace(" ", "_")} [verified]`, delay: 2800 },
+  { text: "status: online", delay: 3200 },
 ]
 
 export function HeroSection() {
@@ -20,14 +20,14 @@ export function HeroSection() {
     bootLines.forEach((_, i) => {
       timers.push(setTimeout(() => setVisibleLines(i + 1), bootLines[i].delay))
     })
-    timers.push(setTimeout(() => setShowContent(true), 2000))
+    timers.push(setTimeout(() => setShowContent(true), 3600))
     return () => timers.forEach(clearTimeout)
   }, [])
 
   return (
     <section
       id="hero"
-      className="relative flex min-h-[100dvh] items-center px-6 py-32 md:px-12 lg:px-24"
+      className="relative flex min-h-[88dvh] items-center justify-center px-6 py-20 md:px-12 md:py-24 lg:px-24"
       aria-label="Introduction"
     >
       {/* Ambient glow */}
@@ -55,9 +55,9 @@ export function HeroSection() {
         </svg>
       </div>
 
-      <div className="relative z-10 w-full max-w-4xl">
+      <div className="relative z-10 w-full max-w-4xl text-center">
         {/* Terminal boot sequence */}
-        <div className="mb-10 flex flex-col gap-1.5 font-mono text-xs text-muted-foreground sm:text-sm">
+        <div className="mb-10 flex flex-col items-center gap-1.5 font-mono text-xs text-muted-foreground sm:text-sm">
           {bootLines.map((line, i) => (
             <p
               key={i}
@@ -108,7 +108,7 @@ export function HeroSection() {
           </h1>
 
           {/* Tagline */}
-          <div className="mt-6 flex items-center gap-3">
+          <div className="mt-6 flex items-center justify-center gap-3">
             <div className="h-px w-8 bg-terminal-green/40" aria-hidden="true" />
             <p className="font-mono text-sm tracking-wide text-muted-foreground sm:text-base">
               {personalInfo.role.split(" / ").map((part, i, arr) => (
@@ -133,7 +133,7 @@ export function HeroSection() {
           </p>
 
           {/* CTAs */}
-          <div className="mt-10 flex flex-wrap gap-4">
+          <div className="mt-10 flex flex-wrap justify-center gap-4">
             <a
               href="#projects"
               className="hero-cta-primary hover-btn-glow group relative inline-flex items-center gap-2.5 overflow-hidden rounded-md border border-terminal-green/50 bg-surface-1 px-7 py-3.5 font-mono text-xs tracking-widest text-terminal-green hover:border-terminal-green hover:bg-surface-2 hover:shadow-[0_0_24px_rgba(0,255,135,0.18)] sm:text-sm uppercase"
@@ -159,7 +159,7 @@ export function HeroSection() {
           </div>
 
           {/* Scroll hint */}
-          <div className="mt-16 flex items-center gap-2 text-muted-foreground/40">
+          <div className="mt-10 flex items-center justify-center gap-2 text-muted-foreground/40">
             <div className="h-8 w-px bg-terminal-dim" aria-hidden="true" />
             <span className="font-mono text-[10px] tracking-widest uppercase">{"scroll"}</span>
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="animate-bounce opacity-50">
