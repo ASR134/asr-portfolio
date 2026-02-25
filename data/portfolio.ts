@@ -131,53 +131,5 @@ export const techStack: TechStackCategory[] = [
   },
 ]
 
-// ---- LeetCode Stats ----
-
-export const leetcode = {
-  profile: {
-    solved: 256,
-    totalProblems: 3851,
-    contestRating: 1544,
-    contestPercentile: "Top 33%",
-    globalRanking: 273210,
-    totalUsers: 839080,
-    activeDays: 207,
-    maxStreak: 20,
-  },
-  breakdown: {
-    easy: { solved: 69, total: 927 },
-    medium: { solved: 164, total: 2014 },
-    hard: { solved: 23, total: 910 },
-  },
-  badges: [
-    { title: "100 Days Badge", subtitle: "2024", recent: false },
-    { title: "200 Days Badge", subtitle: "2025", recent: true },
-    { title: "Annual Contender", subtitle: "", recent: false },
-  ],
-  heatmap: {
-    totalSubmissions: 1113,
-    activeDays: 207,
-    maxStreak: 20,
-  },
-}
-
-// Generate realistic LeetCode-style heatmap (53 weeks x 7 days = 371 cells)
-export function generateLeetcodeHeatmap(): number[] {
-  // Full 371-entry deterministic pattern -- dense activity, realistic variation
-  return [
-    3,2,1,3,4,3,0, 2,3,0,2,4,3,1, 4,1,0,3,4,2,1, 0,2,3,4,4,3,2,
-    1,0,0,1,2,3,3, 4,2,1,0,1,2,4, 3,2,2,0,1,1,2, 3,4,4,3,2,1,0,
-    1,2,3,4,3,2,1, 0,0,1,2,2,3,4, 4,3,3,1,0,1,2, 3,3,2,1,0,0,1,
-    2,3,4,4,3,3,1, 0,1,2,3,4,3,2, 1,0,0,1,3,4,4, 3,2,2,0,0,1,2,
-    3,4,4,3,2,1,0, 1,2,3,3,4,2,2, 0,1,2,4,3,2,0, 0,1,1,2,3,4,4,
-    3,2,1,0,0,2,3, 4,4,3,3,1,0,1, 2,3,4,3,2,1,0, 0,1,2,2,3,4,4,
-    3,2,1,0,1,2,3, 3,2,2,0,0,1,2, 3,4,4,3,2,1,0, 1,2,3,4,3,3,1,
-    0,0,1,3,4,4,3, 2,1,0,0,1,2,3, 4,4,3,2,1,0,1, 2,3,3,4,2,1,0,
-    1,3,4,3,2,0,0, 1,1,2,3,4,4,3, 2,1,0,0,2,3,4, 4,3,2,1,0,1,2,
-    3,4,3,2,1,0,0, 1,2,2,3,4,4,3, 2,2,0,1,2,3,3, 2,1,0,0,1,2,3,
-    4,4,3,2,1,0,1, 2,3,4,3,2,1,0, 0,1,3,4,4,3,2, 1,0,0,1,2,3,4,
-    4,3,3,1,0,1,2, 3,3,4,2,1,0,1, 2,4,3,3,0,0,1, 1,2,3,4,4,3,2,
-    1,0,0,2,3,4,4, 3,2,1,0,1,2,3, 4,3,2,1,0,0,1, 2,2,3,4,4,3,2,
-    1,0,1,2,3,
-  ]
-}
+// LeetCode username (stats fetched live from /api/leetcode)
+export const LEETCODE_USERNAME = "ASR134"

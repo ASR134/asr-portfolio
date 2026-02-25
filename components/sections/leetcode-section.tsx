@@ -1,7 +1,7 @@
 "use client"
 
-import { useEffect, useRef, useState, useMemo, useCallback } from "react"
-import { leetcode, generateLeetcodeHeatmap } from "@/data/portfolio"
+import { useEffect, useRef, useState, useMemo } from "react"
+import useSWR from "swr"
 import {
   Tooltip,
   TooltipTrigger,
@@ -9,20 +9,53 @@ import {
 } from "@/components/ui/tooltip"
 
 // ============================================================
-// useCountUp — animates from 0 to target over a duration
+// Types
+// ============================================================
+type LeetCodeData = {
+  username: string
+  profile: {
+    solved: number
+    totalProblems: number
+    globalRanking: number
+    maxStreak: number
+    activeDays: number
+  }
+  breakdown: {
+    easy: { solved: number; total: number }
+    medium: { solved: number; total: number }
+    hard: { solved: number; total: number }
+  }
+  badges: { title: string; subtitle: string; recent: boolean }[]
+  heatmap: {
+    data: number[]
+    totalSubmissions: number
+    activeDays: number
+    maxStreak: number
+  }
+}
+
+// ============================================================
+// SWR fetcher
+// ============================================================
+const fetcher = (url: string) => fetch(url).then((r) => {
+  if (!r.ok) throw new Error("Failed to fetch")
+  return r.json()
+})
+
+// ============================================================
+// useCountUp
 // ============================================================
 function useCountUp(target: number, duration = 1400, trigger = false) {
   const [value, setValue] = useState(0)
 
   useEffect(() => {
-    if (!trigger) return
+    if (!trigger || target === 0) return
     let start: number | null = null
     let raf: number
 
     function step(ts: number) {
       if (start === null) start = ts
       const progress = Math.min((ts - start) / duration, 1)
-      // easeOutCubic
       const eased = 1 - Math.pow(1 - progress, 3)
       setValue(Math.round(eased * target))
       if (progress < 1) raf = requestAnimationFrame(step)
@@ -36,7 +69,7 @@ function useCountUp(target: number, duration = 1400, trigger = false) {
 }
 
 // ============================================================
-// useInView — triggers once when element enters viewport
+// useInView
 // ============================================================
 function useInView(threshold = 0.15) {
   const ref = useRef<HTMLDivElement>(null)
@@ -54,6 +87,121 @@ function useInView(threshold = 0.15) {
   }, [threshold])
 
   return { ref, inView }
+}
+
+// ============================================================
+// Skeleton components
+// ============================================================
+function SkeletonStatCard() {
+  return (
+    <div className="flex flex-col gap-3 rounded-lg border border-border/40 bg-card/40 p-5">
+      <div className="h-3 w-24 animate-pulse rounded bg-secondary" />
+      <div className="h-8 w-20 animate-pulse rounded bg-secondary" />
+    </div>
+  )
+}
+
+function SkeletonRing() {
+  return (
+    <div className="flex size-[172px] shrink-0 items-center justify-center rounded-full border border-border/30 bg-card/20">
+      <div className="flex flex-col items-center gap-1">
+        <div className="h-7 w-14 animate-pulse rounded bg-secondary" />
+        <div className="h-2.5 w-10 animate-pulse rounded bg-secondary" />
+      </div>
+    </div>
+  )
+}
+
+function SkeletonBar() {
+  return (
+    <div className="flex items-center gap-4">
+      <div className="h-3 w-16 shrink-0 animate-pulse rounded bg-secondary" />
+      <div className="relative h-2 flex-1 overflow-hidden rounded-full bg-secondary" />
+      <div className="h-3 w-20 shrink-0 animate-pulse rounded bg-secondary" />
+    </div>
+  )
+}
+
+function SkeletonBadge() {
+  return (
+    <div className="flex items-center gap-4 rounded-lg border border-border/40 bg-card/40 p-4">
+      <div className="size-10 shrink-0 animate-pulse rounded-lg bg-secondary" />
+      <div className="flex flex-col gap-1.5">
+        <div className="h-3.5 w-28 animate-pulse rounded bg-secondary" />
+        <div className="h-2.5 w-16 animate-pulse rounded bg-secondary" />
+      </div>
+    </div>
+  )
+}
+
+function LoadingSkeleton() {
+  return (
+    <div className="py-24 px-6 md:px-12 lg:px-24" aria-busy="true">
+      {/* Header skeleton */}
+      <div className="mb-3 flex items-center gap-3">
+        <div className="size-[18px] animate-pulse rounded bg-secondary" />
+        <div className="h-3 w-32 animate-pulse rounded bg-secondary" />
+      </div>
+      <div className="mb-2 h-7 w-64 animate-pulse rounded bg-secondary" />
+      <div className="mb-12 h-4 w-96 max-w-full animate-pulse rounded bg-secondary" />
+
+      {/* Stat cards */}
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <SkeletonStatCard />
+        <SkeletonStatCard />
+        <SkeletonStatCard />
+        <SkeletonStatCard />
+      </div>
+
+      {/* Donut + bars */}
+      <div className="mt-14 flex flex-col items-center gap-12 md:flex-row md:items-start md:gap-16">
+        <SkeletonRing />
+        <div className="flex w-full flex-col gap-6">
+          <SkeletonBar />
+          <SkeletonBar />
+          <SkeletonBar />
+        </div>
+      </div>
+
+      {/* Badges */}
+      <div className="mt-14">
+        <div className="mb-5 h-3 w-28 animate-pulse rounded bg-secondary" />
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <SkeletonBadge />
+          <SkeletonBadge />
+          <SkeletonBadge />
+        </div>
+      </div>
+
+      {/* Heatmap placeholder */}
+      <div className="mt-10 h-40 animate-pulse rounded-lg border border-border/40 bg-card/20" />
+    </div>
+  )
+}
+
+// ============================================================
+// Error fallback
+// ============================================================
+function ErrorFallback({ retry }: { retry: () => void }) {
+  return (
+    <div className="py-24 px-6 md:px-12 lg:px-24">
+      <div className="flex flex-col items-center justify-center rounded-lg border border-border/40 bg-card/20 px-8 py-16">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#4A6070" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mb-4">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="8" x2="12" y2="12" />
+          <line x1="12" y1="16" x2="12.01" y2="16" />
+        </svg>
+        <p className="mb-1 font-mono text-sm font-semibold text-foreground">Stats temporarily unavailable</p>
+        <p className="mb-6 font-mono text-xs text-muted-foreground/60">Could not reach LeetCode servers</p>
+        <button
+          onClick={retry}
+          className="rounded border border-border px-4 py-2 font-mono text-xs tracking-wider text-muted-foreground transition-colors hover:border-terminal-green/40 hover:text-terminal-green uppercase"
+        >
+          Retry
+        </button>
+      </div>
+    </div>
+  )
 }
 
 // ============================================================
@@ -110,17 +258,17 @@ function StatCard({
 }
 
 // ============================================================
-// ProgressRing — clean SVG donut
+// ProgressRing
 // ============================================================
-function ProgressRing({ inView }: { inView: boolean }) {
-  const { easy, medium, hard } = leetcode.breakdown
+function ProgressRing({ data, inView }: { data: LeetCodeData; inView: boolean }) {
+  const { easy, medium, hard } = data.breakdown
   const total = easy.solved + medium.solved + hard.solved
   const count = useCountUp(total, 1600, inView)
 
   const r = 68
   const stroke = 7
   const c = 2 * Math.PI * r
-  const gap = 6 // px gap between arcs
+  const gap = 6
 
   const segments = [
     { solved: easy.solved, color: "#00FF87" },
@@ -130,10 +278,9 @@ function ProgressRing({ inView }: { inView: boolean }) {
 
   const totalSolved = segments.reduce((sum, s) => sum + s.solved, 0)
 
-  // Calculate cumulative offset for each arc
   let cumulativeOffset = 0
   const arcs = segments.map((seg) => {
-    const fraction = seg.solved / totalSolved
+    const fraction = totalSolved > 0 ? seg.solved / totalSolved : 0
     const arcLen = Math.max(fraction * c - gap, 0)
     const offset = c - cumulativeOffset
     cumulativeOffset += fraction * c
@@ -150,9 +297,7 @@ function ProgressRing({ inView }: { inView: boolean }) {
       }}
     >
       <svg width={172} height={172} viewBox="0 0 172 172" role="img" aria-label={`${total} problems solved`}>
-        {/* Background ring */}
         <circle cx={86} cy={86} r={r} fill="none" stroke="#1A2A36" strokeWidth={stroke} opacity={0.5} />
-        {/* Arcs */}
         {arcs.map((arc, i) => (
           <circle
             key={i}
@@ -203,7 +348,7 @@ function ProgressBar({
   delay: number
   inView: boolean
 }) {
-  const pct = Math.min((solved / total) * 100, 100)
+  const pct = total > 0 ? Math.min((solved / total) * 100, 100) : 0
   const count = useCountUp(solved, 1200, inView)
 
   return (
@@ -268,7 +413,6 @@ function BadgeCard({
         transition: `opacity 0.5s ease ${delay}ms, transform 0.5s ease ${delay}ms, border-color 0.3s, background-color 0.3s`,
       }}
     >
-      {/* Badge icon */}
       <div
         className={`flex size-10 shrink-0 items-center justify-center rounded-lg ${
           recent ? "bg-terminal-green/10" : "bg-secondary/80"
@@ -280,12 +424,8 @@ function BadgeCard({
         </svg>
       </div>
       <div className="flex flex-col gap-0.5">
-        <span className="font-mono text-sm font-semibold text-foreground">
-          {title}
-        </span>
-        <span className="font-mono text-[11px] text-muted-foreground/60">
-          {subtitle || "LeetCode Achievement"}
-        </span>
+        <span className="font-mono text-sm font-semibold text-foreground">{title}</span>
+        <span className="font-mono text-[11px] text-muted-foreground/60">{subtitle || "LeetCode Achievement"}</span>
       </div>
       {recent && (
         <span className="ml-auto shrink-0 rounded-full border border-terminal-green/20 bg-terminal-green/10 px-2.5 py-0.5 font-mono text-[9px] font-semibold tracking-widest text-terminal-green uppercase">
@@ -297,27 +437,26 @@ function BadgeCard({
 }
 
 // ============================================================
-// Heatmap
+// Heatmap (live data)
 // ============================================================
 const heatmapColors = ["#0F1923", "#0a3d1f", "#00873a", "#00CC66", "#00FF87"]
 const months = ["Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb"]
 const dayLabels = ["", "Mon", "", "Wed", "", "Fri", ""]
 
-function SubmissionHeatmap({ inView }: { inView: boolean }) {
-  const data = useMemo(() => generateLeetcodeHeatmap(), [])
-
+function SubmissionHeatmap({ data, inView }: { data: LeetCodeData; inView: boolean }) {
   const weeks: number[][] = useMemo(() => {
+    const heatData = data.heatmap.data
     const w: number[][] = []
     for (let i = 0; i < 53; i++) {
       const week: number[] = []
       for (let d = 0; d < 7; d++) {
         const idx = i * 7 + d
-        week.push(idx < data.length ? data[idx] : 0)
+        week.push(idx < heatData.length ? heatData[idx] : 0)
       }
       w.push(week)
     }
     return w
-  }, [data])
+  }, [data.heatmap.data])
 
   return (
     <div
@@ -331,18 +470,18 @@ function SubmissionHeatmap({ inView }: { inView: boolean }) {
       {/* Submission summary */}
       <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-1">
         <span className="font-mono text-xs text-muted-foreground/70">
-          <span className="font-semibold tabular-nums text-foreground">{leetcode.heatmap.totalSubmissions.toLocaleString()}</span>
+          <span className="font-semibold tabular-nums text-foreground">{data.heatmap.totalSubmissions.toLocaleString()}</span>
           {" submissions in the past year"}
         </span>
         <span className="hidden size-1 rounded-full bg-border sm:block" />
         <span className="font-mono text-xs text-muted-foreground/70">
-          <span className="font-semibold tabular-nums text-foreground">{leetcode.heatmap.activeDays}</span>
+          <span className="font-semibold tabular-nums text-foreground">{data.heatmap.activeDays}</span>
           {" active days"}
         </span>
         <span className="hidden size-1 rounded-full bg-border sm:block" />
         <span className="font-mono text-xs text-muted-foreground/70">
           {"max streak: "}
-          <span className="font-semibold tabular-nums text-foreground">{leetcode.heatmap.maxStreak}</span>
+          <span className="font-semibold tabular-nums text-foreground">{data.heatmap.maxStreak}</span>
         </span>
       </div>
 
@@ -352,11 +491,7 @@ function SubmissionHeatmap({ inView }: { inView: boolean }) {
           {/* Month labels */}
           <div className="mb-1.5 flex pl-8">
             {months.map((m, i) => (
-              <span
-                key={i}
-                className="font-mono text-[9px] tracking-wider text-muted-foreground/40"
-                style={{ width: "53px", minWidth: "53px" }}
-              >
+              <span key={i} className="font-mono text-[9px] tracking-wider text-muted-foreground/40" style={{ width: "53px", minWidth: "53px" }}>
                 {m}
               </span>
             ))}
@@ -367,20 +502,14 @@ function SubmissionHeatmap({ inView }: { inView: boolean }) {
             {/* Day labels */}
             <div className="flex w-8 shrink-0 flex-col gap-[3px]" aria-hidden="true">
               {dayLabels.map((d, i) => (
-                <span key={i} className="flex h-[11px] items-center font-mono text-[8px] text-muted-foreground/30">
-                  {d}
-                </span>
+                <span key={i} className="flex h-[11px] items-center font-mono text-[8px] text-muted-foreground/30">{d}</span>
               ))}
             </div>
 
             {/* Cells */}
             <div
               className="grid gap-[3px]"
-              style={{
-                gridTemplateColumns: "repeat(53, 11px)",
-                gridTemplateRows: "repeat(7, 11px)",
-                gridAutoFlow: "column",
-              }}
+              style={{ gridTemplateColumns: "repeat(53, 11px)", gridTemplateRows: "repeat(7, 11px)", gridAutoFlow: "column" }}
               role="img"
               aria-label="LeetCode submission heatmap"
             >
@@ -389,11 +518,7 @@ function SubmissionHeatmap({ inView }: { inView: boolean }) {
                   <div
                     key={`${wIdx}-${dIdx}`}
                     className="rounded-[2px] transition-colors duration-200 hover:ring-1 hover:ring-terminal-green/30"
-                    style={{
-                      width: 11,
-                      height: 11,
-                      backgroundColor: heatmapColors[level] || heatmapColors[0],
-                    }}
+                    style={{ width: 11, height: 11, backgroundColor: heatmapColors[level] || heatmapColors[0] }}
                     aria-hidden="true"
                   />
                 ))
@@ -405,16 +530,27 @@ function SubmissionHeatmap({ inView }: { inView: boolean }) {
           <div className="mt-3 flex items-center justify-end gap-1.5">
             <span className="font-mono text-[9px] text-muted-foreground/30">less</span>
             {heatmapColors.map((color, i) => (
-              <div
-                key={i}
-                className="size-[11px] rounded-[2px]"
-                style={{ backgroundColor: color }}
-                aria-hidden="true"
-              />
+              <div key={i} className="size-[11px] rounded-[2px]" style={{ backgroundColor: color }} aria-hidden="true" />
             ))}
             <span className="font-mono text-[9px] text-muted-foreground/30">more</span>
           </div>
         </div>
+      </div>
+
+      {/* LeetCode profile link */}
+      <div className="mt-4 flex justify-end">
+        <a
+          href={`https://leetcode.com/u/${data.username}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group inline-flex items-center gap-1.5 font-mono text-[11px] tracking-wider text-muted-foreground/50 transition-colors hover:text-terminal-green"
+        >
+          {"View full profile on LeetCode"}
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform group-hover:translate-x-0.5">
+            <path d="M7 17L17 7" />
+            <path d="M7 7h10v10" />
+          </svg>
+        </a>
       </div>
     </div>
   )
@@ -424,8 +560,16 @@ function SubmissionHeatmap({ inView }: { inView: boolean }) {
 // Main Section
 // ============================================================
 export function LeetCodeSection() {
-  const { profile, breakdown, badges } = leetcode
+  const { data, error, mutate } = useSWR<LeetCodeData>("/api/leetcode", fetcher, {
+    revalidateOnFocus: false,
+    dedupingInterval: 600_000, // 10 min dedup
+  })
   const { ref: sectionRef, inView } = useInView(0.1)
+
+  if (error) return <ErrorFallback retry={() => mutate()} />
+  if (!data) return <LoadingSkeleton />
+
+  const { profile, breakdown, badges } = data
 
   return (
     <section
@@ -449,20 +593,29 @@ export function LeetCodeSection() {
         Problem Solving Stats
       </h2>
       <p className="mb-12 max-w-lg font-mono text-sm leading-relaxed text-muted-foreground/60">
-        Algorithmic thinking, one problem at a time. Consistent practice across difficulty levels with a focus on patterns and optimization.
+        {"Live stats for "}
+        <a
+          href={`https://leetcode.com/u/${data.username}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-terminal-green/80 underline decoration-terminal-green/20 underline-offset-2 transition-colors hover:text-terminal-green"
+        >
+          {data.username}
+        </a>
+        {". Algorithmic thinking, one problem at a time."}
       </p>
 
       {/* Stat cards */}
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         <StatCard label="Problems Solved" value={profile.solved} suffix={`/ ${profile.totalProblems}`} tooltip="Total unique problems solved across all difficulty levels" delay={0} inView={inView} />
-        <StatCard label="Contest Rating" value={profile.contestRating} tooltip={`Competitive programming rating \u2014 ${profile.contestPercentile} of all participants`} delay={80} inView={inView} />
-        <StatCard label="Global Ranking" value={profile.globalRanking} suffix={`/ ${profile.totalUsers.toLocaleString()}`} tooltip="Your position among all LeetCode users worldwide" delay={160} inView={inView} />
+        <StatCard label="Global Ranking" value={profile.globalRanking} tooltip="Your position among all LeetCode users worldwide" delay={80} inView={inView} />
+        <StatCard label="Active Days" value={profile.activeDays} suffix="days" tooltip="Days with at least one submission in the past year" delay={160} inView={inView} />
         <StatCard label="Max Streak" value={profile.maxStreak} suffix="days" tooltip="Longest consecutive streak of solving at least one problem per day" delay={240} inView={inView} />
       </div>
 
       {/* Donut + Progress bars */}
       <div className="mt-14 flex flex-col items-center gap-12 md:flex-row md:items-start md:gap-16">
-        <ProgressRing inView={inView} />
+        <ProgressRing data={data} inView={inView} />
         <div className="flex w-full flex-col gap-6">
           <ProgressBar label="Easy" solved={breakdown.easy.solved} total={breakdown.easy.total} color="#00FF87" delay={400} inView={inView} />
           <ProgressBar label="Medium" solved={breakdown.medium.solved} total={breakdown.medium.total} color="#FFB547" delay={500} inView={inView} />
@@ -471,19 +624,21 @@ export function LeetCodeSection() {
       </div>
 
       {/* Badges */}
-      <div className="mt-14">
-        <h3 className="mb-5 font-mono text-xs font-semibold tracking-widest text-muted-foreground/70 uppercase">
-          Badges Earned
-        </h3>
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-          {badges.map((badge, i) => (
-            <BadgeCard key={i} title={badge.title} subtitle={badge.subtitle} recent={badge.recent} delay={i * 100} inView={inView} />
-          ))}
+      {badges.length > 0 && (
+        <div className="mt-14">
+          <h3 className="mb-5 font-mono text-xs font-semibold tracking-widest text-muted-foreground/70 uppercase">
+            Badges Earned
+          </h3>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+            {badges.map((badge, i) => (
+              <BadgeCard key={i} title={badge.title} subtitle={badge.subtitle} recent={badge.recent} delay={i * 100} inView={inView} />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Heatmap */}
-      <SubmissionHeatmap inView={inView} />
+      <SubmissionHeatmap data={data} inView={inView} />
     </section>
   )
 }
