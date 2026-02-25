@@ -4,45 +4,90 @@ import { ExternalLink, Github } from "lucide-react"
 import type { Project } from "@/data/portfolio"
 
 const tagStyles: Record<string, string> = {
-  ml: "bg-[#00FF87]/10 text-[#00FF87]",
-  frontend: "bg-[#4D9EFF]/10 text-[#4D9EFF]",
-  backend: "bg-[#00C2FF]/10 text-[#00C2FF]",
-  devops: "bg-[#FFB547]/10 text-[#FFB547]",
+  ml: "bg-[#00FF87]/8 text-[#00FF87]/80 border-[#00FF87]/15",
+  frontend: "bg-[#A78BFA]/8 text-[#A78BFA]/80 border-[#A78BFA]/15",
+  backend: "bg-[#00C2FF]/8 text-[#00C2FF]/80 border-[#00C2FF]/15",
+  devops: "bg-[#FFB547]/8 text-[#FFB547]/80 border-[#FFB547]/15",
 }
 
 export function ProjectCard({
   title,
+  tagline,
   description,
   tags,
   githubUrl,
   demoUrl,
+  accentColor,
 }: Project) {
   return (
     <article
-      className="group relative flex w-[280px] shrink-0 flex-col border border-terminal-dim bg-card transition-all duration-300 hover:border-l-terminal-green hover:shadow-[0_0_20px_-8px_rgba(0,255,135,0.15)] sm:w-[300px]"
-      style={{ height: "420px" }}
+      className="group relative flex flex-col overflow-hidden rounded-lg border border-terminal-dim/60 bg-card transition-all duration-300 hover:border-terminal-dim hover:shadow-[0_8px_40px_-12px_rgba(0,255,135,0.08)]"
     >
-      {/* Left accent border */}
-      <div className="absolute inset-y-0 left-0 w-[3px] bg-terminal-dim transition-colors duration-300 group-hover:bg-terminal-green group-hover:shadow-[0_0_8px_rgba(0,255,135,0.4)]" />
-
-      {/* Noise texture top area */}
-      <div className="noise-texture h-28 w-full border-b border-terminal-dim" />
+      {/* Abstract visual header */}
+      <div className="relative h-36 w-full overflow-hidden bg-secondary">
+        {/* Grid pattern */}
+        <div
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage: `linear-gradient(${accentColor}20 1px, transparent 1px), linear-gradient(90deg, ${accentColor}20 1px, transparent 1px)`,
+            backgroundSize: "24px 24px",
+          }}
+        />
+        {/* Accent glow orb */}
+        <div
+          className="absolute -bottom-10 -right-10 size-40 rounded-full blur-3xl opacity-15 transition-opacity duration-500 group-hover:opacity-30"
+          style={{ backgroundColor: accentColor }}
+        />
+        {/* Second smaller orb */}
+        <div
+          className="absolute -top-6 -left-6 size-24 rounded-full blur-2xl opacity-10 transition-opacity duration-500 group-hover:opacity-20"
+          style={{ backgroundColor: accentColor }}
+        />
+        {/* Project number watermark */}
+        <div
+          className="absolute bottom-3 right-4 font-mono text-6xl font-bold leading-none opacity-[0.04] select-none"
+          style={{ color: accentColor }}
+        >
+          {title.charAt(0)}
+        </div>
+        {/* Top-left label */}
+        <div className="absolute top-3 left-4 flex items-center gap-2">
+          <span
+            className="inline-block size-2 rounded-full"
+            style={{ backgroundColor: accentColor }}
+          />
+          <span className="font-mono text-[10px] tracking-wider text-muted-foreground uppercase">
+            {"featured project"}
+          </span>
+        </div>
+      </div>
 
       {/* Content */}
-      <div className="flex flex-1 flex-col px-5 py-4">
+      <div className="flex flex-1 flex-col px-5 pt-5 pb-5">
+        {/* Title */}
         <h3 className="font-mono text-lg font-bold tracking-tight text-foreground">
           {title}
         </h3>
-        <p className="mt-2 flex-1 font-mono text-xs leading-relaxed text-muted-foreground">
+
+        {/* Tagline */}
+        <p
+          className="mt-1 font-mono text-xs font-medium leading-snug"
+          style={{ color: accentColor, opacity: 0.7 }}
+        >
+          {tagline}
+        </p>
+
+        {/* Description */}
+        <p className="mt-3 flex-1 font-mono text-xs leading-relaxed text-muted-foreground">
           {description}
         </p>
 
-        {/* Tags - color coded with full names */}
-        <div className="mt-3 flex flex-wrap gap-1.5">
+        {/* Tags */}
+        <div className="mt-4 flex flex-wrap gap-1.5">
           {tags.map((tag) => (
             <span
               key={tag.label}
-              className={`inline-block px-2 py-0.5 font-mono text-[10px] tracking-wider uppercase ${tagStyles[tag.category] || "bg-muted text-muted-foreground"}`}
+              className={`inline-flex items-center rounded-full border px-2.5 py-0.5 font-mono text-[10px] tracking-wide ${tagStyles[tag.category] || "bg-muted text-muted-foreground border-border"}`}
             >
               {tag.label}
             </span>
@@ -50,29 +95,42 @@ export function ProjectCard({
         </div>
 
         {/* Actions */}
-        <div className="mt-4 flex items-center gap-3 border-t border-terminal-dim pt-3">
-          <a
-            href={githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 font-mono text-[10px] tracking-wider text-muted-foreground transition-colors hover:text-terminal-green uppercase"
-            aria-label={`View ${title} on GitHub`}
-          >
-            <Github className="size-3.5" />
-            {"source"}
-          </a>
+        <div className="mt-5 flex items-center gap-2">
           {demoUrl && (
             <a
               href={demoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 font-mono text-[10px] tracking-wider text-muted-foreground transition-colors hover:text-terminal-cyan uppercase"
+              className="inline-flex items-center gap-1.5 rounded-md px-3.5 py-2 font-mono text-[11px] font-medium tracking-wide transition-all duration-200 uppercase"
+              style={{
+                backgroundColor: `${accentColor}15`,
+                color: accentColor,
+                border: `1px solid ${accentColor}30`,
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = `${accentColor}25`
+                e.currentTarget.style.borderColor = `${accentColor}50`
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = `${accentColor}15`
+                e.currentTarget.style.borderColor = `${accentColor}30`
+              }}
               aria-label={`View live demo of ${title}`}
             >
-              <ExternalLink className="size-3.5" />
-              {"demo"}
+              <ExternalLink className="size-3" />
+              {"Live Demo"}
             </a>
           )}
+          <a
+            href={githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 rounded-md border border-terminal-dim/80 bg-transparent px-3.5 py-2 font-mono text-[11px] font-medium tracking-wide text-muted-foreground transition-all duration-200 hover:border-foreground/20 hover:text-foreground uppercase"
+            aria-label={`View ${title} source code on GitHub`}
+          >
+            <Github className="size-3" />
+            {"Source"}
+          </a>
         </div>
       </div>
     </article>

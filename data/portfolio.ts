@@ -18,63 +18,58 @@ export const techStackLine = "python \u00b7 pytorch \u00b7 react \u00b7 next.js 
 
 export type Project = {
   title: string
+  tagline: string
   description: string
   tags: { label: string; category: "ml" | "frontend" | "backend" | "devops" }[]
   githubUrl: string
   demoUrl?: string
+  accentColor: string
 }
 
 export const projects: Project[] = [
   {
-    title: "NeuralDeploy",
+    title: "MovieMind",
+    tagline: "ML-powered movie recommendations that actually understand your taste",
     description:
-      "End-to-end ML model deployment platform with auto-scaling inference endpoints, model versioning, and real-time monitoring dashboards.",
+      "Content-based + collaborative filtering recommendation engine trained on 100k+ ratings. Features real-time inference via FastAPI, interactive Streamlit dashboard, and A/B testing framework.",
     tags: [
-      { label: "PyTorch", category: "ml" },
+      { label: "Python", category: "ml" },
+      { label: "Scikit-learn", category: "ml" },
       { label: "FastAPI", category: "backend" },
-      { label: "Docker", category: "devops" },
-      { label: "React", category: "frontend" },
+      { label: "Streamlit", category: "frontend" },
     ],
     githubUrl: "https://github.com",
     demoUrl: "https://example.com",
+    accentColor: "#00FF87",
   },
   {
-    title: "CollabSpace",
+    title: "InsightBoard",
+    tagline: "Turn raw CSV data into beautiful, shareable analytics dashboards",
     description:
-      "Real-time collaborative workspace with AI-powered document summarization, smart task assignment, and team analytics.",
+      "Drag-and-drop analytics dashboard builder with auto-visualization suggestions, real-time data refresh, and exportable reports. Supports CSV, JSON, and live API data sources.",
     tags: [
-      { label: "Next.js", category: "frontend" },
-      { label: "WebSocket", category: "backend" },
-      { label: "OpenAI", category: "ml" },
-      { label: "PostgreSQL", category: "backend" },
+      { label: "Streamlit", category: "frontend" },
+      { label: "Pandas", category: "ml" },
+      { label: "Matplotlib", category: "ml" },
+      { label: "Python", category: "backend" },
     ],
     githubUrl: "https://github.com",
     demoUrl: "https://example.com",
+    accentColor: "#00C2FF",
   },
   {
-    title: "DataForge",
+    title: "DataForge CLI",
+    tagline: "Open-source toolkit for automated data pipeline construction",
     description:
-      "Open-source CLI toolkit for automated data pipeline construction, featuring schema inference, quality checks, and transformation DSL.",
+      "CLI tool that automates data cleaning, transformation, and validation workflows. Features schema inference, configurable quality checks, and a YAML-based pipeline DSL.",
     tags: [
       { label: "Python", category: "backend" },
-      { label: "CLI", category: "devops" },
+      { label: "Pydantic", category: "backend" },
       { label: "Pandas", category: "ml" },
-      { label: "Arrow", category: "backend" },
+      { label: "CLI", category: "devops" },
     ],
     githubUrl: "https://github.com",
-  },
-  {
-    title: "VisionLab",
-    description:
-      "Computer vision research toolkit for rapid prototyping of image classification, object detection, and segmentation pipelines.",
-    tags: [
-      { label: "PyTorch", category: "ml" },
-      { label: "OpenCV", category: "ml" },
-      { label: "FastAPI", category: "backend" },
-      { label: "Docker", category: "devops" },
-    ],
-    githubUrl: "https://github.com",
-    demoUrl: "https://example.com",
+    accentColor: "#FFB547",
   },
 ]
 
