@@ -32,13 +32,13 @@ export function HeroSection() {
     >
       {/* Ambient glow */}
       <div
-        className="pointer-events-none absolute left-1/4 top-1/3 -z-10 h-[500px] w-[500px] rounded-full opacity-35 blur-[130px]"
-        style={{ background: "radial-gradient(circle, rgba(0,255,135,0.16), transparent 70%)" }}
+        className="pointer-events-none absolute left-1/4 top-1/3 -z-10 h-[350px] w-[350px] rounded-full opacity-25 blur-[100px]"
+        style={{ background: "radial-gradient(circle, rgba(0,255,135,0.12), transparent 70%)" }}
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute right-1/4 top-1/2 -z-10 h-[300px] w-[300px] rounded-full opacity-25 blur-[110px]"
-        style={{ background: "radial-gradient(circle, rgba(0,194,255,0.14), transparent 70%)" }}
+        className="pointer-events-none absolute right-1/4 top-1/2 -z-10 h-[200px] w-[200px] rounded-full opacity-20 blur-[80px]"
+        style={{ background: "radial-gradient(circle, rgba(0,194,255,0.1), transparent 70%)" }}
         aria-hidden="true"
       />
 

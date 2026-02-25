@@ -24,7 +24,7 @@ export function ProjectCard({
       className="hover-card-lift group relative flex flex-col overflow-hidden rounded-lg border border-terminal-dim/50 bg-card/80 backdrop-blur-sm hover:border-terminal-green/20 hover:shadow-[0_8px_40px_-12px_rgba(0,255,135,0.1)]"
     >
       {/* Abstract visual header */}
-      <div className="relative h-36 w-full overflow-hidden bg-[#0a0a0a]">
+      <div className="relative h-36 w-full overflow-hidden bg-[#0e0e0e]">
         {/* Grid pattern */}
         <div
           className="absolute inset-0 opacity-20"

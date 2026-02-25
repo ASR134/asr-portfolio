@@ -13,54 +13,34 @@ export default function Home() {
     <>
       <NavHeader />
       <main>
-        {/* Hero */}
-        <div className="relative">
-          <div className="bg-section-grid bg-section-fade pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
-          <HeroSection />
-        </div>
+        <HeroSection />
 
-        <div className="py-6 md:py-10">
+        <div className="py-8 md:py-12">
           <SectionDivider />
         </div>
 
-        {/* Projects */}
-        <div className="relative">
-          <div className="bg-section-grid bg-section-fade pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
-          <ProjectsSection />
-        </div>
+        <ProjectsSection />
 
-        <div className="py-6 md:py-10">
+        <div className="py-8 md:py-12">
           <SectionDivider />
         </div>
 
-        {/* Tech Stack */}
-        <div className="relative">
-          <div className="bg-section-grid-fine bg-section-fade pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
-          <SkillsSection />
-        </div>
+        <SkillsSection />
 
-        <div className="py-6 md:py-10">
+        <div className="py-8 md:py-12">
           <SectionDivider />
         </div>
 
-        {/* LeetCode */}
-        <div className="relative">
-          <div className="bg-section-grid bg-section-fade pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
-          <LeetCodeSection />
-        </div>
+        <LeetCodeSection />
 
-        <div className="py-6 md:py-10">
+        <div className="py-8 md:py-12">
           <SectionDivider />
         </div>
 
-        {/* Contact */}
-        <div className="relative">
-          <div className="bg-section-grid-fine bg-section-fade pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
-          <ContactSection />
-        </div>
+        <ContactSection />
       </main>
 
-      <footer className="border-t border-terminal-dim/40 px-6 py-8 md:px-12 lg:px-24">
+      <footer className="border-t border-terminal-dim/50 px-6 py-8 md:px-12 lg:px-24">
         <div className="flex items-center justify-between gap-4">
           <p className="font-mono text-[10px] tracking-wider text-muted-foreground/60 uppercase">
             {"// BUILT WITH NEXT.JS + TAILWIND + SHADCN + V0  \u00b7  \u00a9 2025 ALEX CHEN  \u00b7  ALL SYSTEMS OPERATIONAL"}

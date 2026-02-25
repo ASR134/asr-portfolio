@@ -38,8 +38,8 @@ export function ContactSection() {
     >
       {/* Background accent */}
       <div
-        className="pointer-events-none absolute bottom-0 left-1/3 -z-10 h-[400px] w-[400px] rounded-full opacity-20 blur-[120px]"
-        style={{ background: "radial-gradient(circle, rgba(0,255,135,0.1), transparent 70%)" }}
+        className="pointer-events-none absolute bottom-0 left-1/3 -z-10 h-[250px] w-[250px] rounded-full opacity-15 blur-[80px]"
+        style={{ background: "radial-gradient(circle, rgba(0,255,135,0.08), transparent 70%)" }}
         aria-hidden="true"
       />
 

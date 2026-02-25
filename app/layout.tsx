@@ -43,8 +43,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-sans antialiased overflow-x-hidden">
-        <div className="vignette-overlay" aria-hidden="true" />
-        <div className="grain-overlay" aria-hidden="true" />
         {children}
         <Analytics />
       </body>

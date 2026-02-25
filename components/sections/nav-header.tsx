@@ -48,7 +48,7 @@ export function NavHeader() {
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-500 font-mono",
         scrolled
-          ? "border-b border-terminal-dim/60 bg-terminal-bg/85 backdrop-blur-xl shadow-[0_4px_20px_rgba(0,0,0,0.3)]"
+          ? "border-b border-terminal-dim/70 bg-terminal-bg/90 backdrop-blur-xl shadow-[0_4px_24px_rgba(0,0,0,0.5)]"
           : "bg-transparent"
       )}
     >
