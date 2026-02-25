@@ -90,7 +90,7 @@ export function HeroSection() {
           }}
         >
           {/* Available tag */}
-          <div className="mb-6 inline-flex items-center gap-2.5 border border-terminal-green/20 bg-terminal-green/5 px-3.5 py-1.5">
+          <div className="mb-6 inline-flex items-center gap-2.5 rounded-md border border-terminal-green/25 bg-surface-1 px-3.5 py-1.5">
             <span className="animate-pulse-available size-2 rounded-full bg-terminal-green" />
             <span className="font-mono text-[10px] tracking-[0.2em] text-terminal-green uppercase">
               {"Available for hire"}
@@ -136,7 +136,7 @@ export function HeroSection() {
           <div className="mt-10 flex flex-wrap gap-4">
             <a
               href="#projects"
-              className="hero-cta-primary hover-btn-glow group relative inline-flex items-center gap-2.5 overflow-hidden border border-terminal-green/60 bg-terminal-green/10 px-7 py-3.5 font-mono text-xs tracking-widest text-terminal-green hover:border-terminal-green hover:bg-terminal-green/20 hover:shadow-[0_0_24px_rgba(0,255,135,0.18)] sm:text-sm uppercase"
+              className="hero-cta-primary hover-btn-glow group relative inline-flex items-center gap-2.5 overflow-hidden rounded-md border border-terminal-green/50 bg-surface-1 px-7 py-3.5 font-mono text-xs tracking-widest text-terminal-green hover:border-terminal-green hover:bg-surface-2 hover:shadow-[0_0_24px_rgba(0,255,135,0.18)] sm:text-sm uppercase"
             >
               <span className="relative z-10 flex items-center gap-2.5">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:translate-x-0.5">
@@ -147,7 +147,7 @@ export function HeroSection() {
             </a>
             <a
               href={personalInfo.resumeUrl}
-              className="hover-btn-glow group inline-flex items-center gap-2.5 border border-terminal-dim px-7 py-3.5 font-mono text-xs tracking-widest text-muted-foreground hover:border-terminal-cyan/50 hover:text-terminal-cyan hover:shadow-[0_0_20px_rgba(0,194,255,0.12)] sm:text-sm uppercase"
+              className="hover-btn-glow group inline-flex items-center gap-2.5 rounded-md border border-terminal-dim bg-surface-1 px-7 py-3.5 font-mono text-xs tracking-widest text-muted-foreground hover:border-terminal-cyan/50 hover:bg-surface-2 hover:text-terminal-cyan hover:shadow-[0_0_20px_rgba(0,194,255,0.12)] sm:text-sm uppercase"
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:translate-y-0.5">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />

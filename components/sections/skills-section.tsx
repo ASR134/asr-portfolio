@@ -23,7 +23,7 @@ function SkillBadge({
       style={{
         borderColor: `${color}25`,
         backgroundColor: `var(--surface-1)`,
-        color: "#E8ECF1",
+        color: "#F0F4F8",
       }}
       tabIndex={0}
       role="listitem"

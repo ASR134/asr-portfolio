@@ -74,7 +74,7 @@ export function ContactSection() {
                 href={link.url}
                 target={link.platform === "Email" ? undefined : "_blank"}
                 rel={link.platform === "Email" ? undefined : "noopener noreferrer"}
-                className="hover-card-lift group relative flex flex-col gap-4 overflow-hidden rounded-lg border border-terminal-dim bg-surface-1 p-5 hover:border-terminal-green/25"
+                className="hover-card-lift group relative flex flex-col gap-4 overflow-hidden rounded-lg border border-terminal-dim bg-surface-1 p-5 shadow-[0_4px_24px_rgba(0,0,0,0.4)] hover:border-terminal-green/25"
                 onMouseEnter={() => setHoveredCard(link.platform)}
                 onMouseLeave={() => setHoveredCard(null)}
                 aria-label={`Connect on ${link.platform}`}
@@ -131,7 +131,7 @@ export function ContactSection() {
           {/* Status */}
           {personalInfo.openToOpportunities && (
             <div className="flex items-center gap-4">
-              <div className="relative flex items-center gap-2.5 rounded-md border border-terminal-green/20 bg-surface-1 px-4 py-2">
+              <div className="relative flex items-center gap-2.5 rounded-md border border-terminal-green/25 bg-surface-1 px-4 py-2 shadow-[0_0_12px_rgba(0,255,135,0.05)]">
                 <span className="relative flex size-2.5">
                   <span className="absolute inline-flex size-full animate-ping rounded-full bg-terminal-green opacity-40" />
                   <span className="relative inline-flex size-2.5 rounded-full bg-terminal-green" />

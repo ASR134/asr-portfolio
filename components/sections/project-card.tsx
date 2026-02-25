@@ -4,10 +4,10 @@ import { ExternalLink, Github } from "lucide-react"
 import type { Project } from "@/data/portfolio"
 
 const tagStyles: Record<string, string> = {
-  ml: "bg-[#00FF87]/8 text-[#00FF87]/80 border-[#00FF87]/15",
-  frontend: "bg-[#A78BFA]/8 text-[#A78BFA]/80 border-[#A78BFA]/15",
-  backend: "bg-[#00C2FF]/8 text-[#00C2FF]/80 border-[#00C2FF]/15",
-  devops: "bg-[#FFB547]/8 text-[#FFB547]/80 border-[#FFB547]/15",
+  ml: "bg-surface-2 text-[#00FF87]/90 border-[#00FF87]/20",
+  frontend: "bg-surface-2 text-[#A78BFA]/90 border-[#A78BFA]/20",
+  backend: "bg-surface-2 text-[#00C2FF]/90 border-[#00C2FF]/20",
+  devops: "bg-surface-2 text-[#FFB547]/90 border-[#FFB547]/20",
 }
 
 export function ProjectCard({
@@ -21,21 +21,21 @@ export function ProjectCard({
 }: Project) {
   return (
     <article
-      className="hover-card-lift group relative flex flex-col overflow-hidden rounded-lg border border-terminal-dim bg-surface-1 hover:border-terminal-green/25"
+      className="hover-card-lift group relative flex flex-col overflow-hidden rounded-lg border border-terminal-dim bg-surface-1 shadow-[0_4px_24px_rgba(0,0,0,0.4)] hover:border-terminal-green/25"
     >
       {/* Inner gradient overlay for depth */}
       <div className="pointer-events-none absolute inset-0 z-0 rounded-lg bg-gradient-to-b from-white/[0.03] via-transparent to-transparent" aria-hidden="true" />
       {/* Outer glow */}
       <div className="pointer-events-none absolute -inset-px z-0 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ boxShadow: "0 0 40px rgba(0,255,135,0.06)" }} aria-hidden="true" />
-      {/* Abstract visual header */}
+      {/* Abstract visual header — solid surface, no grid */}
       <div className="relative z-[1] h-36 w-full overflow-hidden bg-surface-2">
-        {/* Grid pattern */}
+        {/* Subtle top-to-bottom gradient for depth */}
         <div
-          className="absolute inset-0 opacity-20"
+          className="absolute inset-0"
           style={{
-            backgroundImage: `linear-gradient(${accentColor}20 1px, transparent 1px), linear-gradient(90deg, ${accentColor}20 1px, transparent 1px)`,
-            backgroundSize: "24px 24px",
+            background: `linear-gradient(135deg, ${accentColor}08 0%, transparent 50%, ${accentColor}04 100%)`,
           }}
+          aria-hidden="true"
         />
         {/* Accent glow orb */}
         <div
@@ -107,17 +107,19 @@ export function ProjectCard({
               rel="noopener noreferrer"
               className="hover-btn-glow inline-flex items-center gap-1.5 rounded-md px-3.5 py-2 font-mono text-[11px] font-medium tracking-wide uppercase"
               style={{
-                backgroundColor: `${accentColor}15`,
+                backgroundColor: `var(--surface-2)`,
                 color: accentColor,
-                border: `1px solid ${accentColor}30`,
+                border: `1px solid ${accentColor}35`,
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = `${accentColor}25`
-                e.currentTarget.style.borderColor = `${accentColor}50`
+                e.currentTarget.style.backgroundColor = `var(--surface-3)`
+                e.currentTarget.style.borderColor = `${accentColor}60`
+                e.currentTarget.style.boxShadow = `0 0 16px ${accentColor}20`
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = `${accentColor}15`
-                e.currentTarget.style.borderColor = `${accentColor}30`
+                e.currentTarget.style.backgroundColor = `var(--surface-2)`
+                e.currentTarget.style.borderColor = `${accentColor}35`
+                e.currentTarget.style.boxShadow = `none`
               }}
               aria-label={`View live demo of ${title}`}
             >
@@ -129,7 +131,7 @@ export function ProjectCard({
             href={githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover-btn-glow inline-flex items-center gap-1.5 rounded-md border border-terminal-dim/80 bg-transparent px-3.5 py-2 font-mono text-[11px] font-medium tracking-wide text-muted-foreground hover:border-foreground/20 hover:text-foreground uppercase"
+            className="hover-btn-glow inline-flex items-center gap-1.5 rounded-md border border-terminal-dim bg-surface-2 px-3.5 py-2 font-mono text-[11px] font-medium tracking-wide text-muted-foreground hover:border-foreground/20 hover:bg-surface-3 hover:text-foreground uppercase"
             aria-label={`View ${title} source code on GitHub`}
           >
             <Github className="size-3" />

@@ -323,22 +323,11 @@ body::after {
 }
 
 /* ================================================================
-   NOISE TEXTURE (project card headers only)
+   NOISE TEXTURE — solid surface only, no patterns
    ================================================================ */
 
 .noise-texture {
   position: relative;
   overflow: hidden;
-  background: var(--surface-1);
-}
-.noise-texture::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    repeating-radial-gradient(circle at 17% 32%, #1a2535 0px, transparent 1px, transparent 30px),
-    repeating-radial-gradient(circle at 62% 71%, #1a2535 0px, transparent 1px, transparent 24px),
-    repeating-radial-gradient(circle at 83% 15%, #111a24 0px, transparent 1px, transparent 40px);
-  filter: contrast(170%) brightness(60%);
-  opacity: 0.6;
+  background: var(--surface-2);
 }

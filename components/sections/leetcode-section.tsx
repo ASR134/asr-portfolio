@@ -84,7 +84,7 @@ function StatCard({
     <Tooltip>
       <TooltipTrigger asChild>
         <div
-          className="hover-card-lift group relative flex flex-col gap-2 overflow-hidden rounded-lg border border-terminal-dim bg-surface-1 p-5 hover:border-terminal-green/25"
+          className="hover-card-lift group relative flex flex-col gap-2 overflow-hidden rounded-lg border border-terminal-dim bg-surface-1 p-5 shadow-[0_4px_24px_rgba(0,0,0,0.4)] hover:border-terminal-green/25"
           style={{
             opacity: inView ? 1 : 0,
             transform: inView ? "translateY(0)" : "translateY(16px)",
@@ -265,7 +265,7 @@ function BadgeCard({
 }) {
   return (
     <div
-      className={`group relative overflow-hidden flex items-center gap-4 rounded-lg border p-4 transition-all duration-300 ${
+      className={`group relative overflow-hidden flex items-center gap-4 rounded-lg border p-4 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300 ${
         recent
           ? "border-terminal-green/30 bg-surface-1"
           : "border-terminal-dim bg-surface-1 hover:border-terminal-dim/80"
@@ -278,7 +278,7 @@ function BadgeCard({
     >
       <div
         className={`flex size-10 shrink-0 items-center justify-center rounded-lg ${
-          recent ? "bg-terminal-green/10" : "bg-surface-2"
+          recent ? "bg-surface-2" : "bg-surface-2"
         }`}
       >
         <svg
@@ -302,7 +302,7 @@ function BadgeCard({
         </span>
       </div>
       {recent && (
-        <span className="ml-auto shrink-0 rounded-full border border-terminal-green/20 bg-terminal-green/10 px-2.5 py-0.5 font-mono text-[9px] font-semibold tracking-widest text-terminal-green uppercase">
+        <span className="ml-auto shrink-0 rounded-full border border-terminal-green/25 bg-surface-2 px-2.5 py-0.5 font-mono text-[9px] font-semibold tracking-widest text-terminal-green uppercase">
           latest
         </span>
       )}
