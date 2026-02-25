@@ -21,10 +21,14 @@ export function ProjectCard({
 }: Project) {
   return (
     <article
-      className="hover-card-lift group relative flex flex-col overflow-hidden rounded-lg border border-terminal-dim/50 bg-card/80 backdrop-blur-sm hover:border-terminal-green/20 hover:shadow-[0_8px_40px_-12px_rgba(0,255,135,0.1)]"
+      className="hover-card-lift group relative flex flex-col overflow-hidden rounded-lg border border-terminal-dim bg-surface-1 hover:border-terminal-green/25"
     >
+      {/* Inner gradient overlay for depth */}
+      <div className="pointer-events-none absolute inset-0 z-0 rounded-lg bg-gradient-to-b from-white/[0.03] via-transparent to-transparent" aria-hidden="true" />
+      {/* Outer glow */}
+      <div className="pointer-events-none absolute -inset-px z-0 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ boxShadow: "0 0 40px rgba(0,255,135,0.06)" }} aria-hidden="true" />
       {/* Abstract visual header */}
-      <div className="relative h-36 w-full overflow-hidden bg-[#0e0e0e]">
+      <div className="relative z-[1] h-36 w-full overflow-hidden bg-surface-2">
         {/* Grid pattern */}
         <div
           className="absolute inset-0 opacity-20"
@@ -63,7 +67,7 @@ export function ProjectCard({
       </div>
 
       {/* Content */}
-      <div className="flex flex-1 flex-col px-5 pt-5 pb-5">
+      <div className="relative z-[1] flex flex-1 flex-col px-5 pt-5 pb-5">
         {/* Title */}
         <h3 className="font-mono text-lg font-bold tracking-tight text-foreground">
           {title}

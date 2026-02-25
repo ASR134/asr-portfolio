@@ -84,17 +84,18 @@ function StatCard({
     <Tooltip>
       <TooltipTrigger asChild>
         <div
-          className="hover-card-lift group flex flex-col gap-2 rounded-lg border border-border/60 bg-card/60 p-5 backdrop-blur-sm hover:border-terminal-green/30 hover:bg-card/80"
+          className="hover-card-lift group relative flex flex-col gap-2 overflow-hidden rounded-lg border border-terminal-dim bg-surface-1 p-5 hover:border-terminal-green/25"
           style={{
             opacity: inView ? 1 : 0,
             transform: inView ? "translateY(0)" : "translateY(16px)",
             transition: `opacity 0.6s ease ${delay}ms, transform 0.6s ease ${delay}ms, border-color 0.3s, background-color 0.3s`,
           }}
         >
-          <span className="font-mono text-[10px] font-medium tracking-widest text-muted-foreground/70 uppercase">
+          <div className="pointer-events-none absolute inset-0 rounded-lg bg-gradient-to-b from-white/[0.03] via-transparent to-transparent" aria-hidden="true" />
+          <span className="relative font-mono text-[10px] font-medium tracking-widest text-muted-foreground/70 uppercase">
             {label}
           </span>
-          <div className="flex items-baseline gap-1">
+          <div className="relative flex items-baseline gap-1">
             <span className="font-mono text-3xl font-bold tabular-nums tracking-tight text-foreground transition-all duration-300 group-hover:text-terminal-green group-hover:[text-shadow:0_0_20px_rgba(0,255,135,0.25)]">
               {count.toLocaleString()}
             </span>
@@ -161,7 +162,7 @@ function ProgressRing({ inView }: { inView: boolean }) {
         role="img"
         aria-label={`${total} problems solved`}
       >
-        <circle cx={86} cy={86} r={r} fill="none" stroke="#222222" strokeWidth={stroke} opacity={0.7} />
+        <circle cx={86} cy={86} r={r} fill="none" stroke="#1a2535" strokeWidth={stroke} opacity={0.8} />
         {arcs.map((arc, i) => (
           <circle
             key={i}
@@ -228,7 +229,7 @@ function DifficultyBar({
       >
         {label}
       </span>
-      <div className="relative h-2 flex-1 overflow-hidden rounded-full bg-secondary">
+      <div className="relative h-2 flex-1 overflow-hidden rounded-full bg-surface-2">
         <div
           className="absolute inset-y-0 left-0 rounded-full transition-all duration-1000 ease-out"
           style={{
@@ -264,10 +265,10 @@ function BadgeCard({
 }) {
   return (
     <div
-      className={`group flex items-center gap-4 rounded-lg border p-4 transition-all duration-300 ${
+      className={`group relative overflow-hidden flex items-center gap-4 rounded-lg border p-4 transition-all duration-300 ${
         recent
-          ? "border-terminal-green/30 bg-terminal-green/[0.04]"
-          : "border-border/60 bg-card/40 hover:border-border hover:bg-card/60"
+          ? "border-terminal-green/30 bg-surface-1"
+          : "border-terminal-dim bg-surface-1 hover:border-terminal-dim/80"
       }`}
       style={{
         opacity: inView ? 1 : 0,
@@ -277,7 +278,7 @@ function BadgeCard({
     >
       <div
         className={`flex size-10 shrink-0 items-center justify-center rounded-lg ${
-          recent ? "bg-terminal-green/10" : "bg-secondary/80"
+          recent ? "bg-terminal-green/10" : "bg-surface-2"
         }`}
       >
         <svg
@@ -361,7 +362,7 @@ function HeatmapEmbed({ inView }: { inView: boolean }) {
         Submission Activity
       </h3>
 
-      <div className="overflow-hidden rounded-lg border border-border/40 bg-card/30 p-4">
+      <div className="overflow-hidden rounded-lg border border-terminal-dim bg-surface-1 p-4 shadow-[0_8px_30px_rgba(0,0,0,0.4)]">
         {/* Live image — always in the DOM so it can load in the background */}
         {!showFallback && (
           /* eslint-disable-next-line @next/next/no-img-element */
@@ -564,7 +565,7 @@ export function LeetCodeSection() {
           href={profileUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="hover-btn-glow group inline-flex items-center gap-1.5 rounded-md border border-border/40 bg-card/40 px-4 py-2 font-mono text-xs tracking-wider text-muted-foreground hover:border-terminal-green/30 hover:text-terminal-green"
+          className="hover-btn-glow group inline-flex items-center gap-1.5 rounded-md border border-terminal-dim bg-surface-1 px-4 py-2 font-mono text-xs tracking-wider text-muted-foreground hover:border-terminal-green/30 hover:text-terminal-green"
         >
           View full profile on LeetCode
           <svg

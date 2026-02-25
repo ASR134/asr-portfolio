@@ -40,7 +40,7 @@ export default function Home() {
         <ContactSection />
       </main>
 
-      <footer className="border-t border-terminal-dim/50 px-6 py-8 md:px-12 lg:px-24">
+      <footer className="border-t border-terminal-dim px-6 py-8 md:px-12 lg:px-24">
         <div className="flex items-center justify-between gap-4">
           <p className="font-mono text-[10px] tracking-wider text-muted-foreground/60 uppercase">
             {"// BUILT WITH NEXT.JS + TAILWIND + SHADCN + V0  \u00b7  \u00a9 2025 ALEX CHEN  \u00b7  ALL SYSTEMS OPERATIONAL"}

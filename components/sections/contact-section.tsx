@@ -74,11 +74,13 @@ export function ContactSection() {
                 href={link.url}
                 target={link.platform === "Email" ? undefined : "_blank"}
                 rel={link.platform === "Email" ? undefined : "noopener noreferrer"}
-                className="hover-card-lift group relative flex flex-col gap-4 border border-terminal-dim bg-card/50 p-5 hover:border-terminal-green/40 hover:bg-terminal-green/[0.04]"
+                className="hover-card-lift group relative flex flex-col gap-4 overflow-hidden rounded-lg border border-terminal-dim bg-surface-1 p-5 hover:border-terminal-green/25"
                 onMouseEnter={() => setHoveredCard(link.platform)}
                 onMouseLeave={() => setHoveredCard(null)}
                 aria-label={`Connect on ${link.platform}`}
               >
+                {/* Inner gradient for depth */}
+                <div className="pointer-events-none absolute inset-0 rounded-lg bg-gradient-to-b from-white/[0.03] via-transparent to-transparent" aria-hidden="true" />
                 {/* Subtle top border glow on hover */}
                 <div
                   className="pointer-events-none absolute inset-x-0 top-0 h-px transition-opacity duration-300"
@@ -90,7 +92,7 @@ export function ContactSection() {
                 />
 
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center justify-center size-10 border border-terminal-dim text-muted-foreground transition-all duration-300 group-hover:border-terminal-green/30 group-hover:text-terminal-green">
+                  <div className="flex items-center justify-center size-10 rounded-md border border-terminal-dim bg-surface-2 text-muted-foreground transition-all duration-300 group-hover:border-terminal-green/30 group-hover:text-terminal-green">
                     {iconMap[link.platform]}
                   </div>
                   <svg
@@ -129,7 +131,7 @@ export function ContactSection() {
           {/* Status */}
           {personalInfo.openToOpportunities && (
             <div className="flex items-center gap-4">
-              <div className="relative flex items-center gap-2.5 border border-terminal-green/20 bg-terminal-green/5 px-4 py-2">
+              <div className="relative flex items-center gap-2.5 rounded-md border border-terminal-green/20 bg-surface-1 px-4 py-2">
                 <span className="relative flex size-2.5">
                   <span className="absolute inline-flex size-full animate-ping rounded-full bg-terminal-green opacity-40" />
                   <span className="relative inline-flex size-2.5 rounded-full bg-terminal-green" />

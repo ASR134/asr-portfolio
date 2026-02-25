@@ -21,22 +21,22 @@ function SkillBadge({
     <span
       className="hover-badge-glow group inline-flex items-center gap-2.5 rounded-full border px-4 py-2.5 font-mono text-sm tracking-wide focus-visible:ring-2 focus-visible:ring-terminal-green focus-visible:outline-none"
       style={{
-        borderColor: `${color}30`,
-        backgroundColor: `${color}0a`,
+        borderColor: `${color}25`,
+        backgroundColor: `var(--surface-1)`,
         color: "#E8ECF1",
       }}
       tabIndex={0}
       role="listitem"
       onMouseEnter={(e) => {
         const el = e.currentTarget as HTMLElement
-        el.style.borderColor = `${color}70`
-        el.style.backgroundColor = `${color}18`
-        el.style.boxShadow = `0 0 20px ${color}25, 0 0 6px ${color}18`
+        el.style.borderColor = `${color}60`
+        el.style.backgroundColor = `var(--surface-2)`
+        el.style.boxShadow = `0 0 24px ${color}20, 0 0 8px ${color}15`
       }}
       onMouseLeave={(e) => {
         const el = e.currentTarget as HTMLElement
-        el.style.borderColor = `${color}30`
-        el.style.backgroundColor = `${color}0a`
+        el.style.borderColor = `${color}25`
+        el.style.backgroundColor = `var(--surface-1)`
         el.style.boxShadow = "none"
       }}
     >
