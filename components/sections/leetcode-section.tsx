@@ -161,7 +161,7 @@ function ProgressRing({ inView }: { inView: boolean }) {
         role="img"
         aria-label={`${total} problems solved`}
       >
-        <circle cx={86} cy={86} r={r} fill="none" stroke="#1A2A36" strokeWidth={stroke} opacity={0.5} />
+        <circle cx={86} cy={86} r={r} fill="none" stroke="#1E2E3A" strokeWidth={stroke} opacity={0.5} />
         {arcs.map((arc, i) => (
           <circle
             key={i}

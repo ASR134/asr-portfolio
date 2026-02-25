@@ -21,7 +21,7 @@ export function ProjectCard({
 }: Project) {
   return (
     <article
-      className="group relative flex flex-col overflow-hidden rounded-lg border border-terminal-dim/60 bg-card transition-all duration-300 hover:border-terminal-dim hover:shadow-[0_8px_40px_-12px_rgba(0,255,135,0.08)]"
+      className="group relative flex flex-col overflow-hidden rounded-lg border border-terminal-dim/50 bg-card/80 backdrop-blur-sm transition-all duration-300 hover:border-terminal-dim/80 hover:shadow-[0_8px_40px_-12px_rgba(0,255,135,0.06)]"
     >
       {/* Abstract visual header */}
       <div className="relative h-36 w-full overflow-hidden bg-secondary">

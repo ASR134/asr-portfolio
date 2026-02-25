@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#050A0F',
+  themeColor: '#0C1117',
   width: 'device-width',
   initialScale: 1,
 }
@@ -43,6 +43,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-sans antialiased overflow-x-hidden">
+        <div className="vignette-overlay" aria-hidden="true" />
+        <div className="grain-overlay" aria-hidden="true" />
         {children}
         <Analytics />
       </body>

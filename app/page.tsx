@@ -13,20 +13,37 @@ export default function Home() {
     <>
       <NavHeader />
       <main>
-        <HeroSection />
+        {/* Hero with subtle grid pattern */}
+        <div className="relative">
+          <div className="bg-section-grid bg-section-fade pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
+          <HeroSection />
+        </div>
+
         <SectionDivider />
-        <ProjectsSection />
+
+        {/* Projects with subtle grid pattern */}
+        <div className="relative">
+          <div className="bg-section-grid bg-section-fade pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
+          <ProjectsSection />
+        </div>
+
         <SectionDivider />
         <SkillsSection />
         <SectionDivider />
-        <LeetCodeSection />
+
+        {/* LeetCode with subtle grid pattern */}
+        <div className="relative">
+          <div className="bg-section-grid bg-section-fade pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
+          <LeetCodeSection />
+        </div>
+
         <SectionDivider />
         <ContactSection />
       </main>
 
-      <footer className="border-t border-terminal-dim px-6 py-6 md:px-12 lg:px-24">
+      <footer className="border-t border-terminal-dim/40 px-6 py-6 md:px-12 lg:px-24">
         <div className="flex items-center justify-between gap-4">
-          <p className="font-mono text-[10px] tracking-wider text-muted-foreground uppercase">
+          <p className="font-mono text-[10px] tracking-wider text-muted-foreground/60 uppercase">
             {"// BUILT WITH NEXT.JS + TAILWIND + SHADCN + V0  \u00b7  \u00a9 2025 ALEX CHEN  \u00b7  ALL SYSTEMS OPERATIONAL"}
           </p>
           <div className="flex shrink-0 items-center gap-1.5">
