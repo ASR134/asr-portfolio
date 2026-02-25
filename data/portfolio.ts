@@ -1,37 +1,20 @@
 export const personalInfo = {
   name: "Alex Chen",
-  role: "ML Engineer  ·  Full Stack Developer  ·  Open Source Contributor",
-  bio: "I build intelligent systems at the intersection of machine learning and software engineering. Passionate about deploying production-grade ML models and crafting seamless user experiences that make complex technology accessible.",
+  role: "ML Engineer / Full Stack Developer / Open Source Contributor",
+  bio: "Building intelligent systems at the intersection of machine learning and software engineering. Deploying production-grade ML models and crafting seamless user experiences that make complex technology accessible.",
   email: "alex.chen@example.com",
   resumeUrl: "#",
   openToOpportunities: true,
 }
 
 export const socialLinks = [
-  { platform: "GitHub", url: "https://github.com", icon: "github" as const },
-  {
-    platform: "LinkedIn",
-    url: "https://linkedin.com",
-    icon: "linkedin" as const,
-  },
-  { platform: "X", url: "https://x.com", icon: "twitter" as const },
-  {
-    platform: "Email",
-    url: "mailto:alex.chen@example.com",
-    icon: "mail" as const,
-  },
+  { platform: "GitHub", url: "https://github.com", command: "github --open" },
+  { platform: "LinkedIn", url: "https://linkedin.com", command: "linkedin --connect" },
+  { platform: "X / Twitter", url: "https://x.com", command: "twitter --follow" },
+  { platform: "Email", url: "mailto:alex.chen@example.com", command: "mail --send" },
 ]
 
-export const techStack = [
-  { name: "Python", icon: "python" },
-  { name: "PyTorch", icon: "pytorch" },
-  { name: "TensorFlow", icon: "tensorflow" },
-  { name: "React", icon: "react" },
-  { name: "TypeScript", icon: "typescript" },
-  { name: "Next.js", icon: "nextjs" },
-  { name: "Node.js", icon: "nodejs" },
-  { name: "PostgreSQL", icon: "postgresql" },
-]
+export const techStackLine = "python · pytorch · react · next.js · fastapi · docker · typescript · postgresql"
 
 export type Project = {
   title: string
@@ -76,9 +59,22 @@ export const projects: Project[] = [
       { label: "Python", category: "ml" },
       { label: "CLI", category: "devops" },
       { label: "Pandas", category: "ml" },
-      { label: "Apache Arrow", category: "backend" },
+      { label: "Arrow", category: "backend" },
     ],
     githubUrl: "https://github.com",
+  },
+  {
+    title: "VisionLab",
+    description:
+      "Computer vision research toolkit for rapid prototyping of image classification, object detection, and segmentation pipelines.",
+    tags: [
+      { label: "PyTorch", category: "ml" },
+      { label: "OpenCV", category: "ml" },
+      { label: "FastAPI", category: "backend" },
+      { label: "Docker", category: "devops" },
+    ],
+    githubUrl: "https://github.com",
+    demoUrl: "https://example.com",
   },
 ]
 
@@ -86,80 +82,79 @@ export type SkillCategory = "Machine Learning" | "Backend" | "Frontend" | "Tools
 
 export type Skill = {
   label: string
+  shortLabel: string
   category: SkillCategory
 }
 
 export const skills: Skill[] = [
-  // Machine Learning
-  { label: "PyTorch", category: "Machine Learning" },
-  { label: "TensorFlow", category: "Machine Learning" },
-  { label: "scikit-learn", category: "Machine Learning" },
-  { label: "Hugging Face", category: "Machine Learning" },
-  { label: "Computer Vision", category: "Machine Learning" },
-  { label: "NLP", category: "Machine Learning" },
-  { label: "MLOps", category: "Machine Learning" },
-  { label: "ONNX", category: "Machine Learning" },
-  // Backend
-  { label: "Python", category: "Backend" },
-  { label: "Node.js", category: "Backend" },
-  { label: "FastAPI", category: "Backend" },
-  { label: "PostgreSQL", category: "Backend" },
-  { label: "Redis", category: "Backend" },
-  { label: "GraphQL", category: "Backend" },
-  // Frontend
-  { label: "React", category: "Frontend" },
-  { label: "Next.js", category: "Frontend" },
-  { label: "TypeScript", category: "Frontend" },
-  { label: "Tailwind CSS", category: "Frontend" },
-  { label: "Three.js", category: "Frontend" },
-  // Tools & DevOps
-  { label: "Docker", category: "Tools & DevOps" },
-  { label: "Kubernetes", category: "Tools & DevOps" },
-  { label: "AWS", category: "Tools & DevOps" },
-  { label: "Git", category: "Tools & DevOps" },
-  { label: "CI/CD", category: "Tools & DevOps" },
-  { label: "Linux", category: "Tools & DevOps" },
+  { label: "PyTorch", shortLabel: "PT", category: "Machine Learning" },
+  { label: "TensorFlow", shortLabel: "TF", category: "Machine Learning" },
+  { label: "scikit-learn", shortLabel: "SK", category: "Machine Learning" },
+  { label: "Hugging Face", shortLabel: "HF", category: "Machine Learning" },
+  { label: "Computer Vision", shortLabel: "CV", category: "Machine Learning" },
+  { label: "NLP", shortLabel: "NL", category: "Machine Learning" },
+  { label: "MLOps", shortLabel: "MO", category: "Machine Learning" },
+  { label: "ONNX", shortLabel: "OX", category: "Machine Learning" },
+  { label: "Python", shortLabel: "PY", category: "Backend" },
+  { label: "Node.js", shortLabel: "NJ", category: "Backend" },
+  { label: "FastAPI", shortLabel: "FA", category: "Backend" },
+  { label: "PostgreSQL", shortLabel: "PG", category: "Backend" },
+  { label: "Redis", shortLabel: "RD", category: "Backend" },
+  { label: "GraphQL", shortLabel: "GQ", category: "Backend" },
+  { label: "React", shortLabel: "RC", category: "Frontend" },
+  { label: "Next.js", shortLabel: "NX", category: "Frontend" },
+  { label: "TypeScript", shortLabel: "TS", category: "Frontend" },
+  { label: "Tailwind CSS", shortLabel: "TW", category: "Frontend" },
+  { label: "Three.js", shortLabel: "3J", category: "Frontend" },
+  { label: "Docker", shortLabel: "DK", category: "Tools & DevOps" },
+  { label: "Kubernetes", shortLabel: "K8", category: "Tools & DevOps" },
+  { label: "AWS", shortLabel: "AW", category: "Tools & DevOps" },
+  { label: "Git", shortLabel: "GT", category: "Tools & DevOps" },
+  { label: "CI/CD", shortLabel: "CI", category: "Tools & DevOps" },
+  { label: "Linux", shortLabel: "LX", category: "Tools & DevOps" },
+]
+
+export const skillCategories: SkillCategory[] = [
+  "Machine Learning",
+  "Backend",
+  "Frontend",
+  "Tools & DevOps",
 ]
 
 export type Achievement = {
   title: string
   description: string
   date: string
-  icon: "trophy" | "medal" | "star" | "award"
   link?: string
 }
 
 export const achievements: Achievement[] = [
   {
-    title: "Kaggle Competition — Top 2%",
+    title: "Kaggle Competition -- Top 2%",
     description:
-      "Achieved a gold medal in the Google Brain ventilator pressure prediction competition with an ensemble of transformer models.",
+      "Gold medal in Google Brain ventilator pressure prediction with an ensemble of transformer models.",
     date: "2025",
-    icon: "trophy",
     link: "https://kaggle.com",
   },
   {
-    title: "HackMIT — 1st Place",
+    title: "HackMIT -- 1st Place",
     description:
-      "Built an AI-powered accessibility tool that generates real-time audio descriptions for visually impaired users.",
+      "Built an AI-powered accessibility tool generating real-time audio descriptions for visually impaired users.",
     date: "2024",
-    icon: "medal",
     link: "https://hackmit.org",
   },
   {
-    title: "Open Source — 2k+ GitHub Stars",
+    title: "Open Source -- 2k+ GitHub Stars",
     description:
       "Created DataForge, an open-source data pipeline toolkit adopted by teams at multiple Fortune 500 companies.",
     date: "2024",
-    icon: "star",
     link: "https://github.com",
   },
   {
-    title: "Research Publication — NeurIPS Workshop",
+    title: "Research Publication -- NeurIPS Workshop",
     description:
-      "Co-authored a paper on efficient fine-tuning methods for large language models in resource-constrained environments.",
+      "Co-authored paper on efficient fine-tuning methods for large language models in resource-constrained environments.",
     date: "2024",
-    icon: "award",
     link: "#",
   },
 ]

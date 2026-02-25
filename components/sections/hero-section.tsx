@@ -1,103 +1,93 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { ArrowDown, Download } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { personalInfo, techStack } from "@/data/portfolio"
-
-function TechIcon({ name }: { name: string }) {
-  return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <span className="inline-flex size-10 items-center justify-center rounded-lg border border-white/[0.08] bg-card/60 text-xs font-bold text-muted-foreground backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:text-foreground hover:shadow-[0_0_20px_-5px] hover:shadow-primary/15 sm:size-12 sm:text-sm">
-          {name.slice(0, 2).toUpperCase()}
-        </span>
-      </TooltipTrigger>
-      <TooltipContent>{name}</TooltipContent>
-    </Tooltip>
-  )
-}
+import { personalInfo, techStackLine } from "@/data/portfolio"
 
 export function HeroSection() {
-  const [showCursor, setShowCursor] = useState(true)
-
-  useEffect(() => {
-    const interval = setInterval(() => setShowCursor((c) => !c), 530)
-    return () => clearInterval(interval)
-  }, [])
-
   return (
     <section
       id="hero"
-      className="relative flex min-h-[100dvh] flex-col items-center justify-center px-6 py-24"
+      className="relative flex min-h-[100dvh] flex-col justify-center px-6 py-32 md:px-12 lg:px-24"
       aria-label="Introduction"
     >
-      {/* Floating glow orbs */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="animate-glow-pulse absolute -top-32 left-1/2 size-[500px] -translate-x-1/2 rounded-full bg-primary/[0.07] blur-[120px]" />
-        <div className="animate-glow-pulse animation-delay-200 absolute -bottom-48 right-1/4 size-[400px] rounded-full bg-sky-500/[0.05] blur-[100px]" />
-      </div>
-
-      <div className="relative z-10 flex max-w-3xl flex-col items-center text-center">
-        {/* Greeting */}
-        <div className="animate-fade-in-up">
-          <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl text-balance">
-            {"Hi, I'm "}
-            <span className="bg-gradient-to-r from-primary to-sky-400 bg-clip-text text-transparent">
-              {personalInfo.name}
+      <div className="relative z-10 max-w-4xl">
+        {/* Boot sequence lines */}
+        <div className="mb-8 flex flex-col gap-2 font-mono text-sm text-muted-foreground">
+          <p className="animate-line-reveal delay-100">
+            <span className="text-terminal-green">{">"}</span>
+            {" Initializing..."}
+          </p>
+          <p className="animate-line-reveal delay-500">
+            <span className="text-terminal-green">{">"}</span>
+            {" Loading "}
+            <span className="text-foreground">{personalInfo.name}</span>
+            {"..."}
+          </p>
+          <p className="animate-line-reveal delay-900">
+            <span className="text-terminal-green">{">"}</span>
+            {" Status: "}
+            <span className="text-terminal-green">
+              {"Available for hire "}
             </span>
-            <span
-              className={`ml-1 inline-block w-[3px] h-[0.9em] align-middle bg-primary transition-opacity duration-100 ${showCursor ? "opacity-100" : "opacity-0"}`}
-              aria-hidden="true"
-            />
-          </h1>
+            <span className="text-terminal-green" aria-hidden="true">
+              {"[OK]"}
+            </span>
+          </p>
         </div>
 
-        {/* Role */}
-        <p className="animate-fade-in-up animation-delay-200 mt-4 font-mono text-sm tracking-wide text-muted-foreground sm:text-base opacity-0">
+        {/* Name - large, left-aligned, mono, green */}
+        <h1 className="animate-line-reveal delay-1300">
+          <span className="block font-mono text-5xl font-bold tracking-tighter text-terminal-green sm:text-7xl lg:text-8xl">
+            {personalInfo.name.split(" ")[0]}
+          </span>
+          <span className="mt-1 block font-mono text-5xl font-bold tracking-tighter text-foreground sm:text-7xl lg:text-8xl">
+            {personalInfo.name.split(" ").slice(1).join(" ")}
+          </span>
+        </h1>
+
+        {/* Role with blinking cursor */}
+        <p className="animate-line-reveal delay-1500 mt-6 font-mono text-base text-muted-foreground sm:text-lg">
           {personalInfo.role}
+          <span
+            className="animate-blink ml-0.5 inline-block h-[1.1em] w-[10px] translate-y-[2px] bg-terminal-green"
+            aria-hidden="true"
+          />
         </p>
 
-        {/* Bio */}
-        <p className="animate-fade-in-up animation-delay-400 mt-6 max-w-xl text-base leading-relaxed text-muted-foreground/80 sm:text-lg opacity-0 text-pretty">
-          {personalInfo.bio}
+        {/* Tech stack as terminal command */}
+        <p className="animate-line-reveal delay-1700 mt-6 font-mono text-xs tracking-wide text-muted-foreground sm:text-sm">
+          <span className="text-terminal-green">{"$ "}</span>
+          <span className="text-secondary-foreground">
+            {"stack: "}
+          </span>
+          {techStackLine}
         </p>
 
-        {/* Tech stack icons */}
-        <div className="animate-fade-in-up animation-delay-600 mt-8 flex flex-wrap items-center justify-center gap-3 opacity-0">
-          {techStack.map((tech) => (
-            <TechIcon key={tech.name} name={tech.name} />
-          ))}
-        </div>
-
-        {/* CTA Buttons */}
-        <div className="animate-fade-in-up animation-delay-800 mt-10 flex flex-wrap items-center justify-center gap-4 opacity-0">
-          <Button
-            size="lg"
-            className="bg-gradient-to-r from-primary to-sky-500 text-white shadow-lg shadow-primary/25 transition-all duration-300 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5"
-            asChild
+        {/* CTA buttons as terminal commands */}
+        <div className="animate-line-reveal delay-1900 mt-10 flex flex-wrap gap-4">
+          <a
+            href="#projects"
+            className="group inline-flex items-center gap-2 border border-terminal-green bg-terminal-green/5 px-5 py-3 font-mono text-xs tracking-wider text-terminal-green transition-all hover:bg-terminal-green/15 sm:text-sm uppercase"
           >
-            <a href="#projects">
-              <ArrowDown className="size-4" />
-              View My Work
-            </a>
-          </Button>
-          <Button
-            variant="outline"
-            size="lg"
-            className="border-white/[0.1] bg-card/40 text-foreground backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30"
-            asChild
+            <span className="text-terminal-green/60 transition-colors group-hover:text-terminal-green">
+              {"["}
+            </span>
+            {"RUN: view_work"}
+            <span className="text-terminal-green/60 transition-colors group-hover:text-terminal-green">
+              {"]"}
+            </span>
+          </a>
+          <a
+            href={personalInfo.resumeUrl}
+            className="group inline-flex items-center gap-2 border border-terminal-dim px-5 py-3 font-mono text-xs tracking-wider text-muted-foreground transition-all hover:border-terminal-cyan hover:text-terminal-cyan sm:text-sm uppercase"
           >
-            <a href={personalInfo.resumeUrl}>
-              <Download className="size-4" />
-              Download Resume
-            </a>
-          </Button>
+            <span className="opacity-60 transition-opacity group-hover:opacity-100">
+              {"["}
+            </span>
+            {"GET: resume.pdf"}
+            <span className="opacity-60 transition-opacity group-hover:opacity-100">
+              {"]"}
+            </span>
+          </a>
         </div>
       </div>
     </section>

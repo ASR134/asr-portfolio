@@ -1,15 +1,13 @@
 "use client"
 
 import { ExternalLink, Github } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import type { Project } from "@/data/portfolio"
 
 const categoryColors: Record<string, string> = {
-  ml: "bg-purple-500/15 text-purple-300 border-purple-500/20",
-  frontend: "bg-sky-500/15 text-sky-300 border-sky-500/20",
-  backend: "bg-emerald-500/15 text-emerald-300 border-emerald-500/20",
-  devops: "bg-amber-500/15 text-amber-300 border-amber-500/20",
+  ml: "text-terminal-green",
+  frontend: "text-terminal-cyan",
+  backend: "text-secondary-foreground",
+  devops: "text-muted-foreground",
 }
 
 export function ProjectCard({
@@ -20,59 +18,60 @@ export function ProjectCard({
   demoUrl,
 }: Project) {
   return (
-    <article className="group relative flex flex-col rounded-xl border border-white/[0.08] bg-card/50 p-6 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_0_30px_-5px] hover:shadow-primary/10">
-      <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/[0.03] to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+    <article
+      className="group relative flex w-[280px] shrink-0 flex-col border border-terminal-dim bg-card transition-all duration-300 hover:border-l-terminal-green hover:shadow-[0_0_20px_-8px_rgba(0,255,135,0.15)] sm:w-[300px]"
+      style={{ height: "420px" }}
+    >
+      {/* Left accent border */}
+      <div className="absolute inset-y-0 left-0 w-[3px] bg-terminal-dim transition-colors duration-300 group-hover:bg-terminal-green group-hover:shadow-[0_0_8px_rgba(0,255,135,0.4)]" />
 
-      <div className="relative flex flex-1 flex-col">
-        <h3 className="text-lg font-semibold text-foreground">{title}</h3>
-        <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+      {/* Noise texture top area */}
+      <div className="noise-texture h-28 w-full border-b border-terminal-dim" />
+
+      {/* Content */}
+      <div className="flex flex-1 flex-col px-5 py-4">
+        <h3 className="font-mono text-lg font-bold tracking-tight text-foreground">
+          {title}
+        </h3>
+        <p className="mt-2 flex-1 font-mono text-xs leading-relaxed text-muted-foreground">
           {description}
         </p>
 
-        <div className="mt-4 flex flex-wrap gap-2">
+        {/* Tags */}
+        <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1">
           {tags.map((tag) => (
-            <Badge
+            <span
               key={tag.label}
-              variant="outline"
-              className={`text-[11px] font-medium ${categoryColors[tag.category]}`}
+              className={`font-mono text-[10px] tracking-wider uppercase ${categoryColors[tag.category]}`}
             >
               {tag.label}
-            </Badge>
+            </span>
           ))}
         </div>
 
-        <div className="mt-5 flex items-center gap-2">
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            className="text-muted-foreground hover:text-foreground"
-            asChild
+        {/* Actions */}
+        <div className="mt-4 flex items-center gap-3 border-t border-terminal-dim pt-3">
+          <a
+            href={githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 font-mono text-[10px] tracking-wider text-muted-foreground transition-colors hover:text-terminal-green uppercase"
+            aria-label={`View ${title} on GitHub`}
           >
+            <Github className="size-3.5" />
+            {"source"}
+          </a>
+          {demoUrl && (
             <a
-              href={githubUrl}
+              href={demoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`View ${title} on GitHub`}
+              className="flex items-center gap-1.5 font-mono text-[10px] tracking-wider text-muted-foreground transition-colors hover:text-terminal-cyan uppercase"
+              aria-label={`View live demo of ${title}`}
             >
-              <Github className="size-4" />
+              <ExternalLink className="size-3.5" />
+              {"demo"}
             </a>
-          </Button>
-          {demoUrl && (
-            <Button
-              variant="ghost"
-              size="icon-sm"
-              className="text-muted-foreground hover:text-foreground"
-              asChild
-            >
-              <a
-                href={demoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`View live demo of ${title}`}
-              >
-                <ExternalLink className="size-4" />
-              </a>
-            </Button>
           )}
         </div>
       </div>

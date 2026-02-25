@@ -1,16 +1,13 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Menu, X } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import { personalInfo } from "@/data/portfolio"
 
 const navLinks = [
-  { label: "Projects", href: "#projects" },
-  { label: "Skills", href: "#skills" },
-  { label: "Achievements", href: "#achievements" },
-  { label: "Contact", href: "#contact" },
+  { label: "work", href: "#projects" },
+  { label: "skills", href: "#skills" },
+  { label: "log", href: "#achievements" },
+  { label: "signal", href: "#contact" },
 ]
 
 export function NavHeader() {
@@ -26,56 +23,61 @@ export function NavHeader() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-300",
+        "fixed inset-x-0 top-0 z-50 transition-all duration-300 font-mono",
         scrolled
-          ? "border-b border-white/[0.06] bg-background/80 backdrop-blur-xl"
+          ? "border-b border-terminal-dim bg-terminal-bg/90 backdrop-blur-md"
           : "bg-transparent"
       )}
     >
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+      <nav
+        className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-12 lg:px-24"
+        aria-label="Main navigation"
+      >
         <a
           href="#hero"
-          className="text-sm font-bold tracking-tight text-foreground transition-colors hover:text-primary"
+          className="text-xs tracking-widest text-muted-foreground transition-colors hover:text-terminal-green uppercase"
         >
-          {personalInfo.name}
+          {"~/alex.chen"}
         </a>
 
-        {/* Desktop nav */}
-        <div className="hidden items-center gap-1 sm:flex">
+        {/* Desktop nav - terminal style */}
+        <div className="hidden items-center gap-6 sm:flex">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+              className="group flex items-center gap-1.5 text-xs tracking-wider text-muted-foreground transition-colors hover:text-terminal-green uppercase"
             >
+              <span className="text-terminal-green/40 transition-colors group-hover:text-terminal-green">
+                {">"}
+              </span>
               {link.label}
             </a>
           ))}
         </div>
 
-        {/* Mobile menu button */}
-        <Button
-          variant="ghost"
-          size="icon-sm"
-          className="text-muted-foreground sm:hidden"
+        {/* Mobile menu button - terminal style */}
+        <button
+          className="text-xs tracking-wider text-muted-foreground transition-colors hover:text-terminal-green sm:hidden uppercase"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
         >
-          {mobileOpen ? <X className="size-5" /> : <Menu className="size-5" />}
-        </Button>
+          {mobileOpen ? "[CLOSE]" : "[MENU]"}
+        </button>
       </nav>
 
       {/* Mobile nav */}
       {mobileOpen && (
-        <div className="border-t border-white/[0.06] bg-background/95 backdrop-blur-xl sm:hidden">
-          <div className="flex flex-col px-6 py-4">
+        <div className="border-t border-terminal-dim bg-terminal-bg/95 backdrop-blur-md sm:hidden">
+          <div className="flex flex-col px-6 py-4 gap-1">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="rounded-md px-3 py-3 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                className="flex items-center gap-2 px-0 py-3 font-mono text-xs tracking-wider text-muted-foreground transition-colors hover:text-terminal-green uppercase"
                 onClick={() => setMobileOpen(false)}
               >
+                <span className="text-terminal-green/60">{">"}</span>
                 {link.label}
               </a>
             ))}
