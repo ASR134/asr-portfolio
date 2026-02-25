@@ -8,13 +8,13 @@ export const personalInfo = {
 }
 
 export const socialLinks = [
-  { platform: "GitHub", url: "https://github.com", command: "github --open" },
-  { platform: "LinkedIn", url: "https://linkedin.com", command: "linkedin --connect" },
-  { platform: "X / Twitter", url: "https://x.com", command: "twitter --follow" },
+  { platform: "GitHub", url: "https://github.com/alexchen", command: "github --open" },
+  { platform: "LinkedIn", url: "https://linkedin.com/in/alexchen", command: "linkedin --connect" },
+  { platform: "X / Twitter", url: "https://twitter.com/alexchen", command: "twitter --follow" },
   { platform: "Email", url: "mailto:alex.chen@example.com", command: "mail --send" },
 ]
 
-export const techStackLine = "python · pytorch · react · next.js · fastapi · docker · typescript · postgresql"
+export const techStackLine = "python \u00b7 pytorch \u00b7 react \u00b7 next.js \u00b7 fastapi \u00b7 docker \u00b7 typescript \u00b7 postgresql"
 
 export type Project = {
   title: string
@@ -56,7 +56,7 @@ export const projects: Project[] = [
     description:
       "Open-source CLI toolkit for automated data pipeline construction, featuring schema inference, quality checks, and transformation DSL.",
     tags: [
-      { label: "Python", category: "ml" },
+      { label: "Python", category: "backend" },
       { label: "CLI", category: "devops" },
       { label: "Pandas", category: "ml" },
       { label: "Arrow", category: "backend" },
@@ -82,36 +82,35 @@ export type SkillCategory = "Machine Learning" | "Backend" | "Frontend" | "Tools
 
 export type Skill = {
   label: string
-  shortLabel: string
   category: SkillCategory
 }
 
 export const skills: Skill[] = [
-  { label: "PyTorch", shortLabel: "PT", category: "Machine Learning" },
-  { label: "TensorFlow", shortLabel: "TF", category: "Machine Learning" },
-  { label: "scikit-learn", shortLabel: "SK", category: "Machine Learning" },
-  { label: "Hugging Face", shortLabel: "HF", category: "Machine Learning" },
-  { label: "Computer Vision", shortLabel: "CV", category: "Machine Learning" },
-  { label: "NLP", shortLabel: "NL", category: "Machine Learning" },
-  { label: "MLOps", shortLabel: "MO", category: "Machine Learning" },
-  { label: "ONNX", shortLabel: "OX", category: "Machine Learning" },
-  { label: "Python", shortLabel: "PY", category: "Backend" },
-  { label: "Node.js", shortLabel: "NJ", category: "Backend" },
-  { label: "FastAPI", shortLabel: "FA", category: "Backend" },
-  { label: "PostgreSQL", shortLabel: "PG", category: "Backend" },
-  { label: "Redis", shortLabel: "RD", category: "Backend" },
-  { label: "GraphQL", shortLabel: "GQ", category: "Backend" },
-  { label: "React", shortLabel: "RC", category: "Frontend" },
-  { label: "Next.js", shortLabel: "NX", category: "Frontend" },
-  { label: "TypeScript", shortLabel: "TS", category: "Frontend" },
-  { label: "Tailwind CSS", shortLabel: "TW", category: "Frontend" },
-  { label: "Three.js", shortLabel: "3J", category: "Frontend" },
-  { label: "Docker", shortLabel: "DK", category: "Tools & DevOps" },
-  { label: "Kubernetes", shortLabel: "K8", category: "Tools & DevOps" },
-  { label: "AWS", shortLabel: "AW", category: "Tools & DevOps" },
-  { label: "Git", shortLabel: "GT", category: "Tools & DevOps" },
-  { label: "CI/CD", shortLabel: "CI", category: "Tools & DevOps" },
-  { label: "Linux", shortLabel: "LX", category: "Tools & DevOps" },
+  { label: "PyTorch", category: "Machine Learning" },
+  { label: "TensorFlow", category: "Machine Learning" },
+  { label: "scikit-learn", category: "Machine Learning" },
+  { label: "HuggingFace", category: "Machine Learning" },
+  { label: "OpenCV", category: "Machine Learning" },
+  { label: "NLTK", category: "Machine Learning" },
+  { label: "MLflow", category: "Machine Learning" },
+  { label: "ONNX", category: "Machine Learning" },
+  { label: "Python", category: "Backend" },
+  { label: "Node.js", category: "Backend" },
+  { label: "FastAPI", category: "Backend" },
+  { label: "PostgreSQL", category: "Backend" },
+  { label: "Redis", category: "Backend" },
+  { label: "GraphQL", category: "Backend" },
+  { label: "React", category: "Frontend" },
+  { label: "Next.js", category: "Frontend" },
+  { label: "TypeScript", category: "Frontend" },
+  { label: "Tailwind CSS", category: "Frontend" },
+  { label: "Three.js", category: "Frontend" },
+  { label: "Docker", category: "Tools & DevOps" },
+  { label: "Kubernetes", category: "Tools & DevOps" },
+  { label: "AWS", category: "Tools & DevOps" },
+  { label: "Git", category: "Tools & DevOps" },
+  { label: "CI/CD", category: "Tools & DevOps" },
+  { label: "Linux", category: "Tools & DevOps" },
 ]
 
 export const skillCategories: SkillCategory[] = [
@@ -121,40 +120,38 @@ export const skillCategories: SkillCategory[] = [
   "Tools & DevOps",
 ]
 
-export type Achievement = {
-  title: string
-  description: string
-  date: string
-  link?: string
+export const categoryColorMap: Record<SkillCategory, string> = {
+  "Machine Learning": "#00FF87",
+  "Backend": "#00C2FF",
+  "Frontend": "#4D9EFF",
+  "Tools & DevOps": "#FFB547",
 }
 
-export const achievements: Achievement[] = [
-  {
-    title: "Kaggle Competition -- Top 2%",
-    description:
-      "Gold medal in Google Brain ventilator pressure prediction with an ensemble of transformer models.",
-    date: "2025",
-    link: "https://kaggle.com",
-  },
-  {
-    title: "HackMIT -- 1st Place",
-    description:
-      "Built an AI-powered accessibility tool generating real-time audio descriptions for visually impaired users.",
-    date: "2024",
-    link: "https://hackmit.org",
-  },
-  {
-    title: "Open Source -- 2k+ GitHub Stars",
-    description:
-      "Created DataForge, an open-source data pipeline toolkit adopted by teams at multiple Fortune 500 companies.",
-    date: "2024",
-    link: "https://github.com",
-  },
-  {
-    title: "Research Publication -- NeurIPS Workshop",
-    description:
-      "Co-authored paper on efficient fine-tuning methods for large language models in resource-constrained environments.",
-    date: "2024",
-    link: "#",
-  },
+// GitHub-style heatmap data (52 weeks x 7 days)
+export function generateHeatmapData(): number[] {
+  // Seed for deterministic, realistic-looking data
+  const data: number[] = []
+  const seed = [
+    3,0,1,2,4,3,0,2,1,0,0,3,4,2,1,0,2,3,4,4,3,2,1,0,0,1,2,3,3,4,2,1,0,1,2,
+    4,3,2,0,0,1,1,2,3,4,4,3,2,1,0,1,2,3,4,3,2,1,0,0,1,2,2,3,4,4,3,2,1,0,1,
+    2,3,3,2,1,0,0,1,2,3,4,4,3,2,1,0,1,2,3,4,3,2,1,0,0,1,3,4,4,3,2,1,0,0,1,
+    2,3,4,4,3,2,1,0,1,2,3,3,4,2,1,0,1,2,4,3,2,0,0,1,1,2,3,4,4,3,2,1,0,0,2,
+    3,4,4,3,2,1,0,1,2,3,4,3,2,1,0,0,1,2,2,3,4,4,3,2,1,0,1,2,3,3,2,1,0,0,1,
+    2,3,4,4,3,2,1,0,1,2,3,4,3,2,1,0,0,1,3,4,4,3,2,1,0,0,1,2,3,4,4,3,2,1,0,
+    1,2,3,3,4,2,1,0,1,2,4,3,2,0,0,1,1,2,3,4,4,3,2,1,0,0,2,3,4,4,3,2,1,0,1,
+    2,3,4,3,2,1,0,0,1,2,2,3,4,4,3,2,1,0,1,2,3,3,2,1,0,0,1,2,3,4,4,3,2,1,0,
+    1,2,3,4,3,2,1,0,0,1,3,4,4,3,2,1,0,0,1,2,3,4,4,3,2,1,0,1,2,3,3,4,2,1,0,
+    1,2,4,3,2,0,0,1,1,2,3,4,4,3,2,1,0,0,2,3,4,4,3,0,1,0,1,2,3,4,3,2,1,0,0,
+    1,2,2,3,4,4,3,2,1,0,1,2,
+  ]
+  for (let i = 0; i < 364; i++) {
+    data.push(seed[i % seed.length])
+  }
+  return data
+}
+
+export const stats = [
+  { command: "$ commits --year", value: "847", label: "commits this year" },
+  { command: "$ repos --public", value: "23", label: "public repositories" },
+  { command: "$ stars --total", value: "2.1k", label: "total stars earned" },
 ]

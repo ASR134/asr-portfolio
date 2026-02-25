@@ -154,6 +154,15 @@ body::after {
   50% { border-color: #00FF87; }
 }
 
+@keyframes hire-pulse {
+  0%, 100% { opacity: 1; text-shadow: 0 0 4px rgba(0, 255, 135, 0.4); }
+  50% { opacity: 0.7; text-shadow: 0 0 12px rgba(0, 255, 135, 0.8); }
+}
+
+.animate-hire-pulse {
+  animation: hire-pulse 2.5s ease-in-out infinite;
+}
+
 @keyframes scroll-hint {
   0%, 100% { transform: translateX(0); opacity: 0.5; }
   50% { transform: translateX(8px); opacity: 1; }

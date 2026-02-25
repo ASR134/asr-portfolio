@@ -14,7 +14,7 @@ export function ContactSection() {
         className="mb-16 overflow-hidden font-mono text-sm text-terminal-dim select-none"
         aria-hidden="true"
       >
-        {"━".repeat(60)}
+        {"\u2501".repeat(60)}
       </div>
 
       <div className="max-w-3xl">
@@ -29,22 +29,25 @@ export function ContactSection() {
           {" ready to collaborate. drop a signal."}
         </p>
 
-        {/* Social links as commands */}
-        <div className="mt-10 flex flex-col gap-3">
+        {/* Social links as clickable commands */}
+        <div className="mt-10 flex flex-col gap-1">
           {socialLinks.map((link) => (
             <a
               key={link.platform}
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 font-mono text-xs text-muted-foreground transition-colors hover:text-terminal-cyan sm:text-sm"
+              className="contact-link group inline-flex items-center gap-2 py-2.5 font-mono text-xs text-muted-foreground transition-all duration-200 hover:translate-x-1 sm:text-sm"
               aria-label={`Visit ${link.platform}`}
             >
-              <span className="text-terminal-green/60 transition-colors group-hover:text-terminal-green">
+              <span className="text-terminal-green/50 transition-colors duration-200 group-hover:text-terminal-green">
                 {"$"}
               </span>
-              <span className="transition-colors group-hover:text-terminal-cyan">
+              <span className="transition-colors duration-200 group-hover:text-terminal-cyan">
                 {link.command}
+              </span>
+              <span className="ml-1 inline-block max-w-0 overflow-hidden font-mono text-terminal-green transition-all duration-300 group-hover:max-w-[24px]">
+                {"  >"}
               </span>
             </a>
           ))}

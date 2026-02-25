@@ -1,50 +1,56 @@
 "use client"
 
-import { skills, skillCategories, type SkillCategory } from "@/data/portfolio"
+import { skills, skillCategories, categoryColorMap, type SkillCategory } from "@/data/portfolio"
 
-function SkillCell({ label, shortLabel }: { label: string; shortLabel: string }) {
+function LegendRow() {
   return (
-    <div
-      className="group relative flex size-16 cursor-default items-center justify-center border border-terminal-dim transition-all duration-300 hover:border-terminal-green hover:shadow-[0_0_12px_-4px_rgba(0,255,135,0.3)]"
-      title={label}
-      role="gridcell"
-    >
-      <span className="font-mono text-xs font-bold tracking-wider text-muted-foreground transition-all duration-300 group-hover:scale-110 group-hover:text-terminal-green">
-        {shortLabel}
-      </span>
-      {/* Tooltip */}
-      <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-sm bg-card px-2 py-1 font-mono text-[10px] text-foreground opacity-0 shadow-lg transition-opacity duration-200 group-hover:opacity-100 border border-terminal-dim">
-        {label}
-      </span>
+    <div className="mb-8 flex flex-wrap items-center gap-6">
+      {skillCategories.map((cat) => (
+        <div key={cat} className="flex items-center gap-2">
+          <span
+            className="size-2.5 rounded-full"
+            style={{ backgroundColor: categoryColorMap[cat] }}
+            aria-hidden="true"
+          />
+          <span className="font-mono text-[11px] tracking-wider text-muted-foreground uppercase">
+            {cat}
+          </span>
+        </div>
+      ))}
     </div>
   )
 }
 
-function CategoryRow({ category }: { category: SkillCategory }) {
-  const categorySkills = skills.filter((s) => s.category === category)
+function SkillCell({ label, category }: { label: string; category: SkillCategory }) {
+  const dotColor = categoryColorMap[category]
 
   return (
-    <div>
-      {/* Category label - full width glowing header */}
-      <div className="mb-3 flex items-center gap-3">
-        <span className="font-mono text-[10px] tracking-[0.3em] text-terminal-green uppercase">
-          {"/// "}
-          {category.toUpperCase()}
-          {" ///"}
-        </span>
-        <div className="h-px flex-1 bg-terminal-dim" />
-      </div>
-
-      {/* Grid of cells */}
-      <div className="flex flex-wrap gap-1" role="row">
-        {categorySkills.map((skill) => (
-          <SkillCell
-            key={skill.label}
-            label={skill.label}
-            shortLabel={skill.shortLabel}
-          />
-        ))}
-      </div>
+    <div
+      className="skill-cell group relative flex h-20 w-[120px] cursor-default items-center justify-center border transition-all duration-300"
+      style={{
+        borderColor: "rgba(0,255,135,0.15)",
+      }}
+      onMouseEnter={(e) => {
+        const el = e.currentTarget
+        el.style.borderColor = "rgba(0,255,135,0.6)"
+        el.style.backgroundColor = "rgba(0,255,135,0.05)"
+      }}
+      onMouseLeave={(e) => {
+        const el = e.currentTarget
+        el.style.borderColor = "rgba(0,255,135,0.15)"
+        el.style.backgroundColor = "transparent"
+      }}
+    >
+      {/* Category dot in top-right */}
+      <span
+        className="absolute right-1.5 top-1.5 size-2 rounded-full"
+        style={{ backgroundColor: dotColor }}
+        aria-hidden="true"
+      />
+      {/* Skill name */}
+      <span className="font-mono text-xs tracking-wide text-muted-foreground transition-all duration-300 group-hover:text-terminal-green group-hover:[text-shadow:0_0_8px_#00FF87]">
+        {label}
+      </span>
     </div>
   )
 }
@@ -64,9 +70,13 @@ export function SkillsSection() {
         </p>
       </div>
 
-      <div className="max-w-3xl flex flex-col gap-8" role="grid" aria-label="Skills grid">
-        {skillCategories.map((category) => (
-          <CategoryRow key={category} category={category} />
+      {/* Legend */}
+      <LegendRow />
+
+      {/* Skill grid */}
+      <div className="flex flex-wrap gap-1" role="grid" aria-label="Skills grid">
+        {skills.map((skill) => (
+          <SkillCell key={skill.label} label={skill.label} category={skill.category} />
         ))}
       </div>
     </section>

@@ -3,11 +3,11 @@
 import { ExternalLink, Github } from "lucide-react"
 import type { Project } from "@/data/portfolio"
 
-const categoryColors: Record<string, string> = {
-  ml: "text-terminal-green",
-  frontend: "text-terminal-cyan",
-  backend: "text-secondary-foreground",
-  devops: "text-muted-foreground",
+const tagStyles: Record<string, string> = {
+  ml: "bg-[#00FF87]/10 text-[#00FF87]",
+  frontend: "bg-[#4D9EFF]/10 text-[#4D9EFF]",
+  backend: "bg-[#00C2FF]/10 text-[#00C2FF]",
+  devops: "bg-[#FFB547]/10 text-[#FFB547]",
 }
 
 export function ProjectCard({
@@ -37,12 +37,12 @@ export function ProjectCard({
           {description}
         </p>
 
-        {/* Tags */}
-        <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1">
+        {/* Tags - color coded with full names */}
+        <div className="mt-3 flex flex-wrap gap-1.5">
           {tags.map((tag) => (
             <span
               key={tag.label}
-              className={`font-mono text-[10px] tracking-wider uppercase ${categoryColors[tag.category]}`}
+              className={`inline-block px-2 py-0.5 font-mono text-[10px] tracking-wider uppercase ${tagStyles[tag.category] || "bg-muted text-muted-foreground"}`}
             >
               {tag.label}
             </span>

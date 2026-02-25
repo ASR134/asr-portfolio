@@ -25,16 +25,16 @@ export function HeroSection() {
           <p className="animate-line-reveal delay-900">
             <span className="text-terminal-green">{">"}</span>
             {" Status: "}
-            <span className="text-terminal-green">
-              {"Available for hire "}
-            </span>
-            <span className="text-terminal-green" aria-hidden="true">
-              {"[OK]"}
+            <span
+              className="animate-hire-pulse inline-flex items-center border border-terminal-green/40 px-2 py-0.5 font-mono text-sm text-terminal-green"
+              aria-label="Available for hire"
+            >
+              {"\u258C AVAILABLE FOR HIRE \u2590"}
             </span>
           </p>
         </div>
 
-        {/* Name - large, left-aligned, mono, green */}
+        {/* Name */}
         <h1 className="animate-line-reveal delay-1300">
           <span className="block font-mono text-5xl font-bold tracking-tighter text-terminal-green sm:text-7xl lg:text-8xl">
             {personalInfo.name.split(" ")[0]}
@@ -53,16 +53,14 @@ export function HeroSection() {
           />
         </p>
 
-        {/* Tech stack as terminal command */}
+        {/* Tech stack */}
         <p className="animate-line-reveal delay-1700 mt-6 font-mono text-xs tracking-wide text-muted-foreground sm:text-sm">
           <span className="text-terminal-green">{"$ "}</span>
-          <span className="text-secondary-foreground">
-            {"stack: "}
-          </span>
+          <span className="text-secondary-foreground">{"stack: "}</span>
           {techStackLine}
         </p>
 
-        {/* CTA buttons as terminal commands */}
+        {/* CTA buttons */}
         <div className="animate-line-reveal delay-1900 mt-10 flex flex-wrap gap-4">
           <a
             href="#projects"
