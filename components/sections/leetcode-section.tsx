@@ -310,12 +310,43 @@ function BadgeCard({
 }
 
 // ============================================================
-// HeatmapEmbed
+// HeatmapEmbed (fault-tolerant: live image -> timeout -> fallback)
 // ============================================================
+const HEATMAP_TIMEOUT_MS = 8000
+const HEATMAP_LIVE_URL = (u: string) =>
+  `https://leetcard.jacoblin.cool/${u}?theme=dark&font=Fira%20Mono&ext=heatmap&border=0&radius=8`
+const HEATMAP_FALLBACK_URL = "/leetcode-heatmap-fallback.png"
+
 function HeatmapEmbed({ inView }: { inView: boolean }) {
-  const [imgLoaded, setImgLoaded] = useState(false)
-  const [imgError, setImgError] = useState(false)
-  const { username, profileUrl } = leetcodeStats
+  const { username } = leetcodeStats
+
+  // "loading" = trying live image, "live" = success, "fallback" = using local image
+  const [status, setStatus] = useState<"loading" | "live" | "fallback">("loading")
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // Start a timeout when the component mounts — if the live image hasn't
+  // loaded in HEATMAP_TIMEOUT_MS we switch to the fallback automatically.
+  useEffect(() => {
+    timerRef.current = setTimeout(() => {
+      setStatus((prev) => (prev === "loading" ? "fallback" : prev))
+    }, HEATMAP_TIMEOUT_MS)
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current)
+    }
+  }, [])
+
+  function handleLiveLoad() {
+    if (timerRef.current) clearTimeout(timerRef.current)
+    setStatus("live")
+  }
+
+  function handleLiveError() {
+    if (timerRef.current) clearTimeout(timerRef.current)
+    setStatus("fallback")
+  }
+
+  const showFallback = status === "fallback"
+  const showLive = status === "live"
 
   return (
     <div
@@ -331,50 +362,45 @@ function HeatmapEmbed({ inView }: { inView: boolean }) {
       </h3>
 
       <div className="overflow-hidden rounded-lg border border-border/40 bg-card/30 p-4">
-        {!imgError ? (
-          <>
-            {!imgLoaded && (
-              <div className="flex h-36 items-center justify-center">
-                <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground/50">
-                  <svg
-                    className="size-4 animate-spin"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
-                  </svg>
-                  Loading heatmap...
-                </div>
-              </div>
-            )}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={`https://leetcard.jacoblin.cool/${username}?theme=dark&font=Fira%20Mono&ext=heatmap&border=0&radius=8`}
-              alt={`LeetCode submission heatmap for ${username}`}
-              className={`w-full transition-opacity duration-500 ${imgLoaded ? "opacity-100" : "opacity-0 h-0"}`}
-              crossOrigin="anonymous"
-              onLoad={() => setImgLoaded(true)}
-              onError={() => setImgError(true)}
-            />
-          </>
-        ) : (
-          <div className="flex h-36 flex-col items-center justify-center gap-2">
-            <p className="font-mono text-xs text-muted-foreground/50">
-              Heatmap image unavailable
-            </p>
-            <a
-              href={profileUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-mono text-[11px] text-terminal-green/70 underline decoration-terminal-green/20 underline-offset-2 transition-colors hover:text-terminal-green"
-            >
-              View on LeetCode
-            </a>
+        {/* Live image — always in the DOM so it can load in the background */}
+        {!showFallback && (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            src={HEATMAP_LIVE_URL(username)}
+            alt={`LeetCode submission heatmap for ${username}`}
+            className={`w-full transition-opacity duration-500 ${showLive ? "opacity-100" : "opacity-0 h-0 overflow-hidden"}`}
+            crossOrigin="anonymous"
+            onLoad={handleLiveLoad}
+            onError={handleLiveError}
+          />
+        )}
+
+        {/* Fallback image — shown on error or timeout */}
+        {showFallback && (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            src={HEATMAP_FALLBACK_URL}
+            alt={`LeetCode submission heatmap for ${username} (cached snapshot)`}
+            className="w-full rounded"
+          />
+        )}
+
+        {/* Loading placeholder — only while status is "loading" */}
+        {status === "loading" && (
+          <div className="flex h-32 items-center justify-center">
+            <span className="font-mono text-xs text-muted-foreground/40">
+              Loading heatmap...
+            </span>
           </div>
         )}
       </div>
+
+      {/* Fallback caption */}
+      {showFallback && (
+        <p className="mt-2 font-mono text-[11px] italic text-muted-foreground/40">
+          Live heatmap unavailable — showing recent snapshot.
+        </p>
+      )}
     </div>
   )
 }
