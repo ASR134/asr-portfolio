@@ -163,26 +163,7 @@ body::after {
   animation: hire-pulse 2.5s ease-in-out infinite;
 }
 
-/* ---- Terminal typeout reveal ---- */
-@keyframes terminal-typeout {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
-}
 
-.animate-terminal-typeout {
-  animation: terminal-typeout 0.3s ease-out forwards;
-  opacity: 0;
-}
-
-/* ---- Floating stat pills ---- */
-@keyframes float-pill {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-
-.animate-float-pill {
-  animation: float-pill 3s ease-in-out infinite;
-}
 
 /* ---- Hero CTA pulse glow ---- */
 @keyframes btn-pulse-glow {
@@ -194,112 +175,7 @@ body::after {
   animation: btn-pulse-glow 2.5s ease-in-out infinite;
 }
 
-/* ---- Terminal window glow ---- */
-.terminal-window {
-  box-shadow: 0 0 40px rgba(0, 255, 135, 0.08);
-}
 
-.terminal-window:hover {
-  box-shadow: 0 0 60px rgba(0, 255, 135, 0.12);
-}
-
-/* ---- Glitch text effect ---- */
-@keyframes glitch-clip-1 {
-  0%, 92%, 100% { clip-path: inset(0 0 0 0); transform: none; }
-  93% { clip-path: inset(20% 0 30% 0); transform: translateX(-4px); }
-  94% { clip-path: inset(60% 0 10% 0); transform: translateX(4px); }
-  95% { clip-path: inset(10% 0 60% 0); transform: translateX(-2px); }
-  96% { clip-path: inset(0 0 0 0); transform: none; }
-}
-
-@keyframes glitch-clip-2 {
-  0%, 92%, 100% { clip-path: inset(0 0 0 0); transform: none; }
-  93% { clip-path: inset(40% 0 20% 0); transform: translateX(3px); }
-  94% { clip-path: inset(10% 0 50% 0); transform: translateX(-3px); }
-  95% { clip-path: inset(50% 0 15% 0); transform: translateX(2px); }
-  96% { clip-path: inset(0 0 0 0); transform: none; }
-}
-
-.glitch-text {
-  position: relative;
-}
-
-.glitch-text::before,
-.glitch-text::after {
-  content: attr(data-text);
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.glitch-text::before {
-  color: #00FF87;
-  opacity: 0.6;
-  animation: glitch-clip-1 4s steps(1) infinite;
-}
-
-.glitch-text::after {
-  color: #00C2FF;
-  opacity: 0.4;
-  animation: glitch-clip-2 4s steps(1) infinite;
-  animation-delay: 0.1s;
-}
-
-/* ---- Sonar pulse on available dot ---- */
-.sonar-dot {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.sonar-dot::before,
-.sonar-dot::after {
-  content: "";
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  border-radius: 9999px;
-  border: 1px solid #00FF87;
-  opacity: 0;
-}
-
-.sonar-dot::before {
-  animation: sonar-ring 2.5s ease-out infinite;
-}
-
-.sonar-dot::after {
-  animation: sonar-ring 2.5s ease-out infinite;
-  animation-delay: 0.6s;
-}
-
-@keyframes sonar-ring {
-  0% { transform: scale(1); opacity: 0.6; }
-  100% { transform: scale(3.5); opacity: 0; }
-}
-
-/* ---- Contact card breathing glow ---- */
-@keyframes card-breathe {
-  0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 135, 0.05); }
-  50% { box-shadow: 0 0 40px rgba(0, 255, 135, 0.15); }
-}
-
-.contact-card-breathe {
-  animation: card-breathe 4s ease-in-out infinite;
-}
-
-/* ---- Contact row left-border glow on hover ---- */
-.contact-row {
-  position: relative;
-  border-left: 2px solid transparent;
-  padding-left: 8px;
-  transition: border-color 0.2s ease, padding-left 0.2s ease;
-}
-
-.contact-row:hover {
-  border-left-color: rgba(0, 255, 135, 0.4);
-  box-shadow: -4px 0 12px rgba(0, 255, 135, 0.06);
-}
 
 @keyframes scroll-hint {
   0%, 100% { transform: translateX(0); opacity: 0.5; }
