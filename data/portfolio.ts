@@ -124,7 +124,6 @@ export const techStack: TechStackCategory[] = [
       { label: "Jupyter", iconSlug: "jupyter" },
       { label: "Git", iconSlug: "git" },
       { label: "GitHub", iconSlug: "github" },
-      { label: "Spyder", iconSlug: "spyder" },
       { label: "Linux", iconSlug: "linux" },
     ],
   },
