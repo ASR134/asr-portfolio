@@ -83,34 +83,35 @@ export type SkillCategory = "Machine Learning" | "Backend" | "Frontend" | "Tools
 export type Skill = {
   label: string
   category: SkillCategory
+  iconSlug: string | null
 }
 
 export const skills: Skill[] = [
-  { label: "PyTorch", category: "Machine Learning" },
-  { label: "TensorFlow", category: "Machine Learning" },
-  { label: "scikit-learn", category: "Machine Learning" },
-  { label: "HuggingFace", category: "Machine Learning" },
-  { label: "OpenCV", category: "Machine Learning" },
-  { label: "NLTK", category: "Machine Learning" },
-  { label: "MLflow", category: "Machine Learning" },
-  { label: "ONNX", category: "Machine Learning" },
-  { label: "Python", category: "Backend" },
-  { label: "Node.js", category: "Backend" },
-  { label: "FastAPI", category: "Backend" },
-  { label: "PostgreSQL", category: "Backend" },
-  { label: "Redis", category: "Backend" },
-  { label: "GraphQL", category: "Backend" },
-  { label: "React", category: "Frontend" },
-  { label: "Next.js", category: "Frontend" },
-  { label: "TypeScript", category: "Frontend" },
-  { label: "Tailwind CSS", category: "Frontend" },
-  { label: "Three.js", category: "Frontend" },
-  { label: "Docker", category: "Tools & DevOps" },
-  { label: "Kubernetes", category: "Tools & DevOps" },
-  { label: "AWS", category: "Tools & DevOps" },
-  { label: "Git", category: "Tools & DevOps" },
-  { label: "CI/CD", category: "Tools & DevOps" },
-  { label: "Linux", category: "Tools & DevOps" },
+  { label: "PyTorch", category: "Machine Learning", iconSlug: "pytorch" },
+  { label: "TensorFlow", category: "Machine Learning", iconSlug: "tensorflow" },
+  { label: "scikit-learn", category: "Machine Learning", iconSlug: "scikitlearn" },
+  { label: "HuggingFace", category: "Machine Learning", iconSlug: "huggingface" },
+  { label: "OpenCV", category: "Machine Learning", iconSlug: "opencv" },
+  { label: "NLTK", category: "Machine Learning", iconSlug: null },
+  { label: "MLflow", category: "Machine Learning", iconSlug: "mlflow" },
+  { label: "ONNX", category: "Machine Learning", iconSlug: "onnx" },
+  { label: "Python", category: "Backend", iconSlug: "python" },
+  { label: "Node.js", category: "Backend", iconSlug: "nodedotjs" },
+  { label: "FastAPI", category: "Backend", iconSlug: "fastapi" },
+  { label: "PostgreSQL", category: "Backend", iconSlug: "postgresql" },
+  { label: "Redis", category: "Backend", iconSlug: "redis" },
+  { label: "GraphQL", category: "Backend", iconSlug: "graphql" },
+  { label: "React", category: "Frontend", iconSlug: "react" },
+  { label: "Next.js", category: "Frontend", iconSlug: "nextdotjs" },
+  { label: "TypeScript", category: "Frontend", iconSlug: "typescript" },
+  { label: "Tailwind CSS", category: "Frontend", iconSlug: "tailwindcss" },
+  { label: "Three.js", category: "Frontend", iconSlug: "threedotjs" },
+  { label: "Docker", category: "Tools & DevOps", iconSlug: "docker" },
+  { label: "Kubernetes", category: "Tools & DevOps", iconSlug: "kubernetes" },
+  { label: "AWS", category: "Tools & DevOps", iconSlug: "amazonaws" },
+  { label: "Git", category: "Tools & DevOps", iconSlug: "git" },
+  { label: "CI/CD", category: "Tools & DevOps", iconSlug: "githubactions" },
+  { label: "Linux", category: "Tools & DevOps", iconSlug: "linux" },
 ]
 
 export const skillCategories: SkillCategory[] = [
@@ -127,31 +128,58 @@ export const categoryColorMap: Record<SkillCategory, string> = {
   "Tools & DevOps": "#FFB547",
 }
 
-// GitHub-style heatmap data (52 weeks x 7 days)
-export function generateHeatmapData(): number[] {
-  // Seed for deterministic, realistic-looking data
+// ---- LeetCode Stats ----
+
+export const leetcode = {
+  profile: {
+    solved: 256,
+    totalProblems: 3851,
+    contestRating: 1544,
+    contestPercentile: "Top 33%",
+    globalRanking: 273210,
+    totalUsers: 839080,
+    activeDays: 207,
+    maxStreak: 20,
+  },
+  breakdown: {
+    easy: { solved: 69, total: 927 },
+    medium: { solved: 164, total: 2014 },
+    hard: { solved: 23, total: 910 },
+  },
+  badges: [
+    { title: "100 Days Badge", subtitle: "2024", recent: false },
+    { title: "200 Days Badge", subtitle: "2025", recent: true },
+    { title: "Annual Contender", subtitle: "", recent: false },
+  ],
+  heatmap: {
+    totalSubmissions: 1113,
+    activeDays: 207,
+    maxStreak: 20,
+  },
+}
+
+// Generate realistic LeetCode-style heatmap (53 weeks x 7 days)
+export function generateLeetcodeHeatmap(): number[] {
   const data: number[] = []
+  // Deterministic dense activity pattern
   const seed = [
-    3,0,1,2,4,3,0,2,1,0,0,3,4,2,1,0,2,3,4,4,3,2,1,0,0,1,2,3,3,4,2,1,0,1,2,
-    4,3,2,0,0,1,1,2,3,4,4,3,2,1,0,1,2,3,4,3,2,1,0,0,1,2,2,3,4,4,3,2,1,0,1,
-    2,3,3,2,1,0,0,1,2,3,4,4,3,2,1,0,1,2,3,4,3,2,1,0,0,1,3,4,4,3,2,1,0,0,1,
-    2,3,4,4,3,2,1,0,1,2,3,3,4,2,1,0,1,2,4,3,2,0,0,1,1,2,3,4,4,3,2,1,0,0,2,
-    3,4,4,3,2,1,0,1,2,3,4,3,2,1,0,0,1,2,2,3,4,4,3,2,1,0,1,2,3,3,2,1,0,0,1,
-    2,3,4,4,3,2,1,0,1,2,3,4,3,2,1,0,0,1,3,4,4,3,2,1,0,0,1,2,3,4,4,3,2,1,0,
-    1,2,3,3,4,2,1,0,1,2,4,3,2,0,0,1,1,2,3,4,4,3,2,1,0,0,2,3,4,4,3,2,1,0,1,
-    2,3,4,3,2,1,0,0,1,2,2,3,4,4,3,2,1,0,1,2,3,3,2,1,0,0,1,2,3,4,4,3,2,1,0,
-    1,2,3,4,3,2,1,0,0,1,3,4,4,3,2,1,0,0,1,2,3,4,4,3,2,1,0,1,2,3,3,4,2,1,0,
-    1,2,4,3,2,0,0,1,1,2,3,4,4,3,2,1,0,0,2,3,4,4,3,0,1,0,1,2,3,4,3,2,1,0,0,
-    1,2,2,3,4,4,3,2,1,0,1,2,
+    3,2,1,3,4,3,0, 2,3,0,2,4,3,1, 4,1,0,3,4,2,1, 0,2,3,4,4,3,2,
+    1,0,0,1,2,3,3, 4,2,1,0,1,2,4, 3,2,2,0,1,1,2, 3,4,4,3,2,1,0,
+    1,2,3,4,3,2,1, 0,0,1,2,2,3,4, 4,3,3,1,0,1,2, 3,3,2,1,0,0,1,
+    2,3,4,4,3,3,1, 0,1,2,3,4,3,2, 1,0,0,1,3,4,4, 3,2,2,0,0,1,2,
+    3,4,4,3,2,1,0, 1,2,3,3,4,2,2, 0,1,2,4,3,2,0, 0,1,1,2,3,4,4,
+    3,2,1,0,0,2,3, 4,4,3,3,1,0,1, 2,3,4,3,2,1,0, 0,1,2,2,3,4,4,
+    3,2,1,0,1,2,3, 3,2,2,0,0,1,2, 3,4,4,3,2,1,0, 1,2,3,4,3,3,1,
+    0,0,1,3,4,4,3, 2,1,0,0,1,2,3, 4,4,3,2,1,0,1, 2,3,3,4,2,1,0,
+    1,3,4,3,2,0,0, 1,1,2,3,4,4,3, 2,1,0,0,2,3,4, 4,3,2,1,0,1,2,
+    3,4,3,2,1,0,0, 1,2,2,3,4,4,3, 2,2,0,1,2,3,3, 2,1,0,0,1,2,3,
+    4,4,3,2,1,0,1, 2,3,4,3,2,1,0, 0,1,3,4,4,3,2, 1,0,0,1,2,3,4,
+    4,3,3,1,0,1,2, 3,3,4,2,1,0,1, 2,4,3,3,0,0,1, 1,2,3,4,4,3,2,
+    1,0,0,2,3,4,4, 3,2,1,0,1,2,3, 4,3,2,1,0,0,1, 2,2,3,4,4,3,2,
+    1,0,1,2,3,
   ]
-  for (let i = 0; i < 364; i++) {
+  for (let i = 0; i < 371; i++) {
     data.push(seed[i % seed.length])
   }
   return data
 }
-
-export const stats = [
-  { command: "$ commits --year", value: "847", label: "commits this year" },
-  { command: "$ repos --public", value: "23", label: "public repositories" },
-  { command: "$ stars --total", value: "2.1k", label: "total stars earned" },
-]

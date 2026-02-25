@@ -5,7 +5,7 @@ import { HeroSection } from "@/components/sections/hero-section"
 import { SectionDivider } from "@/components/sections/section-divider"
 import { ProjectsSection } from "@/components/sections/projects-section"
 import { SkillsSection } from "@/components/sections/skills-section"
-import { StatsSection } from "@/components/sections/stats-section"
+import { LeetCodeSection } from "@/components/sections/leetcode-section"
 import { ContactSection } from "@/components/sections/contact-section"
 
 export default function Home() {
@@ -19,7 +19,7 @@ export default function Home() {
         <SectionDivider />
         <SkillsSection />
         <SectionDivider />
-        <StatsSection />
+        <LeetCodeSection />
         <SectionDivider />
         <ContactSection />
       </main>
