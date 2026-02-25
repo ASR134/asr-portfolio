@@ -131,5 +131,25 @@ export const techStack: TechStackCategory[] = [
   },
 ]
 
-// LeetCode username (stats fetched live from /api/leetcode)
-export const LEETCODE_USERNAME = "ASR134"
+// ---- Static LeetCode stats for ASR134 ----
+export const leetcodeStats = {
+  username: "ASR134",
+  profileUrl: "https://leetcode.com/u/ASR134",
+  lastUpdated: "2026-02-25",
+  profile: {
+    solved: 256,
+    totalProblems: 3400,
+    globalRanking: 273210,
+    maxStreak: 20,
+  },
+  breakdown: {
+    easy: { solved: 69, total: 830 },
+    medium: { solved: 164, total: 1740 },
+    hard: { solved: 23, total: 760 },
+  },
+  badges: [
+    { title: "100 Days Badge", subtitle: "2024", recent: false },
+    { title: "200 Days Badge", subtitle: "2025", recent: true },
+    { title: "Annual Contender", subtitle: "2024", recent: false },
+  ],
+}

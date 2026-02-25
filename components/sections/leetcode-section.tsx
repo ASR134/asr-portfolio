@@ -1,71 +1,12 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import useSWR from "swr"
 import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
 } from "@/components/ui/tooltip"
-
-// ============================================================
-// Types
-// ============================================================
-type LeetCodeData = {
-  username: string
-  profile: {
-    solved: number
-    totalProblems: number
-    globalRanking: number
-    maxStreak: number
-    activeDays: number
-    totalSubmissions?: number
-  }
-  breakdown: {
-    easy: { solved: number; total: number }
-    medium: { solved: number; total: number }
-    hard: { solved: number; total: number }
-  }
-  badges: { title: string; subtitle: string; recent: boolean }[]
-  source: string
-}
-
-// ============================================================
-// Static fallback when ALL APIs are down
-// ============================================================
-const FALLBACK_DATA: LeetCodeData = {
-  username: "ASR134",
-  profile: {
-    solved: 256,
-    totalProblems: 3400,
-    globalRanking: 273210,
-    maxStreak: 20,
-    activeDays: 207,
-    totalSubmissions: 1113,
-  },
-  breakdown: {
-    easy: { solved: 69, total: 830 },
-    medium: { solved: 164, total: 1740 },
-    hard: { solved: 23, total: 760 },
-  },
-  badges: [
-    { title: "100 Days Badge", subtitle: "2024", recent: false },
-    { title: "200 Days Badge", subtitle: "2025", recent: true },
-    { title: "Annual Contender", subtitle: "2024", recent: false },
-  ],
-  source: "fallback",
-}
-
-// ============================================================
-// SWR fetcher
-// ============================================================
-const fetcher = async (url: string) => {
-  const res = await fetch(url)
-  if (!res.ok) throw new Error(`HTTP ${res.status}`)
-  const json = await res.json()
-  if (json.error) throw new Error(json.error)
-  return json
-}
+import { leetcodeStats } from "@/data/portfolio"
 
 // ============================================================
 // useCountUp
@@ -117,64 +58,6 @@ function useInView(threshold = 0.1) {
   }, [threshold])
 
   return { ref, inView }
-}
-
-// ============================================================
-// Skeleton
-// ============================================================
-function SkeletonBlock({ className }: { className: string }) {
-  return <div className={`animate-pulse rounded bg-secondary ${className}`} />
-}
-
-function LoadingSkeleton() {
-  return (
-    <div className="py-24 px-6 md:px-12 lg:px-24" aria-busy="true">
-      <SkeletonBlock className="mb-3 h-3 w-32" />
-      <SkeletonBlock className="mb-2 h-7 w-64" />
-      <SkeletonBlock className="mb-12 h-4 w-96 max-w-full" />
-
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        {Array.from({ length: 4 }).map((_, i) => (
-          <div key={i} className="flex flex-col gap-3 rounded-lg border border-border/40 bg-card/40 p-5">
-            <SkeletonBlock className="h-3 w-24" />
-            <SkeletonBlock className="h-8 w-20" />
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-14 flex flex-col items-center gap-12 md:flex-row md:items-start md:gap-16">
-        <div className="flex size-[172px] shrink-0 items-center justify-center rounded-full border border-border/30 bg-card/20">
-          <SkeletonBlock className="h-7 w-14" />
-        </div>
-        <div className="flex w-full flex-col gap-6">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="flex items-center gap-4">
-              <SkeletonBlock className="h-3 w-16 shrink-0" />
-              <div className="relative h-2 flex-1 overflow-hidden rounded-full bg-secondary" />
-              <SkeletonBlock className="h-3 w-20 shrink-0" />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="mt-14">
-        <SkeletonBlock className="mb-5 h-3 w-28" />
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="flex items-center gap-4 rounded-lg border border-border/40 bg-card/40 p-4">
-              <SkeletonBlock className="size-10 shrink-0 rounded-lg" />
-              <div className="flex flex-col gap-1.5">
-                <SkeletonBlock className="h-3.5 w-28" />
-                <SkeletonBlock className="h-2.5 w-16" />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <SkeletonBlock className="mt-10 h-40 rounded-lg border border-border/40" />
-    </div>
-  )
 }
 
 // ============================================================
@@ -236,8 +119,9 @@ function StatCard({
 // ============================================================
 // ProgressRing
 // ============================================================
-function ProgressRing({ data, inView }: { data: LeetCodeData; inView: boolean }) {
-  const total = data.breakdown.easy.solved + data.breakdown.medium.solved + data.breakdown.hard.solved
+function ProgressRing({ inView }: { inView: boolean }) {
+  const { breakdown } = leetcodeStats
+  const total = breakdown.easy.solved + breakdown.medium.solved + breakdown.hard.solved
   const count = useCountUp(total, 1600, inView)
 
   const r = 68
@@ -246,9 +130,9 @@ function ProgressRing({ data, inView }: { data: LeetCodeData; inView: boolean })
   const gap = 6
 
   const segments = [
-    { solved: data.breakdown.easy.solved, color: "#00FF87" },
-    { solved: data.breakdown.medium.solved, color: "#FFB547" },
-    { solved: data.breakdown.hard.solved, color: "#FF4D4D" },
+    { solved: breakdown.easy.solved, color: "#00FF87" },
+    { solved: breakdown.medium.solved, color: "#FFB547" },
+    { solved: breakdown.hard.solved, color: "#FF4D4D" },
   ]
   const totalSolved = segments.reduce((sum, s) => sum + s.solved, 0)
 
@@ -426,11 +310,12 @@ function BadgeCard({
 }
 
 // ============================================================
-// HeatmapEmbed (reliable image-based)
+// HeatmapEmbed
 // ============================================================
-function HeatmapEmbed({ username, inView }: { username: string; inView: boolean }) {
+function HeatmapEmbed({ inView }: { inView: boolean }) {
   const [imgLoaded, setImgLoaded] = useState(false)
   const [imgError, setImgError] = useState(false)
+  const { username, profileUrl } = leetcodeStats
 
   return (
     <div
@@ -480,7 +365,7 @@ function HeatmapEmbed({ username, inView }: { username: string; inView: boolean 
               Heatmap image unavailable
             </p>
             <a
-              href={`https://leetcode.com/u/${username}`}
+              href={profileUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="font-mono text-[11px] text-terminal-green/70 underline decoration-terminal-green/20 underline-offset-2 transition-colors hover:text-terminal-green"
@@ -490,67 +375,6 @@ function HeatmapEmbed({ username, inView }: { username: string; inView: boolean 
           </div>
         )}
       </div>
-
-      {/* Profile link */}
-      <div className="mt-4 flex justify-end">
-        <a
-          href={`https://leetcode.com/u/${username}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group inline-flex items-center gap-1.5 font-mono text-[11px] tracking-wider text-muted-foreground/50 transition-colors hover:text-terminal-green"
-        >
-          View full profile on LeetCode
-          <svg
-            width="12"
-            height="12"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="transition-transform group-hover:translate-x-0.5"
-          >
-            <path d="M7 17L17 7" />
-            <path d="M7 7h10v10" />
-          </svg>
-        </a>
-      </div>
-    </div>
-  )
-}
-
-// ============================================================
-// FallbackNotice (shown when using cached/static data)
-// ============================================================
-function FallbackNotice({ username }: { username: string }) {
-  return (
-    <div className="mb-8 flex items-center gap-3 rounded-lg border border-border/40 bg-card/30 px-4 py-3">
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="#4A6070"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <circle cx="12" cy="12" r="10" />
-        <line x1="12" y1="8" x2="12" y2="12" />
-        <line x1="12" y1="16" x2="12.01" y2="16" />
-      </svg>
-      <p className="font-mono text-[11px] text-muted-foreground/60">
-        {"Showing cached stats. "}
-        <a
-          href={`https://leetcode.com/u/${username}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-terminal-green/70 underline decoration-terminal-green/20 underline-offset-2 transition-colors hover:text-terminal-green"
-        >
-          View live profile
-        </a>
-      </p>
     </div>
   )
 }
@@ -559,27 +383,14 @@ function FallbackNotice({ username }: { username: string }) {
 // Main Section
 // ============================================================
 export function LeetCodeSection() {
-  const {
-    data: apiData,
-    error,
-    isLoading,
-  } = useSWR<LeetCodeData>("/api/leetcode", fetcher, {
-    revalidateOnFocus: false,
-    dedupingInterval: 600_000,
-    errorRetryCount: 2,
-    errorRetryInterval: 3000,
-  })
-
   const { ref: sectionRef, inView } = useInView(0.1)
+  const { profile, breakdown, badges, username, profileUrl, lastUpdated } = leetcodeStats
 
-  // Use API data if available, otherwise fall back to static data
-  const data = apiData || (error ? FALLBACK_DATA : null)
-  const isFallback = !apiData && !!error
-
-  if (isLoading && !data) return <LoadingSkeleton />
-  if (!data) return <LoadingSkeleton />
-
-  const { profile, breakdown, badges } = data
+  const formattedDate = new Date(lastUpdated + "T00:00:00").toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  })
 
   return (
     <section
@@ -612,21 +423,23 @@ export function LeetCodeSection() {
       <h2 className="mb-2 font-mono text-2xl font-bold tracking-tight text-foreground">
         Problem Solving Stats
       </h2>
-      <p className="mb-12 max-w-lg font-mono text-sm leading-relaxed text-muted-foreground/60">
-        {"Live stats for "}
-        <a
-          href={`https://leetcode.com/u/${data.username}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-terminal-green/80 underline decoration-terminal-green/20 underline-offset-2 transition-colors hover:text-terminal-green"
-        >
-          {data.username}
-        </a>
-        {". Algorithmic thinking, one problem at a time."}
-      </p>
-
-      {/* Fallback notice */}
-      {isFallback && <FallbackNotice username={data.username} />}
+      <div className="mb-12 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+        <p className="font-mono text-sm leading-relaxed text-muted-foreground/60">
+          {"Stats for "}
+          <a
+            href={profileUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-terminal-green/80 underline decoration-terminal-green/20 underline-offset-2 transition-colors hover:text-terminal-green"
+          >
+            {username}
+          </a>
+          {". Algorithmic thinking, one problem at a time."}
+        </p>
+        <span className="shrink-0 font-mono text-[10px] tracking-wider text-muted-foreground/40">
+          {"Updated " + formattedDate}
+        </span>
+      </div>
 
       {/* Stat cards */}
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
@@ -641,15 +454,15 @@ export function LeetCodeSection() {
         <StatCard
           label="Global Ranking"
           value={profile.globalRanking}
-          tooltip="Your position among all LeetCode users worldwide"
+          tooltip="Position among all LeetCode users worldwide"
           delay={80}
           inView={inView}
         />
         <StatCard
-          label="Active Days"
-          value={profile.activeDays}
-          suffix="days"
-          tooltip="Days with at least one submission in the past year"
+          label="Easy Solved"
+          value={breakdown.easy.solved}
+          suffix={`/ ${breakdown.easy.total}`}
+          tooltip="Easy difficulty problems completed"
           delay={160}
           inView={inView}
         />
@@ -665,7 +478,7 @@ export function LeetCodeSection() {
 
       {/* Donut + Progress bars */}
       <div className="mt-14 flex flex-col items-center gap-12 md:flex-row md:items-start md:gap-16">
-        <ProgressRing data={data} inView={inView} />
+        <ProgressRing inView={inView} />
         <div className="flex w-full flex-col gap-6">
           <DifficultyBar
             label="Easy"
@@ -715,8 +528,34 @@ export function LeetCodeSection() {
         </div>
       )}
 
-      {/* Heatmap (image embed for reliability) */}
-      <HeatmapEmbed username={data.username} inView={inView} />
+      {/* Heatmap (image embed) */}
+      <HeatmapEmbed inView={inView} />
+
+      {/* View full profile link + last updated */}
+      <div className="mt-6 flex flex-col items-end gap-1">
+        <a
+          href={profileUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group inline-flex items-center gap-1.5 rounded-md border border-border/40 bg-card/40 px-4 py-2 font-mono text-xs tracking-wider text-muted-foreground transition-all hover:border-terminal-green/30 hover:text-terminal-green"
+        >
+          View full profile on LeetCode
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="transition-transform group-hover:translate-x-0.5"
+          >
+            <path d="M7 17L17 7" />
+            <path d="M7 7h10v10" />
+          </svg>
+        </a>
+      </div>
     </section>
   )
 }
