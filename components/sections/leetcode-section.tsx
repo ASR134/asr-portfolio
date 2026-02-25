@@ -84,7 +84,7 @@ function StatCard({
     <Tooltip>
       <TooltipTrigger asChild>
         <div
-          className="group flex flex-col gap-2 rounded-lg border border-border/60 bg-card/60 p-5 backdrop-blur-sm transition-all duration-300 hover:border-terminal-green/30 hover:bg-card/80"
+          className="hover-card-lift group flex flex-col gap-2 rounded-lg border border-border/60 bg-card/60 p-5 backdrop-blur-sm hover:border-terminal-green/30 hover:bg-card/80"
           style={{
             opacity: inView ? 1 : 0,
             transform: inView ? "translateY(0)" : "translateY(16px)",
@@ -161,7 +161,7 @@ function ProgressRing({ inView }: { inView: boolean }) {
         role="img"
         aria-label={`${total} problems solved`}
       >
-        <circle cx={86} cy={86} r={r} fill="none" stroke="#1E2E3A" strokeWidth={stroke} opacity={0.5} />
+        <circle cx={86} cy={86} r={r} fill="none" stroke="#242e3a" strokeWidth={stroke} opacity={0.5} />
         {arcs.map((arc, i) => (
           <circle
             key={i}
@@ -563,7 +563,7 @@ export function LeetCodeSection() {
           href={profileUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="group inline-flex items-center gap-1.5 rounded-md border border-border/40 bg-card/40 px-4 py-2 font-mono text-xs tracking-wider text-muted-foreground transition-all hover:border-terminal-green/30 hover:text-terminal-green"
+          className="hover-btn-glow group inline-flex items-center gap-1.5 rounded-md border border-border/40 bg-card/40 px-4 py-2 font-mono text-xs tracking-wider text-muted-foreground hover:border-terminal-green/30 hover:text-terminal-green"
         >
           View full profile on LeetCode
           <svg

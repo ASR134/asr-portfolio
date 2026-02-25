@@ -72,7 +72,7 @@ export function ContactSection() {
                 href={link.url}
                 target={link.platform === "Email" ? undefined : "_blank"}
                 rel={link.platform === "Email" ? undefined : "noopener noreferrer"}
-                className="group relative flex flex-col gap-4 border border-terminal-dim bg-card/50 p-5 transition-all duration-300 hover:border-terminal-green/40 hover:bg-terminal-green/[0.03]"
+                className="hover-card-lift group relative flex flex-col gap-4 border border-terminal-dim bg-card/50 p-5 hover:border-terminal-green/40 hover:bg-terminal-green/[0.04]"
                 onMouseEnter={() => setHoveredCard(link.platform)}
                 onMouseLeave={() => setHoveredCard(null)}
                 aria-label={`Connect on ${link.platform}`}

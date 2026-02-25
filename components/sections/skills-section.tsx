@@ -15,7 +15,7 @@ function SkillBadge({
 
   return (
     <span
-      className="group inline-flex items-center gap-2 rounded-full border px-3.5 py-2 font-mono text-xs tracking-wide transition-all duration-300 hover:scale-[1.04] focus-visible:ring-2 focus-visible:ring-terminal-green focus-visible:outline-none"
+      className="hover-badge-glow group inline-flex items-center gap-2 rounded-full border px-3.5 py-2 font-mono text-xs tracking-wide focus-visible:ring-2 focus-visible:ring-terminal-green focus-visible:outline-none"
       style={{
         borderColor: `${color}25`,
         backgroundColor: `${color}08`,

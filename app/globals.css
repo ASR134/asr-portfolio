@@ -4,45 +4,45 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* ---- Soft dark-grey palette ---- */
-  --background: #0C1117;
+  /* ---- Charcoal / dark-grey palette ---- */
+  --background: #0f1419;
   --foreground: #E0E6ED;
-  --card: #111921;
+  --card: #161c24;
   --card-foreground: #E0E6ED;
-  --popover: #111921;
+  --popover: #161c24;
   --popover-foreground: #E0E6ED;
   --primary: #00FF87;
-  --primary-foreground: #0C1117;
-  --secondary: #151D27;
+  --primary-foreground: #0f1419;
+  --secondary: #1a222c;
   --secondary-foreground: #8899AA;
-  --muted: #151D27;
-  --muted-foreground: #4A6070;
+  --muted: #1a222c;
+  --muted-foreground: #556677;
   --accent: #00C2FF;
-  --accent-foreground: #0C1117;
+  --accent-foreground: #0f1419;
   --destructive: #FF4444;
   --destructive-foreground: #FFFFFF;
-  --border: #1E2E3A;
-  --input: #1E2E3A;
+  --border: #242e3a;
+  --input: #242e3a;
   --ring: #00FF87;
   --chart-1: #00FF87;
   --chart-2: #00C2FF;
-  --chart-3: #4A6070;
+  --chart-3: #556677;
   --chart-4: #8899AA;
   --chart-5: #E0E6ED;
-  --radius: 0.25rem;
-  --sidebar: #111921;
+  --radius: 0.375rem;
+  --sidebar: #161c24;
   --sidebar-foreground: #E0E6ED;
   --sidebar-primary: #00FF87;
-  --sidebar-primary-foreground: #0C1117;
-  --sidebar-accent: #151D27;
+  --sidebar-primary-foreground: #0f1419;
+  --sidebar-accent: #1a222c;
   --sidebar-accent-foreground: #E0E6ED;
-  --sidebar-border: #1E2E3A;
+  --sidebar-border: #242e3a;
   --sidebar-ring: #00FF87;
 
   --terminal-green: #00FF87;
   --terminal-cyan: #00C2FF;
-  --terminal-dim: #1E2E3A;
-  --terminal-bg: #0C1117;
+  --terminal-dim: #242e3a;
+  --terminal-bg: #0f1419;
 }
 
 @theme inline {
@@ -104,20 +104,19 @@
    GLOBAL BACKGROUND LAYERS
    ================================================================ */
 
-/* Full-page gradient: soft charcoal top -> slightly warmer bottom */
 body {
   background:
     linear-gradient(
       180deg,
-      #0C1117 0%,
-      #0F161D 35%,
-      #111921 65%,
-      #0E1620 100%
+      #0f1419 0%,
+      #131a21 30%,
+      #151d26 60%,
+      #121920 100%
     );
   background-attachment: fixed;
 }
 
-/* Scanline CRT overlay (very subtle) */
+/* Scanline overlay */
 body::before {
   content: "";
   position: fixed;
@@ -128,68 +127,74 @@ body::before {
     0deg,
     transparent,
     transparent 2px,
-    rgba(0, 0, 0, 0.12) 2px,
-    rgba(0, 0, 0, 0.12) 4px
+    rgba(0, 0, 0, 0.08) 2px,
+    rgba(0, 0, 0, 0.08) 4px
   );
-  opacity: 0.025;
+  opacity: 0.02;
 }
 
-/* Dot grid background (softened) */
+/* Dot grid — noticeably visible */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-image: radial-gradient(circle, #1E2E3A 0.8px, transparent 0.8px);
-  background-size: 32px 32px;
-  opacity: 0.25;
+  background-image: radial-gradient(circle, #2a3a48 0.7px, transparent 0.7px);
+  background-size: 28px 28px;
+  opacity: 0.35;
 }
 
-/* Vignette overlay for depth */
+/* Vignette */
 .vignette-overlay {
   position: fixed;
   inset: 0;
   z-index: 9998;
   pointer-events: none;
   background: radial-gradient(
-    ellipse 80% 60% at 50% 50%,
-    transparent 50%,
-    rgba(8, 12, 18, 0.5) 100%
+    ellipse 75% 55% at 50% 50%,
+    transparent 45%,
+    rgba(10, 14, 20, 0.55) 100%
   );
 }
 
-/* Grain texture (film noise) */
+/* Grain texture */
 .grain-overlay {
   position: fixed;
   inset: 0;
   z-index: 9997;
   pointer-events: none;
-  opacity: 0.03;
+  opacity: 0.025;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 256px 256px;
 }
 
 /* ================================================================
-   SECTION BACKGROUND UTILITIES
+   SECTION GRID PATTERNS (clearly visible)
    ================================================================ */
 
-/* Subtle grid pattern for specific sections */
 .bg-section-grid {
   background-image:
-    linear-gradient(rgba(30, 46, 58, 0.15) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(30, 46, 58, 0.15) 1px, transparent 1px);
+    linear-gradient(rgba(42, 58, 72, 0.22) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(42, 58, 72, 0.22) 1px, transparent 1px);
   background-size: 48px 48px;
 }
 
-/* Radial fade that softens grid edges */
 .bg-section-fade {
-  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 90%);
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 90%);
+  -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 50%, black 25%, transparent 85%);
+  mask-image: radial-gradient(ellipse 75% 65% at 50% 50%, black 25%, transparent 85%);
 }
 
-/* Smooth section transition gradient (top) */
+/* Smaller grid for dense sections */
+.bg-section-grid-fine {
+  background-image:
+    linear-gradient(rgba(42, 58, 72, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(42, 58, 72, 0.12) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Section top/bottom gradient blenders */
 .section-blend-top {
   position: relative;
 }
@@ -205,7 +210,6 @@ body::after {
   z-index: 1;
 }
 
-/* Smooth section transition gradient (bottom) */
 .section-blend-bottom {
   position: relative;
 }
@@ -219,6 +223,26 @@ body::after {
   background: linear-gradient(0deg, var(--background), transparent);
   pointer-events: none;
   z-index: 1;
+}
+
+/* ================================================================
+   SCROLL-TRIGGERED ENTRANCE ANIMATIONS
+   ================================================================ */
+
+@keyframes fade-slide-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.animate-on-scroll.in-view {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* ================================================================
@@ -246,7 +270,7 @@ body::after {
 }
 
 @keyframes cell-glow {
-  0%, 100% { border-color: #1E2E3A; }
+  0%, 100% { border-color: #242e3a; }
   50% { border-color: #00FF87; }
 }
 
@@ -259,10 +283,9 @@ body::after {
   animation: hire-pulse 2.5s ease-in-out infinite;
 }
 
-/* Hero CTA primary glow */
 @keyframes cta-glow {
-  0%, 100% { box-shadow: 0 0 8px rgba(0, 255, 135, 0.08), 0 0 20px rgba(0, 255, 135, 0.03); }
-  50% { box-shadow: 0 0 14px rgba(0, 255, 135, 0.16), 0 0 36px rgba(0, 255, 135, 0.06); }
+  0%, 100% { box-shadow: 0 0 8px rgba(0, 255, 135, 0.1), 0 0 20px rgba(0, 255, 135, 0.04); }
+  50% { box-shadow: 0 0 16px rgba(0, 255, 135, 0.2), 0 0 40px rgba(0, 255, 135, 0.08); }
 }
 
 .hero-cta-primary {
@@ -272,6 +295,11 @@ body::after {
 @keyframes scroll-hint {
   0%, 100% { transform: translateX(0); opacity: 0.5; }
   50% { transform: translateX(8px); opacity: 1; }
+}
+
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
 }
 
 .animate-blink {
@@ -295,6 +323,10 @@ body::after {
   animation: scroll-hint 1.5s ease-in-out infinite;
 }
 
+.animate-float-gentle {
+  animation: float-gentle 3s ease-in-out infinite;
+}
+
 .delay-100 { animation-delay: 100ms; }
 .delay-300 { animation-delay: 300ms; }
 .delay-500 { animation-delay: 500ms; }
@@ -309,6 +341,55 @@ body::after {
 .delay-2300 { animation-delay: 2300ms; }
 
 /* ================================================================
+   REUSABLE HOVER UTILITIES
+   ================================================================ */
+
+/* Card hover: lift + glow + border */
+.hover-card-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.hover-card-lift:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 8px 32px rgba(0, 255, 135, 0.06), 0 0 0 1px rgba(0, 255, 135, 0.08);
+}
+
+/* Button hover: glow + lift */
+.hover-btn-glow {
+  transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+.hover-btn-glow:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(0, 255, 135, 0.12);
+}
+
+/* Badge/chip hover: scale + glow */
+.hover-badge-glow {
+  transition: transform 0.25s ease, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+}
+.hover-badge-glow:hover {
+  transform: scale(1.04);
+}
+
+/* Nav link animated underline */
+.nav-link-underline {
+  position: relative;
+}
+.nav-link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 1px;
+  background: var(--terminal-green);
+  transition: width 0.3s ease;
+}
+.nav-link-underline:hover::after,
+.nav-link-underline.active::after {
+  width: 100%;
+}
+
+/* ================================================================
    SCROLLBAR
    ================================================================ */
 
@@ -316,7 +397,7 @@ body::after {
   height: 3px;
 }
 .scrollbar-terminal::-webkit-scrollbar-track {
-  background: #151D27;
+  background: #1a222c;
 }
 .scrollbar-terminal::-webkit-scrollbar-thumb {
   background: #00FF87;
@@ -324,7 +405,7 @@ body::after {
 }
 .scrollbar-terminal {
   scrollbar-width: thin;
-  scrollbar-color: #00FF87 #151D27;
+  scrollbar-color: #00FF87 #1a222c;
 }
 
 /* ================================================================
@@ -334,7 +415,7 @@ body::after {
 .section-divider {
   position: relative;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--terminal-dim), transparent);
+  background: linear-gradient(90deg, transparent 5%, var(--terminal-dim), transparent 95%);
   margin: 0 auto;
 }
 .section-divider::after {
@@ -343,11 +424,12 @@ body::after {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
   border-radius: 9999px;
   background: var(--terminal-green);
-  box-shadow: 0 0 6px var(--terminal-green), 0 0 14px var(--terminal-green);
+  box-shadow: 0 0 8px var(--terminal-green), 0 0 16px var(--terminal-green);
+  animation: float-gentle 3s ease-in-out infinite;
 }
 
 /* ================================================================
@@ -357,16 +439,16 @@ body::after {
 .noise-texture {
   position: relative;
   overflow: hidden;
-  background: #111921;
+  background: #161c24;
 }
 .noise-texture::before {
   content: "";
   position: absolute;
   inset: 0;
   background:
-    repeating-radial-gradient(circle at 17% 32%, #1E2E3A 0px, transparent 1px, transparent 30px),
-    repeating-radial-gradient(circle at 62% 71%, #1E2E3A 0px, transparent 1px, transparent 24px),
-    repeating-radial-gradient(circle at 83% 15%, #151D27 0px, transparent 1px, transparent 40px);
+    repeating-radial-gradient(circle at 17% 32%, #242e3a 0px, transparent 1px, transparent 30px),
+    repeating-radial-gradient(circle at 62% 71%, #242e3a 0px, transparent 1px, transparent 24px),
+    repeating-radial-gradient(circle at 83% 15%, #1a222c 0px, transparent 1px, transparent 40px);
   filter: contrast(170%) brightness(60%);
   opacity: 0.6;
 }

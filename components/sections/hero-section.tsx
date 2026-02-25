@@ -32,13 +32,13 @@ export function HeroSection() {
     >
       {/* Ambient glow */}
       <div
-        className="pointer-events-none absolute left-1/4 top-1/3 -z-10 h-[500px] w-[500px] rounded-full opacity-25 blur-[140px]"
-        style={{ background: "radial-gradient(circle, rgba(0,255,135,0.12), transparent 70%)" }}
+        className="pointer-events-none absolute left-1/4 top-1/3 -z-10 h-[500px] w-[500px] rounded-full opacity-30 blur-[130px]"
+        style={{ background: "radial-gradient(circle, rgba(0,255,135,0.14), transparent 70%)" }}
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute right-1/4 top-1/2 -z-10 h-[300px] w-[300px] rounded-full opacity-15 blur-[120px]"
-        style={{ background: "radial-gradient(circle, rgba(0,194,255,0.1), transparent 70%)" }}
+        className="pointer-events-none absolute right-1/4 top-1/2 -z-10 h-[300px] w-[300px] rounded-full opacity-20 blur-[110px]"
+        style={{ background: "radial-gradient(circle, rgba(0,194,255,0.12), transparent 70%)" }}
         aria-hidden="true"
       />
 
@@ -136,7 +136,7 @@ export function HeroSection() {
           <div className="mt-10 flex flex-wrap gap-4">
             <a
               href="#projects"
-              className="hero-cta-primary group relative inline-flex items-center gap-2.5 overflow-hidden border border-terminal-green/60 bg-terminal-green/10 px-7 py-3.5 font-mono text-xs tracking-widest text-terminal-green transition-all duration-300 hover:border-terminal-green hover:bg-terminal-green/20 hover:shadow-[0_0_20px_rgba(0,255,135,0.15)] sm:text-sm uppercase"
+              className="hero-cta-primary hover-btn-glow group relative inline-flex items-center gap-2.5 overflow-hidden border border-terminal-green/60 bg-terminal-green/10 px-7 py-3.5 font-mono text-xs tracking-widest text-terminal-green hover:border-terminal-green hover:bg-terminal-green/20 hover:shadow-[0_0_24px_rgba(0,255,135,0.18)] sm:text-sm uppercase"
             >
               <span className="relative z-10 flex items-center gap-2.5">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:translate-x-0.5">
@@ -147,7 +147,7 @@ export function HeroSection() {
             </a>
             <a
               href={personalInfo.resumeUrl}
-              className="group inline-flex items-center gap-2.5 border border-terminal-dim px-7 py-3.5 font-mono text-xs tracking-widest text-muted-foreground transition-all duration-300 hover:border-terminal-cyan/50 hover:text-terminal-cyan hover:shadow-[0_0_16px_rgba(0,194,255,0.08)] sm:text-sm uppercase"
+              className="hover-btn-glow group inline-flex items-center gap-2.5 border border-terminal-dim px-7 py-3.5 font-mono text-xs tracking-widest text-muted-foreground hover:border-terminal-cyan/50 hover:text-terminal-cyan hover:shadow-[0_0_20px_rgba(0,194,255,0.12)] sm:text-sm uppercase"
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:translate-y-0.5">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />

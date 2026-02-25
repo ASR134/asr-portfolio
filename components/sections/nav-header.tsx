@@ -21,7 +21,6 @@ export function NavHeader() {
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
-  // IntersectionObserver for active section tracking
   useEffect(() => {
     const sectionIds = navLinks.map((l) => l.sectionId)
     const observers: IntersectionObserver[] = []
@@ -32,9 +31,7 @@ export function NavHeader() {
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              setActiveSection(id)
-            }
+            if (entry.isIntersecting) setActiveSection(id)
           })
         },
         { rootMargin: "-40% 0px -50% 0px", threshold: 0 }
@@ -49,9 +46,9 @@ export function NavHeader() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-300 font-mono",
+        "fixed inset-x-0 top-0 z-50 transition-all duration-500 font-mono",
         scrolled
-          ? "border-b border-terminal-dim bg-terminal-bg/90 backdrop-blur-md"
+          ? "border-b border-terminal-dim/60 bg-terminal-bg/85 backdrop-blur-xl shadow-[0_4px_20px_rgba(0,0,0,0.3)]"
           : "bg-transparent"
       )}
     >
@@ -61,13 +58,15 @@ export function NavHeader() {
       >
         <a
           href="#hero"
-          className="text-xs tracking-widest text-muted-foreground transition-colors hover:text-terminal-green uppercase"
+          className="group text-xs tracking-widest text-muted-foreground transition-all duration-300 hover:text-terminal-green uppercase"
         >
-          {"~/alex.chen"}
+          <span className="inline-block transition-transform duration-300 group-hover:-translate-y-px">
+            {"~/alex.chen"}
+          </span>
         </a>
 
         {/* Desktop nav */}
-        <div className="hidden items-center gap-6 sm:flex">
+        <div className="hidden items-center gap-7 sm:flex">
           {navLinks.map((link) => {
             const isActive = activeSection === link.sectionId
             return (
@@ -75,18 +74,18 @@ export function NavHeader() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "group flex items-center gap-1.5 text-xs tracking-wider transition-colors uppercase",
+                  "nav-link-underline group flex items-center gap-1.5 py-1 text-xs tracking-wider transition-all duration-300 uppercase",
                   isActive
-                    ? "text-terminal-green"
+                    ? "text-terminal-green active"
                     : "text-muted-foreground hover:text-terminal-green"
                 )}
               >
                 <span
                   className={cn(
-                    "transition-colors",
+                    "transition-all duration-300",
                     isActive
-                      ? "text-terminal-green"
-                      : "text-terminal-green/40 group-hover:text-terminal-green"
+                      ? "text-terminal-green translate-x-0"
+                      : "text-terminal-green/30 group-hover:text-terminal-green/70 -translate-x-1 group-hover:translate-x-0"
                   )}
                 >
                   {">"}
@@ -104,7 +103,7 @@ export function NavHeader() {
 
         {/* Mobile menu button */}
         <button
-          className="text-xs tracking-wider text-muted-foreground transition-colors hover:text-terminal-green sm:hidden uppercase"
+          className="text-xs tracking-wider text-muted-foreground transition-all duration-300 hover:text-terminal-green hover:scale-105 sm:hidden uppercase"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
         >
@@ -114,7 +113,7 @@ export function NavHeader() {
 
       {/* Mobile nav */}
       {mobileOpen && (
-        <div className="border-t border-terminal-dim bg-terminal-bg/95 backdrop-blur-md sm:hidden">
+        <div className="border-t border-terminal-dim/60 bg-terminal-bg/95 backdrop-blur-xl sm:hidden">
           <div className="flex flex-col px-6 py-4 gap-1">
             {navLinks.map((link) => {
               const isActive = activeSection === link.sectionId
@@ -123,14 +122,14 @@ export function NavHeader() {
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    "flex items-center gap-2 px-0 py-3 font-mono text-xs tracking-wider transition-colors uppercase",
+                    "flex items-center gap-2 px-0 py-3 font-mono text-xs tracking-wider transition-all duration-300 uppercase",
                     isActive
                       ? "text-terminal-green"
-                      : "text-muted-foreground hover:text-terminal-green"
+                      : "text-muted-foreground hover:text-terminal-green hover:translate-x-1"
                   )}
                   onClick={() => setMobileOpen(false)}
                 >
-                  <span className={isActive ? "text-terminal-green" : "text-terminal-green/60"}>
+                  <span className={isActive ? "text-terminal-green" : "text-terminal-green/40"}>
                     {">"}
                   </span>
                   {link.label}

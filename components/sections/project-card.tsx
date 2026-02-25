@@ -21,10 +21,10 @@ export function ProjectCard({
 }: Project) {
   return (
     <article
-      className="group relative flex flex-col overflow-hidden rounded-lg border border-terminal-dim/50 bg-card/80 backdrop-blur-sm transition-all duration-300 hover:border-terminal-dim/80 hover:shadow-[0_8px_40px_-12px_rgba(0,255,135,0.06)]"
+      className="hover-card-lift group relative flex flex-col overflow-hidden rounded-lg border border-terminal-dim/50 bg-card/80 backdrop-blur-sm hover:border-terminal-green/20 hover:shadow-[0_8px_40px_-12px_rgba(0,255,135,0.1)]"
     >
       {/* Abstract visual header */}
-      <div className="relative h-36 w-full overflow-hidden bg-secondary">
+      <div className="relative h-36 w-full overflow-hidden bg-[#1a222c]">
         {/* Grid pattern */}
         <div
           className="absolute inset-0 opacity-20"
@@ -101,7 +101,7 @@ export function ProjectCard({
               href={demoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-md px-3.5 py-2 font-mono text-[11px] font-medium tracking-wide transition-all duration-200 uppercase"
+              className="hover-btn-glow inline-flex items-center gap-1.5 rounded-md px-3.5 py-2 font-mono text-[11px] font-medium tracking-wide uppercase"
               style={{
                 backgroundColor: `${accentColor}15`,
                 color: accentColor,
@@ -125,7 +125,7 @@ export function ProjectCard({
             href={githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-md border border-terminal-dim/80 bg-transparent px-3.5 py-2 font-mono text-[11px] font-medium tracking-wide text-muted-foreground transition-all duration-200 hover:border-foreground/20 hover:text-foreground uppercase"
+            className="hover-btn-glow inline-flex items-center gap-1.5 rounded-md border border-terminal-dim/80 bg-transparent px-3.5 py-2 font-mono text-[11px] font-medium tracking-wide text-muted-foreground hover:border-foreground/20 hover:text-foreground uppercase"
             aria-label={`View ${title} source code on GitHub`}
           >
             <Github className="size-3" />
