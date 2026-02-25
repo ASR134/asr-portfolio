@@ -1,14 +1,14 @@
 "use client"
 
-import { personalInfo, techStackLine } from "@/data/portfolio"
+import { personalInfo } from "@/data/portfolio"
 import { useEffect, useState } from "react"
 
 const bootLines = [
   { text: "booting system...", delay: 200 },
-  { text: "loading modules...", delay: 2000 },
-  { text: "establishing connection...", delay: 2400 },
-  { text: `user: ${personalInfo.name.toLowerCase().replace(" ", "_")} [verified]`, delay: 2800 },
-  { text: "status: online", delay: 3200 },
+  { text: "loading modules...", delay: 1000 },
+  { text: "establishing connection...", delay: 1400 },
+  { text: `user: ${personalInfo.name.toLowerCase().replace(" ", "_")} [verified]`, delay: 1800 },
+  { text: "status: online", delay: 2200 },
 ]
 
 export function HeroSection() {
@@ -20,7 +20,7 @@ export function HeroSection() {
     bootLines.forEach((_, i) => {
       timers.push(setTimeout(() => setVisibleLines(i + 1), bootLines[i].delay))
     })
-    timers.push(setTimeout(() => setShowContent(true), 3600))
+    timers.push(setTimeout(() => setShowContent(true), 2800))
     return () => timers.forEach(clearTimeout)
   }, [])
 
@@ -92,7 +92,7 @@ export function HeroSection() {
           {/* Available tag */}
           <div className="mb-6 inline-flex items-center gap-2.5 rounded-md border border-terminal-green/25 bg-surface-1 px-3.5 py-1.5">
             <span className="animate-pulse-available size-2 rounded-full bg-terminal-green" />
-            <span className="font-mono text-[10px] tracking-[0.2em] text-terminal-green uppercase">
+            <span className="font-mono text-[10px] tracking-[0.2em] text-terminal-white uppercase">
               {"Available for hire"}
             </span>
           </div>
@@ -125,12 +125,6 @@ export function HeroSection() {
               />
             </p>
           </div>
-
-          {/* Stack */}
-          <p className="mt-5 font-mono text-xs tracking-wide text-muted-foreground/60 sm:text-sm">
-            <span className="text-terminal-green/50">{"$ "}</span>
-            {techStackLine}
-          </p>
 
           {/* CTAs */}
           <div className="mt-10 flex flex-wrap justify-center gap-4">

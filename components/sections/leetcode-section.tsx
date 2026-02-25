@@ -74,8 +74,8 @@ export function LeetCodeSection() {
           src="/leetcode-heatmap-fallback.png"
           alt="LeetCode activity heatmap"
           width={500}
-          height={200}
-          className="mx-auto w-full max-w-6xl rounded-lg"
+          height={100}
+          className="mx-auto w-full max-w-5xl rounded-lg"
         />
       </div>
 

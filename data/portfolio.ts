@@ -3,7 +3,7 @@ export const personalInfo = {
   role: "ML Engineer / Open Source Contributor",
   bio: "Building intelligent systems at the intersection of machine learning and software engineering. Deploying production-grade ML models and crafting seamless user experiences that make complex technology accessible.",
   email: "amansinghrawat992752@gmail.com",
-  resumeUrl: "https://drive.google.com/drive/u/1/recent",
+  resumeUrl: "https://drive.google.com/file/d/1J-bs95cBPflsLWav0qKZ6U2F6Oy_WfS2/view?usp=drive_link",
   openToOpportunities: true,
 }
 
@@ -13,8 +13,6 @@ export const socialLinks = [
   { platform: "X / Twitter", url: "https://x.com/AmanRawat196850", command: "twitter --follow" },
   { platform: "Email", url: "amansinghrawat992752@gmail.com", command: "mail --send" },
 ]
-
-export const techStackLine = "python \u00b7 pytorch \u00b7 react \u00b7 next.js \u00b7 fastapi \u00b7 docker \u00b7 typescript \u00b7 postgresql"
 
 export type Project = {
   title: string
@@ -28,47 +26,48 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    title: "MovieMind",
-    tagline: "ML-powered movie recommendations that actually understand your taste",
+    title: "CineMatch",
+    tagline: "ML-powered movie recommender",
     description:
-      "Content-based + collaborative filtering recommendation engine trained on 100k+ ratings. Features real-time inference via FastAPI, interactive Streamlit dashboard, and A/B testing framework.",
+      "CineMatch is a full-stack movie recommendation system — a FastAPI backend serving a content-based ML model ",
     tags: [
       { label: "Python", category: "ml" },
       { label: "Scikit-learn", category: "ml" },
       { label: "FastAPI", category: "backend" },
       { label: "Streamlit", category: "frontend" },
     ],
-    githubUrl: "https://github.com",
-    demoUrl: "https://example.com",
+    githubUrl: "https://github.com/ASR134/movie_recommender",
+    demoUrl: "https://movie-recommender-asr.streamlit.app/",
     accentColor: "#00FF87",
   },
   {
-    title: "InsightBoard",
-    tagline: "Turn raw CSV data into beautiful, shareable analytics dashboards",
+    title: "ChatPulse",
+    tagline: "Whatsapp chats into visual insights",
     description:
-      "Drag-and-drop analytics dashboard builder with auto-visualization suggestions, real-time data refresh, and exportable reports. Supports CSV, JSON, and live API data sources.",
+      "Drop your chat to get detailed analytics and meaningful insights from your conversations with friends",
     tags: [
       { label: "Streamlit", category: "frontend" },
       { label: "Pandas", category: "ml" },
       { label: "Matplotlib", category: "ml" },
       { label: "Python", category: "backend" },
     ],
-    githubUrl: "https://github.com",
-    demoUrl: "https://example.com",
+    githubUrl: "https://github.com/ASR134/whatsapp-chat-analyzer",
+    demoUrl: "https://chat-analyzer-asr.streamlit.app/",
     accentColor: "#00C2FF",
   },
   {
-    title: "DataForge CLI",
-    tagline: "Open-source toolkit for automated data pipeline construction",
+    title: "GlucoSense",
+    tagline: "Diabetes Risk Analyzer",
     description:
-      "CLI tool that automates data cleaning, transformation, and validation workflows. Features schema inference, configurable quality checks, and a YAML-based pipeline DSL.",
+      "A modern, AI-powered web application that predicts diabetes risk from clinical parameters",
     tags: [
       { label: "Python", category: "backend" },
       { label: "Pydantic", category: "backend" },
       { label: "Pandas", category: "ml" },
       { label: "CLI", category: "devops" },
     ],
-    githubUrl: "https://github.com",
+    githubUrl: "https://github.com/ASR134/Diabetes-web-app",
+    demoUrl: "https://diabetes-web-app-asr.streamlit.app/",
     accentColor: "#FFB547",
   },
 ]

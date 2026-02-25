@@ -43,7 +43,7 @@ export default function Home() {
       <footer className="border-t border-terminal-dim bg-surface-1 px-6 py-8 md:px-12 lg:px-24 text-center">
         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row sm:justify-between">
           <p className="font-mono text-[10px] tracking-wider text-muted-foreground/60 uppercase">
-            {"// BUILT WITH NEXT.JS + TAILWIND + SHADCN + V0  \u00b7  \u00a9 2025 ALEX CHEN  \u00b7  ALL SYSTEMS OPERATIONAL"}
+            {" \u00a9 2025 AMAN RAWAT  \u00b7  ALL SYSTEMS OPERATIONAL"}
           </p>
           <div className="flex shrink-0 items-center gap-1.5">
             <span className="animate-glow-dot size-1.5 rounded-full bg-terminal-green" />

@@ -60,9 +60,6 @@ export function NavHeader() {
           href="#hero"
           className="group text-xs tracking-widest text-muted-foreground transition-all duration-300 hover:text-terminal-green uppercase"
         >
-          <span className="inline-block transition-transform duration-300 group-hover:-translate-y-px">
-            {"~/alex.chen"}
-          </span>
         </a>
 
         {/* Desktop nav */}
