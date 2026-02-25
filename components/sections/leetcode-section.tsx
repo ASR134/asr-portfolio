@@ -161,7 +161,7 @@ function ProgressRing({ inView }: { inView: boolean }) {
         role="img"
         aria-label={`${total} problems solved`}
       >
-        <circle cx={86} cy={86} r={r} fill="none" stroke="#242e3a" strokeWidth={stroke} opacity={0.5} />
+        <circle cx={86} cy={86} r={r} fill="none" stroke="#1a1a1a" strokeWidth={stroke} opacity={0.6} />
         {arcs.map((arc, i) => (
           <circle
             key={i}
@@ -422,7 +422,7 @@ export function LeetCodeSection() {
     <section
       id="leetcode"
       ref={sectionRef}
-      className="py-24 px-6 md:px-12 lg:px-24"
+      className="py-28 px-6 md:px-12 lg:px-24"
       aria-label="LeetCode stats"
     >
       {/* Header */}
@@ -441,12 +441,13 @@ export function LeetCodeSection() {
           <path d="M16 18l2-2-4-4 4-4-2-2-6 6z" />
           <path d="M14 20h6" />
         </svg>
-        <p className="font-mono text-xs tracking-widest text-muted-foreground uppercase">
-          <span className="text-terminal-green">04</span>
-          {" / LEETCODE"}
+        <p className="font-mono text-sm tracking-widest text-muted-foreground uppercase">
+          <span className="text-terminal-green font-semibold">04</span>
+          {" / "}
+          <span className="text-foreground font-semibold">LEETCODE</span>
         </p>
       </div>
-      <h2 className="mb-2 font-mono text-2xl font-bold tracking-tight text-foreground">
+      <h2 className="mb-2 font-mono text-3xl font-bold tracking-tight text-foreground">
         Problem Solving Stats
       </h2>
       <div className="mb-12 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">

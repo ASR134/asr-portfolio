@@ -13,46 +13,54 @@ export default function Home() {
     <>
       <NavHeader />
       <main>
-        {/* Hero — full grid */}
+        {/* Hero */}
         <div className="relative">
           <div className="bg-section-grid bg-section-fade pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
           <HeroSection />
         </div>
 
-        <SectionDivider />
+        <div className="py-6 md:py-10">
+          <SectionDivider />
+        </div>
 
-        {/* Projects — full grid */}
+        {/* Projects */}
         <div className="relative">
           <div className="bg-section-grid bg-section-fade pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
           <ProjectsSection />
         </div>
 
-        <SectionDivider />
+        <div className="py-6 md:py-10">
+          <SectionDivider />
+        </div>
 
-        {/* Skills — fine grid (lower opacity behind dense content) */}
+        {/* Tech Stack */}
         <div className="relative">
           <div className="bg-section-grid-fine bg-section-fade pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
           <SkillsSection />
         </div>
 
-        <SectionDivider />
+        <div className="py-6 md:py-10">
+          <SectionDivider />
+        </div>
 
-        {/* LeetCode — full grid */}
+        {/* LeetCode */}
         <div className="relative">
           <div className="bg-section-grid bg-section-fade pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
           <LeetCodeSection />
         </div>
 
-        <SectionDivider />
+        <div className="py-6 md:py-10">
+          <SectionDivider />
+        </div>
 
-        {/* Contact — fine grid */}
+        {/* Contact */}
         <div className="relative">
           <div className="bg-section-grid-fine bg-section-fade pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
           <ContactSection />
         </div>
       </main>
 
-      <footer className="border-t border-terminal-dim/50 px-6 py-6 md:px-12 lg:px-24">
+      <footer className="border-t border-terminal-dim/40 px-6 py-8 md:px-12 lg:px-24">
         <div className="flex items-center justify-between gap-4">
           <p className="font-mono text-[10px] tracking-wider text-muted-foreground/60 uppercase">
             {"// BUILT WITH NEXT.JS + TAILWIND + SHADCN + V0  \u00b7  \u00a9 2025 ALEX CHEN  \u00b7  ALL SYSTEMS OPERATIONAL"}

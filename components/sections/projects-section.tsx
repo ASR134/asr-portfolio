@@ -5,12 +5,13 @@ import { projects } from "@/data/portfolio"
 
 export function ProjectsSection() {
   return (
-    <section id="projects" className="py-24 px-6 md:px-12 lg:px-24" aria-label="Featured projects">
+    <section id="projects" className="py-28 px-6 md:px-12 lg:px-24" aria-label="Featured projects">
       {/* Section label */}
-      <div className="mb-12">
-        <p className="font-mono text-xs tracking-widest text-muted-foreground uppercase">
-          <span className="text-terminal-green">{"02"}</span>
-          {" / PROJECTS"}
+      <div className="mb-14">
+        <p className="font-mono text-sm tracking-widest text-muted-foreground uppercase">
+          <span className="text-terminal-green font-semibold">{"02"}</span>
+          {" / "}
+          <span className="text-foreground font-semibold">{"PROJECTS"}</span>
         </p>
         <p className="mt-3 max-w-lg font-mono text-sm leading-relaxed text-muted-foreground">
           {"A selection of recent projects spanning machine learning, data visualization, and developer tooling."}

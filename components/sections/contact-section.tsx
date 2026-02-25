@@ -33,7 +33,7 @@ export function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative px-6 py-24 md:px-12 lg:px-24"
+      className="relative px-6 py-28 md:px-12 lg:px-24"
       aria-label="Contact"
     >
       {/* Background accent */}
@@ -48,8 +48,10 @@ export function ContactSection() {
         <div className="mb-14">
           <div className="mb-4 flex items-center gap-3">
             <div className="h-px w-10 bg-terminal-green/40" aria-hidden="true" />
-            <span className="font-mono text-xs tracking-[0.3em] text-terminal-green/70 uppercase">
-              {"05 / signal"}
+            <span className="font-mono text-sm tracking-[0.3em] text-terminal-green/70 uppercase">
+              <span className="font-semibold text-terminal-green">{"05"}</span>
+              {" / "}
+              <span className="font-semibold text-foreground">{"SIGNAL"}</span>
             </span>
           </div>
           <h2 className="font-mono text-4xl font-bold tracking-tighter text-foreground sm:text-5xl lg:text-6xl text-balance">
