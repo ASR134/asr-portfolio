@@ -78,55 +78,63 @@ export const projects: Project[] = [
   },
 ]
 
-export type SkillCategory = "Machine Learning" | "Backend" | "Frontend" | "Tools & DevOps"
+// ---- Tech Stack (categorized) ----
 
-export type Skill = {
-  label: string
-  category: SkillCategory
-  iconSlug: string | null
+export type TechStackCategory = {
+  title: string
+  color: string
+  skills: { label: string; iconSlug: string | null }[]
 }
 
-export const skills: Skill[] = [
-  { label: "PyTorch", category: "Machine Learning", iconSlug: "pytorch" },
-  { label: "TensorFlow", category: "Machine Learning", iconSlug: "tensorflow" },
-  { label: "scikit-learn", category: "Machine Learning", iconSlug: "scikitlearn" },
-  { label: "HuggingFace", category: "Machine Learning", iconSlug: "huggingface" },
-  { label: "OpenCV", category: "Machine Learning", iconSlug: "opencv" },
-  { label: "NLTK", category: "Machine Learning", iconSlug: null },
-  { label: "MLflow", category: "Machine Learning", iconSlug: "mlflow" },
-  { label: "ONNX", category: "Machine Learning", iconSlug: "onnx" },
-  { label: "Python", category: "Backend", iconSlug: "python" },
-  { label: "Node.js", category: "Backend", iconSlug: "nodedotjs" },
-  { label: "FastAPI", category: "Backend", iconSlug: "fastapi" },
-  { label: "PostgreSQL", category: "Backend", iconSlug: "postgresql" },
-  { label: "Redis", category: "Backend", iconSlug: "redis" },
-  { label: "GraphQL", category: "Backend", iconSlug: "graphql" },
-  { label: "React", category: "Frontend", iconSlug: "react" },
-  { label: "Next.js", category: "Frontend", iconSlug: "nextdotjs" },
-  { label: "TypeScript", category: "Frontend", iconSlug: "typescript" },
-  { label: "Tailwind CSS", category: "Frontend", iconSlug: "tailwindcss" },
-  { label: "Three.js", category: "Frontend", iconSlug: "threedotjs" },
-  { label: "Docker", category: "Tools & DevOps", iconSlug: "docker" },
-  { label: "Kubernetes", category: "Tools & DevOps", iconSlug: "kubernetes" },
-  { label: "AWS", category: "Tools & DevOps", iconSlug: "amazonaws" },
-  { label: "Git", category: "Tools & DevOps", iconSlug: "git" },
-  { label: "CI/CD", category: "Tools & DevOps", iconSlug: "githubactions" },
-  { label: "Linux", category: "Tools & DevOps", iconSlug: "linux" },
+export const techStack: TechStackCategory[] = [
+  {
+    title: "Languages",
+    color: "#00FF87",
+    skills: [
+      { label: "Python", iconSlug: "python" },
+      { label: "C++", iconSlug: "cplusplus" },
+    ],
+  },
+  {
+    title: "Data Science & ML",
+    color: "#00C2FF",
+    skills: [
+      { label: "NumPy", iconSlug: "numpy" },
+      { label: "Pandas", iconSlug: "pandas" },
+      { label: "Seaborn", iconSlug: null },
+      { label: "Matplotlib", iconSlug: null },
+      { label: "Scikit-learn", iconSlug: "scikitlearn" },
+      { label: "SciPy", iconSlug: "scipy" },
+    ],
+  },
+  {
+    title: "Web Apps & Dashboards",
+    color: "#A78BFA",
+    skills: [
+      { label: "Streamlit", iconSlug: "streamlit" },
+    ],
+  },
+  {
+    title: "Backend & APIs",
+    color: "#4D9EFF",
+    skills: [
+      { label: "FastAPI", iconSlug: "fastapi" },
+      { label: "Pydantic", iconSlug: "pydantic" },
+      { label: "Uvicorn", iconSlug: null },
+    ],
+  },
+  {
+    title: "Tools & Platforms",
+    color: "#FFB547",
+    skills: [
+      { label: "Jupyter", iconSlug: "jupyter" },
+      { label: "Git", iconSlug: "git" },
+      { label: "GitHub", iconSlug: "github" },
+      { label: "VS Code", iconSlug: "visualstudiocode" },
+      { label: "Linux", iconSlug: "linux" },
+    ],
+  },
 ]
-
-export const skillCategories: SkillCategory[] = [
-  "Machine Learning",
-  "Backend",
-  "Frontend",
-  "Tools & DevOps",
-]
-
-export const categoryColorMap: Record<SkillCategory, string> = {
-  "Machine Learning": "#00FF87",
-  "Backend": "#00C2FF",
-  "Frontend": "#4D9EFF",
-  "Tools & DevOps": "#FFB547",
-}
 
 // ---- LeetCode Stats ----
 

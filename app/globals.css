@@ -252,14 +252,6 @@ body::after {
   box-shadow: 0 0 8px var(--terminal-green), 0 0 16px var(--terminal-green);
 }
 
-/* ---- Blueprint grid for skills ---- */
-.blueprint-grid {
-  background-image:
-    linear-gradient(rgba(26, 42, 54, 0.3) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(26, 42, 54, 0.3) 1px, transparent 1px);
-  background-size: 20px 20px;
-}
-
 /* ---- Noise texture for project cards ---- */
 .noise-texture {
   position: relative;
