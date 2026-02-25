@@ -12,32 +12,37 @@ function DonutChart() {
   const { easy, medium, hard } = leetcode.breakdown
   const totalSolved = easy.solved + medium.solved + hard.solved
   const radius = 72
-  const stroke = 8
+  const stroke = 9
   const circumference = 2 * Math.PI * radius
-  const gap = 4 // px gap between arcs
 
   const segments = [
-    { solved: easy.solved, color: "#00FF87" },
-    { solved: medium.solved, color: "#FFB547" },
-    { solved: hard.solved, color: "#FF4D4D" },
+    { solved: easy.solved, color: "#00FF87", label: "easy" },
+    { solved: medium.solved, color: "#FFB547", label: "medium" },
+    { solved: hard.solved, color: "#FF4D4D", label: "hard" },
   ]
 
-  let cumulativeOffset = 0
+  // Calculate arcs with proper offsets (no negative arcs)
+  const gapAngle = 0.02 // radians gap between segments
+  const totalGap = gapAngle * segments.length
+  const usableCircumference = circumference * (1 - totalGap / (2 * Math.PI))
+
+  let cumulativeAngle = -Math.PI / 2 // start at top
+
   const arcs = segments.map((seg) => {
     const fraction = seg.solved / totalSolved
-    const arcLength = fraction * circumference - gap
-    const offset = circumference - cumulativeOffset
-    cumulativeOffset += fraction * circumference
-    return { ...seg, arcLength: Math.max(arcLength, 0), offset }
+    const arcLength = fraction * usableCircumference
+    const dashOffset = circumference - (cumulativeAngle + Math.PI / 2) / (2 * Math.PI) * circumference
+    const result = { ...seg, arcLength, dashOffset }
+    cumulativeAngle += fraction * 2 * Math.PI * (1 - totalGap / (2 * Math.PI)) + gapAngle
+    return result
   })
 
   return (
-    <div className="relative flex items-center justify-center">
+    <div className="relative flex shrink-0 items-center justify-center">
       <svg
         width={180}
         height={180}
         viewBox="0 0 180 180"
-        className="rotate-[-90deg]"
         role="img"
         aria-label={`${totalSolved} problems solved: ${easy.solved} easy, ${medium.solved} medium, ${hard.solved} hard`}
       >
@@ -50,7 +55,7 @@ function DonutChart() {
           stroke="#1A2A36"
           strokeWidth={stroke}
         />
-        {/* Segments */}
+        {/* Segments - draw using dasharray/dashoffset */}
         {arcs.map((arc, i) => (
           <circle
             key={i}
@@ -61,9 +66,10 @@ function DonutChart() {
             stroke={arc.color}
             strokeWidth={stroke}
             strokeDasharray={`${arc.arcLength} ${circumference - arc.arcLength}`}
-            strokeDashoffset={arc.offset}
+            strokeDashoffset={arc.dashOffset}
             strokeLinecap="round"
             className="transition-all duration-700"
+            style={{ transform: "rotate(-90deg)", transformOrigin: "90px 90px" }}
           />
         ))}
       </svg>
@@ -82,22 +88,22 @@ function DonutChart() {
 
 // -- Difficulty bar --
 function DifficultyBar({ label, solved, total, color }: { label: string; solved: number; total: number; color: string }) {
-  const pct = (solved / total) * 100
+  const pct = Math.min((solved / total) * 100, 100)
   return (
     <div className="flex items-center gap-3">
       <span
-        className="w-16 shrink-0 text-right font-mono text-[11px] font-bold tracking-wider uppercase"
+        className="w-[4.5rem] shrink-0 text-right font-mono text-[11px] font-bold tracking-wider uppercase"
         style={{ color }}
       >
         {label}
       </span>
       <div className="relative h-2.5 flex-1 overflow-hidden rounded-full bg-[#1A2A36]">
         <div
-          className="absolute inset-y-0 left-0 rounded-full transition-all duration-700"
+          className="absolute inset-y-0 left-0 rounded-full"
           style={{ width: `${pct}%`, backgroundColor: color }}
         />
       </div>
-      <span className="w-20 shrink-0 font-mono text-[11px] tracking-wider text-muted-foreground">
+      <span className="w-24 shrink-0 font-mono text-[11px] tabular-nums tracking-wider text-muted-foreground">
         {solved}
         {" / "}
         {total}
@@ -109,20 +115,11 @@ function DifficultyBar({ label, solved, total, color }: { label: string; solved:
 // -- Stat block --
 function StatBlock({ label, value, sub }: { label: string; value: string; sub: string }) {
   return (
-    <div
-      className="group flex flex-col gap-1.5 border p-4 transition-all duration-300 hover:border-terminal-green/60"
-      style={{ borderColor: "rgba(0,255,135,0.15)", backgroundColor: "rgba(10,17,24,0.8)" }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.borderColor = "rgba(0,255,135,0.5)"
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.borderColor = "rgba(0,255,135,0.15)"
-      }}
-    >
+    <div className="group flex flex-col gap-1.5 border border-[rgba(0,255,135,0.12)] bg-[rgba(10,17,24,0.8)] p-4 transition-all duration-300 hover:border-[rgba(0,255,135,0.45)] hover:bg-[rgba(10,17,24,0.95)]">
       <span className="font-mono text-[10px] tracking-widest text-muted-foreground uppercase">
         {label}
       </span>
-      <span className="font-mono text-3xl font-bold tracking-tight text-terminal-green transition-all duration-300 group-hover:[text-shadow:0_0_12px_rgba(0,255,135,0.5)]">
+      <span className="font-mono text-3xl font-bold tabular-nums tracking-tight text-terminal-green transition-all duration-300 group-hover:[text-shadow:0_0_12px_rgba(0,255,135,0.5)]">
         {value}
       </span>
       <span className="font-mono text-[10px] tracking-wider text-muted-foreground/60 uppercase">
@@ -138,9 +135,9 @@ function BadgeCard({ title, subtitle, recent }: { title: string; subtitle: strin
     <div
       className="relative flex flex-col items-center gap-2 border px-5 py-5 text-center transition-all duration-300"
       style={{
-        borderColor: recent ? "rgba(0,255,135,0.5)" : "rgba(0,255,135,0.15)",
+        borderColor: recent ? "rgba(0,255,135,0.45)" : "rgba(0,255,135,0.12)",
         backgroundColor: "rgba(10,17,24,0.8)",
-        boxShadow: recent ? "0 0 20px rgba(0,255,135,0.1)" : "none",
+        boxShadow: recent ? "0 0 24px rgba(0,255,135,0.08), inset 0 0 12px rgba(0,255,135,0.03)" : "none",
       }}
     >
       <span className="text-2xl" aria-hidden="true">{"🏅"}</span>
@@ -153,7 +150,7 @@ function BadgeCard({ title, subtitle, recent }: { title: string; subtitle: strin
         </span>
       )}
       {recent && (
-        <span className="mt-1 inline-block font-mono text-[9px] tracking-widest text-terminal-green animate-hire-pulse uppercase">
+        <span className="mt-1 inline-block animate-hire-pulse font-mono text-[9px] tracking-widest text-terminal-green uppercase">
           {"★ MOST RECENT"}
         </span>
       )}
@@ -179,7 +176,7 @@ function SubmissionHeatmap() {
   return (
     <div className="mt-14">
       {/* Submission count line */}
-      <p className="mb-4 font-mono text-[11px] tracking-wider text-muted-foreground">
+      <p className="mb-5 font-mono text-[11px] tracking-wider text-muted-foreground">
         <span className="text-terminal-green/60">{">"}</span>
         {" "}
         {leetcode.heatmap.totalSubmissions.toLocaleString()}
@@ -189,15 +186,16 @@ function SubmissionHeatmap() {
         {leetcode.heatmap.maxStreak}
       </p>
 
-      {/* Month labels */}
+      {/* Scrollable heatmap container */}
       <div className="overflow-x-auto scrollbar-terminal">
-        <div className="inline-block">
-          <div className="flex gap-0 pl-8">
+        <div className="inline-block min-w-fit">
+          {/* Month labels row */}
+          <div className="mb-1 flex pl-8">
             {months.map((m, i) => (
               <span
                 key={i}
                 className="font-mono text-[9px] tracking-wider text-muted-foreground/50"
-                style={{ width: `${(53 / 12) * 12}px`, minWidth: "44px" }}
+                style={{ width: `${(53 * 12) / 12}px`, minWidth: "52px" }}
               >
                 {m}
               </span>
@@ -205,7 +203,7 @@ function SubmissionHeatmap() {
           </div>
 
           {/* Grid with day labels */}
-          <div className="flex gap-0">
+          <div className="flex">
             {/* Day labels */}
             <div className="flex w-8 shrink-0 flex-col gap-[2px]" aria-hidden="true">
               {dayLabels.map((d, i) => (
@@ -233,7 +231,7 @@ function SubmissionHeatmap() {
                 week.map((level, dIdx) => (
                   <div
                     key={`${wIdx}-${dIdx}`}
-                    className="rounded-[1.5px] transition-colors duration-150"
+                    className="rounded-[1.5px]"
                     style={{
                       width: 10,
                       height: 10,
@@ -317,12 +315,8 @@ export function LeetCodeSection() {
 
       {/* PART 2: Donut + Bars */}
       <div className="mt-12 flex flex-col items-center gap-10 md:flex-row md:items-start md:gap-16">
-        {/* Donut */}
-        <div className="shrink-0">
-          <DonutChart />
-        </div>
-        {/* Bars */}
-        <div className="flex w-full flex-col gap-4">
+        <DonutChart />
+        <div className="flex w-full flex-col gap-5">
           <DifficultyBar label="Easy" solved={breakdown.easy.solved} total={breakdown.easy.total} color="#00FF87" />
           <DifficultyBar label="Medium" solved={breakdown.medium.solved} total={breakdown.medium.total} color="#FFB547" />
           <DifficultyBar label="Hard" solved={breakdown.hard.solved} total={breakdown.hard.total} color="#FF4D4D" />
