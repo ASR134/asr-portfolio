@@ -1,7 +1,7 @@
 "use client"
 
 import { personalInfo, socialLinks } from "@/data/portfolio"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 const iconMap: Record<string, React.ReactNode> = {
   GitHub: (
@@ -28,7 +28,34 @@ const iconMap: Record<string, React.ReactNode> = {
 }
 
 export function ContactSection() {
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(false)
   const [hoveredCard, setHoveredCard] = useState<string | null>(null)
+  const [ripples, setRipples] = useState<Record<string, { x: number; y: number; id: number }>>({})
+
+  useEffect(() => {
+    const el = sectionRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setVisible(true) },
+      { threshold: 0.15 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  const handleCardClick = (platform: string, e: React.MouseEvent<HTMLAnchorElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    const id = Date.now()
+    setRipples((prev) => ({ ...prev, [platform]: { x, y, id } }))
+    setTimeout(() => setRipples((prev) => {
+      const next = { ...prev }
+      delete next[platform]
+      return next
+    }), 600)
+  }
 
   return (
     <section
@@ -38,36 +65,67 @@ export function ContactSection() {
     >
       {/* Background accent */}
       <div
-        className="pointer-events-none absolute bottom-0 left-1/3 -z-10 h-[250px] w-[250px] rounded-full opacity-15 blur-[80px]"
+        className="pointer-events-none absolute bottom-0 left-1/3 -z-10 h-[250px] w-[250px] rounded-full opacity-15 blur-[80px] animate-float-gentle"
         style={{ background: "radial-gradient(circle, rgba(0,255,135,0.08), transparent 70%)" }}
         aria-hidden="true"
       />
 
-      <div className="mx-auto max-w-5xl">
+      <div className="mx-auto max-w-5xl" ref={sectionRef}>
         {/* Header */}
-        <div className="mb-14 text-center">
+        <div
+          className="mb-14 text-center"
+          style={{
+            opacity: visible ? 1 : 0,
+            transform: visible ? "translateY(0)" : "translateY(24px)",
+            transition: "opacity 0.6s ease, transform 0.6s ease",
+          }}
+        >
           <div className="mb-4 flex items-center justify-center gap-3">
-            <div className="h-px w-10 bg-terminal-green/40" aria-hidden="true" />
+            <div
+              className="h-px bg-terminal-green/40 transition-all duration-700"
+              style={{ width: visible ? "40px" : "0px", transitionDelay: "0.3s" }}
+              aria-hidden="true"
+            />
             <span className="font-mono text-sm tracking-[0.3em] text-terminal-green/70 uppercase">
               <span className="font-semibold text-terminal-green">{"05"}</span>
               {" / "}
               <span className="font-semibold text-foreground">{"SIGNAL"}</span>
             </span>
+            <div
+              className="h-px bg-terminal-green/40 transition-all duration-700"
+              style={{ width: visible ? "40px" : "0px", transitionDelay: "0.3s" }}
+              aria-hidden="true"
+            />
           </div>
-          <h2 className="font-mono text-4xl font-bold tracking-tighter text-foreground sm:text-5xl lg:text-6xl text-balance">
+          <h2
+            className="font-mono text-4xl font-bold tracking-tighter text-foreground sm:text-5xl lg:text-6xl text-balance"
+            style={{
+              opacity: visible ? 1 : 0,
+              transform: visible ? "translateY(0)" : "translateY(16px)",
+              transition: "opacity 0.6s ease 0.1s, transform 0.6s ease 0.1s",
+            }}
+          >
             {"Let's build something"}
             <br />
             <span className="text-terminal-green">{"together."}</span>
           </h2>
-          <p className="mt-4 mx-auto max-w-lg font-mono text-sm leading-relaxed text-muted-foreground">
+          <p
+            className="mt-4 mx-auto max-w-lg font-mono text-sm leading-relaxed text-muted-foreground"
+            style={{
+              opacity: visible ? 1 : 0,
+              transition: "opacity 0.6s ease 0.25s",
+            }}
+          >
             {"Currently open for collaboration, freelance work, and full-time opportunities. Always excited to discuss ML, systems architecture, or your next big idea."}
           </p>
         </div>
 
-        {/* Command cards grid */}
+        {/* Command cards grid — staggered */}
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {socialLinks.map((link) => {
+          {socialLinks.map((link, i) => {
             const isHovered = hoveredCard === link.platform
+            const ripple = ripples[link.platform]
+
             return (
               <a
                 key={link.platform}
@@ -77,11 +135,18 @@ export function ContactSection() {
                 className="hover-card-lift group relative flex flex-col gap-4 overflow-hidden rounded-lg border border-terminal-dim bg-surface-1 p-5 shadow-[0_4px_24px_rgba(0,0,0,0.4)] hover:border-terminal-green/25"
                 onMouseEnter={() => setHoveredCard(link.platform)}
                 onMouseLeave={() => setHoveredCard(null)}
+                onClick={(e) => handleCardClick(link.platform, e)}
                 aria-label={`Connect on ${link.platform}`}
+                style={{
+                  opacity: visible ? 1 : 0,
+                  transform: visible ? "translateY(0)" : "translateY(28px)",
+                  transition: `opacity 0.5s ease ${i * 80 + 200}ms, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) ${i * 80 + 200}ms, box-shadow 0.3s ease`,
+                }}
               >
                 {/* Inner gradient for depth */}
                 <div className="pointer-events-none absolute inset-0 rounded-lg bg-gradient-to-b from-white/[0.03] via-transparent to-transparent" aria-hidden="true" />
-                {/* Subtle top border glow on hover */}
+
+                {/* Top border glow on hover */}
                 <div
                   className="pointer-events-none absolute inset-x-0 top-0 h-px transition-opacity duration-300"
                   style={{
@@ -91,8 +156,31 @@ export function ContactSection() {
                   aria-hidden="true"
                 />
 
+                {/* Click ripple */}
+                {ripple && (
+                  <span
+                    key={ripple.id}
+                    className="pointer-events-none absolute rounded-full bg-terminal-green/20"
+                    style={{
+                      left: ripple.x,
+                      top: ripple.y,
+                      width: 8,
+                      height: 8,
+                      transform: "translate(-50%, -50%) scale(0)",
+                      animation: "ripple 0.5s ease-out forwards",
+                    }}
+                    aria-hidden="true"
+                  />
+                )}
+
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center justify-center size-10 rounded-md border border-terminal-dim bg-surface-2 text-muted-foreground transition-all duration-300 group-hover:border-terminal-green/30 group-hover:text-terminal-green">
+                  <div
+                    className="flex items-center justify-center size-10 rounded-md border border-terminal-dim bg-surface-2 text-muted-foreground transition-all duration-300 group-hover:border-terminal-green/30 group-hover:text-terminal-green"
+                    style={{
+                      transform: isHovered ? "scale(1.1) rotate(-5deg)" : "scale(1) rotate(0deg)",
+                      transition: "transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s, color 0.3s",
+                    }}
+                  >
                     {iconMap[link.platform]}
                   </div>
                   <svg
@@ -127,8 +215,13 @@ export function ContactSection() {
         </div>
 
         {/* Bottom status bar */}
-        <div className="mt-12 flex flex-col items-center justify-center gap-6 sm:flex-row sm:justify-between sm:items-center">
-          {/* Status */}
+        <div
+          className="mt-12 flex flex-col items-center justify-center gap-6 sm:flex-row sm:justify-between sm:items-center"
+          style={{
+            opacity: visible ? 1 : 0,
+            transition: "opacity 0.6s ease 0.6s",
+          }}
+        >
           {personalInfo.openToOpportunities && (
             <div className="flex items-center gap-4">
               <div className="relative flex items-center gap-2.5 rounded-md border border-terminal-green/25 bg-surface-1 px-4 py-2 shadow-[0_0_12px_rgba(0,255,135,0.05)]">
@@ -146,13 +239,19 @@ export function ContactSection() {
             </div>
           )}
 
-          {/* Direct email */}
+          {/* Direct email with arrow micro-interaction */}
           <a
             href={`mailto:${personalInfo.email}`}
             className="group flex items-center gap-2 font-mono text-xs text-muted-foreground transition-colors duration-200 hover:text-terminal-green"
           >
-            <span className="text-terminal-green/50 transition-colors group-hover:text-terminal-green">{">"}</span>
-            {personalInfo.email}
+            <span className="text-terminal-green/50 transition-all duration-300 group-hover:text-terminal-green group-hover:translate-x-0.5">{">"}</span>
+            <span className="relative">
+              {personalInfo.email}
+              <span
+                className="absolute -bottom-px left-0 h-px bg-terminal-green/50 transition-all duration-300"
+                style={{ width: "0%" }}
+              />
+            </span>
             <svg
               width="12"
               height="12"
