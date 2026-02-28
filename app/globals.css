@@ -4,7 +4,6 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* ---- Pure black background + elevated surfaces ---- */
   --background: #000000;
   --foreground: #EDEDED;
   --card: #0b1018;
@@ -44,7 +43,6 @@
   --terminal-dim: #1a2535;
   --terminal-bg: #000000;
 
-  /* Elevated surface tiers */
   --surface-1: #0b1018;
   --surface-2: #0f1722;
   --surface-3: #131e2c;
@@ -103,6 +101,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -133,139 +132,290 @@ body::after {
    ================================================================ */
 
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
 }
 
 @keyframes line-reveal {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes glow-dot {
-  0%, 100% { box-shadow: 0 0 4px var(--terminal-green), 0 0 8px var(--terminal-green); }
-  50% { box-shadow: 0 0 8px var(--terminal-green), 0 0 20px var(--terminal-green); }
+
+  0%,
+  100% {
+    box-shadow: 0 0 4px var(--terminal-green), 0 0 8px var(--terminal-green);
+  }
+
+  50% {
+    box-shadow: 0 0 8px var(--terminal-green), 0 0 20px var(--terminal-green);
+  }
 }
 
 @keyframes pulse-available {
-  0%, 100% { opacity: 1; box-shadow: 0 0 4px var(--terminal-green); }
-  50% { opacity: 0.6; box-shadow: 0 0 12px var(--terminal-green); }
+
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 4px var(--terminal-green);
+  }
+
+  50% {
+    opacity: 0.6;
+    box-shadow: 0 0 12px var(--terminal-green);
+  }
 }
 
 @keyframes hire-pulse {
-  0%, 100% { opacity: 1; text-shadow: 0 0 4px rgba(0, 255, 135, 0.4); }
-  50% { opacity: 0.7; text-shadow: 0 0 12px rgba(0, 255, 135, 0.8); }
+
+  0%,
+  100% {
+    opacity: 1;
+    text-shadow: 0 0 4px rgba(0, 255, 135, 0.4);
+  }
+
+  50% {
+    opacity: 0.7;
+    text-shadow: 0 0 12px rgba(0, 255, 135, 0.8);
+  }
 }
+
+@keyframes cta-glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(0, 255, 135, 0.12), 0 0 24px rgba(0, 255, 135, 0.05);
+  }
+
+  50% {
+    box-shadow: 0 0 20px rgba(0, 255, 135, 0.24), 0 0 48px rgba(0, 255, 135, 0.1);
+  }
+}
+
+@keyframes float-gentle {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes entrance-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scan-line {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(400%);
+    opacity: 0;
+  }
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+@keyframes border-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes text-shimmer {
+  0% {
+    background-position: -200% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes nav-entrance {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes card-shimmer {
+  0% {
+    left: -100%;
+  }
+
+  100% {
+    left: 200%;
+  }
+}
+
+@keyframes ping-subtle {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+  70% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes tag-pop {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  70% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes geo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes underline-draw {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes header-glow {
+
+  0%,
+  100% {
+    text-shadow: 0 0 0px transparent;
+  }
+
+  50% {
+    text-shadow: 0 0 20px rgba(0, 255, 135, 0.15);
+  }
+}
+
+/* ================================================================
+   ANIMATION CLASSES
+   ================================================================ */
 
 .animate-hire-pulse {
   animation: hire-pulse 2.5s ease-in-out infinite;
 }
 
-@keyframes cta-glow {
-  0%, 100% { box-shadow: 0 0 10px rgba(0, 255, 135, 0.12), 0 0 24px rgba(0, 255, 135, 0.05); }
-  50% { box-shadow: 0 0 20px rgba(0, 255, 135, 0.24), 0 0 48px rgba(0, 255, 135, 0.1); }
-}
-
 .hero-cta-primary {
   animation: cta-glow 3s ease-in-out infinite;
-}
-
-@keyframes float-gentle {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
-}
-
-@keyframes entrance-up {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* NEW: Scan line sweep across cards */
-@keyframes scan-line {
-  0% { transform: translateY(-100%); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateY(400%); opacity: 0; }
-}
-
-/* NEW: Ripple on click */
-@keyframes ripple {
-  0% { transform: scale(0); opacity: 0.6; }
-  100% { transform: scale(4); opacity: 0; }
-}
-
-/* NEW: Gradient border spin */
-@keyframes border-spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* NEW: Text shimmer */
-@keyframes text-shimmer {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
-}
-
-/* NEW: Slide in from left */
-@keyframes slide-in-left {
-  from { opacity: 0; transform: translateX(-20px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-/* NEW: Scale in */
-@keyframes scale-in {
-  from { opacity: 0; transform: scale(0.92); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-/* NEW: Nav entrance */
-@keyframes nav-entrance {
-  from { opacity: 0; transform: translateY(-8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* NEW: Stagger fade up */
-@keyframes fade-up {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* NEW: Card shimmer sweep */
-@keyframes card-shimmer {
-  0% { left: -100%; }
-  100% { left: 200%; }
-}
-
-/* NEW: Ping subtle */
-@keyframes ping-subtle {
-  0% { transform: scale(1); opacity: 0.8; }
-  70% { transform: scale(1.8); opacity: 0; }
-  100% { transform: scale(1); opacity: 0; }
-}
-
-/* NEW: Tag pop */
-@keyframes tag-pop {
-  0% { transform: scale(0.8); opacity: 0; }
-  70% { transform: scale(1.05); }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-/* NEW: Geometric spin slow */
-@keyframes geo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-/* NEW: Underline draw */
-@keyframes underline-draw {
-  from { width: 0; }
-  to { width: 100%; }
-}
-
-/* NEW: Glow pulse for section headers */
-@keyframes header-glow {
-  0%, 100% { text-shadow: 0 0 0px transparent; }
-  50% { text-shadow: 0 0 20px rgba(0, 255, 135, 0.15); }
 }
 
 .animate-blink {
@@ -316,32 +466,83 @@ body::after {
   animation: header-glow 4s ease-in-out infinite;
 }
 
-/* Delay utilities */
-.delay-0   { animation-delay: 0ms; }
-.delay-50  { animation-delay: 50ms; }
-.delay-100 { animation-delay: 100ms; }
-.delay-150 { animation-delay: 150ms; }
-.delay-200 { animation-delay: 200ms; }
-.delay-300 { animation-delay: 300ms; }
-.delay-400 { animation-delay: 400ms; }
-.delay-500 { animation-delay: 500ms; }
-.delay-600 { animation-delay: 600ms; }
-.delay-700 { animation-delay: 700ms; }
-.delay-800 { animation-delay: 800ms; }
-.delay-900 { animation-delay: 900ms; }
-.delay-1000{ animation-delay: 1000ms; }
-.delay-1100 { animation-delay: 1100ms; }
-.delay-1300 { animation-delay: 1300ms; }
-.delay-1500 { animation-delay: 1500ms; }
+/* ================================================================
+   DELAY UTILITIES
+   ================================================================ */
+
+.delay-0 {
+  animation-delay: 0ms;
+}
+
+.delay-50 {
+  animation-delay: 50ms;
+}
+
+.delay-100 {
+  animation-delay: 100ms;
+}
+
+.delay-150 {
+  animation-delay: 150ms;
+}
+
+.delay-200 {
+  animation-delay: 200ms;
+}
+
+.delay-300 {
+  animation-delay: 300ms;
+}
+
+.delay-400 {
+  animation-delay: 400ms;
+}
+
+.delay-500 {
+  animation-delay: 500ms;
+}
+
+.delay-600 {
+  animation-delay: 600ms;
+}
+
+.delay-700 {
+  animation-delay: 700ms;
+}
+
+.delay-800 {
+  animation-delay: 800ms;
+}
+
+.delay-900 {
+  animation-delay: 900ms;
+}
+
+.delay-1000 {
+  animation-delay: 1000ms;
+}
+
+.delay-1100 {
+  animation-delay: 1100ms;
+}
+
+.delay-1300 {
+  animation-delay: 1300ms;
+}
+
+.delay-1500 {
+  animation-delay: 1500ms;
+}
 
 /* ================================================================
-   REUSABLE HOVER UTILITIES
+   HOVER UTILITIES
    ================================================================ */
 
 .hover-card-lift {
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
   will-change: transform;
 }
+
 .hover-card-lift:hover {
   transform: translateY(-6px) scale(1.015);
   box-shadow:
@@ -350,7 +551,6 @@ body::after {
     0 0 40px rgba(0, 255, 135, 0.07);
 }
 
-/* NEW: Card shimmer overlay on hover */
 .hover-card-lift::before {
   content: "";
   position: absolute;
@@ -358,11 +558,11 @@ body::after {
   left: -100%;
   width: 60%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
-  transition: none;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
   pointer-events: none;
   z-index: 10;
 }
+
 .hover-card-lift:hover::before {
   animation: card-shimmer 0.6s ease forwards;
 }
@@ -373,12 +573,12 @@ body::after {
   position: relative;
   overflow: hidden;
 }
+
 .hover-btn-glow:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 28px rgba(0, 255, 135, 0.16);
 }
 
-/* NEW: Button ripple effect */
 .hover-btn-glow::after {
   content: "";
   position: absolute;
@@ -388,6 +588,7 @@ body::after {
   opacity: 0;
   transition: opacity 0.2s ease;
 }
+
 .hover-btn-glow:active::after {
   opacity: 1;
   animation: ripple 0.4s ease-out forwards;
@@ -397,14 +598,19 @@ body::after {
   transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
   will-change: transform;
 }
+
 .hover-badge-glow:hover {
   transform: scale(1.07) translateY(-1px);
 }
 
-/* Nav link animated underline */
+/* ================================================================
+   NAV UNDERLINE
+   ================================================================ */
+
 .nav-link-underline {
   position: relative;
 }
+
 .nav-link-underline::after {
   content: "";
   position: absolute;
@@ -415,16 +621,17 @@ body::after {
   background: var(--terminal-green);
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .nav-link-underline:hover::after,
 .nav-link-underline.active::after {
   width: 100%;
 }
 
-/* Category header hover underline sweep */
 .category-header-hover {
   position: relative;
   display: inline-block;
 }
+
 .category-header-hover::after {
   content: "";
   position: absolute;
@@ -435,12 +642,13 @@ body::after {
   background: currentColor;
   transition: width 0.4s ease;
 }
+
 .category-header-hover:hover::after {
   width: 100%;
 }
 
 /* ================================================================
-   FOCUS VISIBLE — keyboard nav micro-interaction
+   FOCUS VISIBLE
    ================================================================ */
 
 :focus-visible {
@@ -460,6 +668,7 @@ body::after {
   background: linear-gradient(90deg, transparent 5%, rgba(255, 255, 255, 0.12), transparent 95%);
   margin: 0 auto;
 }
+
 .section-divider::after {
   content: "";
   position: absolute;
@@ -481,13 +690,16 @@ body::after {
 .scrollbar-terminal::-webkit-scrollbar {
   height: 3px;
 }
+
 .scrollbar-terminal::-webkit-scrollbar-track {
   background: var(--surface-1);
 }
+
 .scrollbar-terminal::-webkit-scrollbar-thumb {
   background: #00FF87;
   border-radius: 4px;
 }
+
 .scrollbar-terminal {
   scrollbar-width: thin;
   scrollbar-color: #00FF87 var(--surface-1);
@@ -504,15 +716,7 @@ body::after {
 }
 
 /* ================================================================
-   NEW: MAGNETIC BUTTON — subtle follow effect via JS
-   ================================================================ */
-
-.magnetic-btn {
-  transition: transform 0.15s ease;
-}
-
-/* ================================================================
-   NEW: SCROLL REVEAL BASE
+   SCROLL REVEAL
    ================================================================ */
 
 .reveal-on-scroll {
@@ -520,23 +724,22 @@ body::after {
   transform: translateY(20px);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
+
 .reveal-on-scroll.is-visible {
   opacity: 1;
   transform: translateY(0);
 }
 
 /* ================================================================
-   NEW: TEXT SHIMMER EFFECT
+   TEXT SHIMMER
    ================================================================ */
 
 .text-shimmer {
-  background: linear-gradient(
-    90deg,
-    var(--terminal-green) 0%,
-    #afffda 40%,
-    var(--terminal-green) 60%,
-    #00c2ff 100%
-  );
+  background: linear-gradient(90deg,
+      var(--terminal-green) 0%,
+      #afffda 40%,
+      var(--terminal-green) 60%,
+      #00c2ff 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -545,7 +748,7 @@ body::after {
 }
 
 /* ================================================================
-   NEW: INTERACTIVE CURSOR GLOW
+   CURSOR GLOW
    ================================================================ */
 
 .cursor-glow {
@@ -561,17 +764,55 @@ body::after {
 }
 
 /* ================================================================
-   NEW: STAGGER CHILDREN ANIMATION
+   MAGNETIC BUTTON
    ================================================================ */
 
-.stagger-children > * {
+.magnetic-btn {
+  transition: transform 0.15s ease;
+}
+
+/* ================================================================
+   STAGGER CHILDREN
+   ================================================================ */
+
+.stagger-children>* {
   opacity: 0;
   transform: translateY(12px);
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
-.stagger-children.is-visible > *:nth-child(1) { transition-delay: 0ms; opacity: 1; transform: translateY(0); }
-.stagger-children.is-visible > *:nth-child(2) { transition-delay: 80ms; opacity: 1; transform: translateY(0); }
-.stagger-children.is-visible > *:nth-child(3) { transition-delay: 160ms; opacity: 1; transform: translateY(0); }
-.stagger-children.is-visible > *:nth-child(4) { transition-delay: 240ms; opacity: 1; transform: translateY(0); }
-.stagger-children.is-visible > *:nth-child(5) { transition-delay: 320ms; opacity: 1; transform: translateY(0); }
-.stagger-children.is-visible > *:nth-child(6) { transition-delay: 400ms; opacity: 1; transform: translateY(0); }
+
+.stagger-children.is-visible>*:nth-child(1) {
+  transition-delay: 0ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger-children.is-visible>*:nth-child(2) {
+  transition-delay: 80ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger-children.is-visible>*:nth-child(3) {
+  transition-delay: 160ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger-children.is-visible>*:nth-child(4) {
+  transition-delay: 240ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger-children.is-visible>*:nth-child(5) {
+  transition-delay: 320ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger-children.is-visible>*:nth-child(6) {
+  transition-delay: 400ms;
+  opacity: 1;
+  transform: translateY(0);
+}
