@@ -46,6 +46,8 @@
   --surface-1: #0b1018;
   --surface-2: #0f1722;
   --surface-3: #131e2c;
+
+  --font-economia: 'Economia', serif;
 }
 
 @theme inline {
@@ -108,7 +110,7 @@
 }
 
 /* ================================================================
-   GLOBAL BACKGROUND + ANIMATED GRID
+   GLOBAL BACKGROUND + GRID
    ================================================================ */
 
 body {
@@ -121,13 +123,11 @@ body::after {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  /* Fine grid */
   background-image:
-    linear-gradient(rgb(255, 255, 255) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.953) 1px, transparent 1px),
-    /* Large grid overlay */
-    linear-gradient(rgba(244, 246, 246, 0.989) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(216, 213, 221) 1px, transparent 1px);
+  linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+  linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size:
     32px 32px,
     32px 32px,
@@ -135,119 +135,323 @@ body::after {
     128px 128px;
 }
 
+/* ================================================================
+   ECONOMIA — body text only, headings + mono untouched
+   ================================================================ */
+
+p,
+li,
+label,
+td,
+th,
+blockquote,
+figcaption,
+caption,
+small,
+strong,
+em {
+  font-family: var(--font-economia);
+}
+
+/* Anchors and spans that are NOT inside a .font-mono context */
+a:not(.font-mono, .font-mono *),
+span:not(.font-mono, .font-mono *) {
+  font-family: var(--font-economia);
+}
+
+/* Headings explicitly inherit — never get Economia */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: inherit;
+}
+
+/* Mono always wins */
+.font-mono,
+.font-mono * {
+  font-family: 'Geist Mono', 'Geist Mono Fallback', monospace !important;
+}
+
+/* ================================================================
+   KEYFRAMES
+   ================================================================ */
 
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
 }
 
 @keyframes line-reveal {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes glow-dot {
-  0%, 100% { box-shadow: 0 0 4px var(--terminal-green), 0 0 8px var(--terminal-green); }
-  50%       { box-shadow: 0 0 8px var(--terminal-green), 0 0 20px var(--terminal-green); }
+
+  0%,
+  100% {
+    box-shadow: 0 0 4px var(--terminal-green), 0 0 8px var(--terminal-green);
+  }
+
+  50% {
+    box-shadow: 0 0 8px var(--terminal-green), 0 0 20px var(--terminal-green);
+  }
 }
 
 @keyframes pulse-available {
-  0%, 100% { opacity: 1; box-shadow: 0 0 4px var(--terminal-green); }
-  50%       { opacity: 0.6; box-shadow: 0 0 12px var(--terminal-green); }
+
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 4px var(--terminal-green);
+  }
+
+  50% {
+    opacity: 0.6;
+    box-shadow: 0 0 12px var(--terminal-green);
+  }
 }
 
 @keyframes hire-pulse {
-  0%, 100% { opacity: 1; text-shadow: 0 0 4px rgba(0, 255, 135, 0.4); }
-  50%       { opacity: 0.7; text-shadow: 0 0 12px rgba(0, 255, 135, 0.8); }
+
+  0%,
+  100% {
+    opacity: 1;
+    text-shadow: 0 0 4px rgba(0, 255, 135, 0.4);
+  }
+
+  50% {
+    opacity: 0.7;
+    text-shadow: 0 0 12px rgba(0, 255, 135, 0.8);
+  }
 }
 
 @keyframes cta-glow {
-  0%, 100% { box-shadow: 0 0 10px rgba(0, 255, 135, 0.12), 0 0 24px rgba(0, 255, 135, 0.05); }
-  50%       { box-shadow: 0 0 20px rgba(0, 255, 135, 0.24), 0 0 48px rgba(0, 255, 135, 0.1); }
+
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(0, 255, 135, 0.12), 0 0 24px rgba(0, 255, 135, 0.05);
+  }
+
+  50% {
+    box-shadow: 0 0 20px rgba(0, 255, 135, 0.24), 0 0 48px rgba(0, 255, 135, 0.1);
+  }
 }
 
 @keyframes float-gentle {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-4px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
 }
 
 @keyframes entrance-up {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes scan-line {
-  0%   { transform: translateY(-100%); opacity: 0; }
-  10%  { opacity: 1; }
-  90%  { opacity: 1; }
-  100% { transform: translateY(400%); opacity: 0; }
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(400%);
+    opacity: 0;
+  }
 }
 
 @keyframes ripple {
-  0%   { transform: scale(0); opacity: 0.6; }
-  100% { transform: scale(4); opacity: 0; }
+  0% {
+    transform: scale(0);
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
 }
 
 @keyframes border-spin {
-  0%   { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes text-shimmer {
-  0%   { background-position: -200% center; }
-  100% { background-position: 200% center; }
+  0% {
+    background-position: -200% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
 }
 
 @keyframes slide-in-left {
-  from { opacity: 0; transform: translateX(-20px); }
-  to   { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @keyframes scale-in {
-  from { opacity: 0; transform: scale(0.92); }
-  to   { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes nav-entrance {
-  from { opacity: 0; transform: translateY(-8px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes fade-up {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes card-shimmer {
-  0%   { left: -100%; }
-  100% { left: 200%; }
+  0% {
+    left: -100%;
+  }
+
+  100% {
+    left: 200%;
+  }
 }
 
 @keyframes ping-subtle {
-  0%   { transform: scale(1); opacity: 0.8; }
-  70%  { transform: scale(1.8); opacity: 0; }
-  100% { transform: scale(1); opacity: 0; }
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+  70% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
 }
 
 @keyframes tag-pop {
-  0%   { transform: scale(0.8); opacity: 0; }
-  70%  { transform: scale(1.05); }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  70% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 @keyframes geo-spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes underline-draw {
-  from { width: 0; }
-  to   { width: 100%; }
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
 }
 
 @keyframes header-glow {
-  0%, 100% { text-shadow: 0 0 0px transparent; }
-  50%       { text-shadow: 0 0 20px rgba(0, 255, 135, 0.15); }
+
+  0%,
+  100% {
+    text-shadow: 0 0 0px transparent;
+  }
+
+  50% {
+    text-shadow: 0 0 20px rgba(0, 255, 135, 0.15);
+  }
 }
 
 /* ================================================================
@@ -314,22 +518,69 @@ body::after {
    DELAY UTILITIES
    ================================================================ */
 
-.delay-0    { animation-delay: 0ms; }
-.delay-50   { animation-delay: 50ms; }
-.delay-100  { animation-delay: 100ms; }
-.delay-150  { animation-delay: 150ms; }
-.delay-200  { animation-delay: 200ms; }
-.delay-300  { animation-delay: 300ms; }
-.delay-400  { animation-delay: 400ms; }
-.delay-500  { animation-delay: 500ms; }
-.delay-600  { animation-delay: 600ms; }
-.delay-700  { animation-delay: 700ms; }
-.delay-800  { animation-delay: 800ms; }
-.delay-900  { animation-delay: 900ms; }
-.delay-1000 { animation-delay: 1000ms; }
-.delay-1100 { animation-delay: 1100ms; }
-.delay-1300 { animation-delay: 1300ms; }
-.delay-1500 { animation-delay: 1500ms; }
+.delay-0 {
+  animation-delay: 0ms;
+}
+
+.delay-50 {
+  animation-delay: 50ms;
+}
+
+.delay-100 {
+  animation-delay: 100ms;
+}
+
+.delay-150 {
+  animation-delay: 150ms;
+}
+
+.delay-200 {
+  animation-delay: 200ms;
+}
+
+.delay-300 {
+  animation-delay: 300ms;
+}
+
+.delay-400 {
+  animation-delay: 400ms;
+}
+
+.delay-500 {
+  animation-delay: 500ms;
+}
+
+.delay-600 {
+  animation-delay: 600ms;
+}
+
+.delay-700 {
+  animation-delay: 700ms;
+}
+
+.delay-800 {
+  animation-delay: 800ms;
+}
+
+.delay-900 {
+  animation-delay: 900ms;
+}
+
+.delay-1000 {
+  animation-delay: 1000ms;
+}
+
+.delay-1100 {
+  animation-delay: 1100ms;
+}
+
+.delay-1300 {
+  animation-delay: 1300ms;
+}
+
+.delay-1500 {
+  animation-delay: 1500ms;
+}
 
 /* ================================================================
    HOVER UTILITIES
@@ -342,10 +593,7 @@ body::after {
 
 .hover-card-lift:hover {
   transform: translateY(-6px) scale(1.015);
-  box-shadow:
-    0 24px 60px rgba(0, 0, 0, 0.6),
-    0 0 0 1px rgba(0, 255, 135, 0.14),
-    0 0 40px rgba(0, 255, 135, 0.07);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 255, 135, 0.14), 0 0 40px rgba(0, 255, 135, 0.07);
 }
 
 .hover-card-lift::before {
@@ -532,11 +780,7 @@ body::after {
    ================================================================ */
 
 .text-shimmer {
-  background: linear-gradient(90deg,
-      var(--terminal-green) 0%,
-      #afffda 40%,
-      var(--terminal-green) 60%,
-      #00c2ff 100%);
+  background: linear-gradient(90deg, var(--terminal-green) 0%, #afffda 40%, var(--terminal-green) 60%, #00c2ff 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -572,15 +816,44 @@ body::after {
    STAGGER CHILDREN
    ================================================================ */
 
-.stagger-children > * {
+.stagger-children>* {
   opacity: 0;
   transform: translateY(12px);
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-.stagger-children.is-visible > *:nth-child(1) { transition-delay: 0ms;   opacity: 1; transform: translateY(0); }
-.stagger-children.is-visible > *:nth-child(2) { transition-delay: 80ms;  opacity: 1; transform: translateY(0); }
-.stagger-children.is-visible > *:nth-child(3) { transition-delay: 160ms; opacity: 1; transform: translateY(0); }
-.stagger-children.is-visible > *:nth-child(4) { transition-delay: 240ms; opacity: 1; transform: translateY(0); }
-.stagger-children.is-visible > *:nth-child(5) { transition-delay: 320ms; opacity: 1; transform: translateY(0); }
-.stagger-children.is-visible > *:nth-child(6) { transition-delay: 400ms; opacity: 1; transform: translateY(0); }
+.stagger-children.is-visible>*:nth-child(1) {
+  transition-delay: 0ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger-children.is-visible>*:nth-child(2) {
+  transition-delay: 80ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger-children.is-visible>*:nth-child(3) {
+  transition-delay: 160ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger-children.is-visible>*:nth-child(4) {
+  transition-delay: 240ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger-children.is-visible>*:nth-child(5) {
+  transition-delay: 320ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger-children.is-visible>*:nth-child(6) {
+  transition-delay: 400ms;
+  opacity: 1;
+  transform: translateY(0);
+}
