@@ -2,6 +2,7 @@
 
 import { personalInfo } from "@/data/portfolio"
 import { useEffect, useState, useRef } from "react"
+import Image from "next/image"
 
 const bootLines = [
   { text: "booting system...", delay: 200 },
@@ -11,7 +12,6 @@ const bootLines = [
   { text: "status: online", delay: 2200 },
 ]
 
-// Split name into individual letters for stagger animation
 function AnimatedName({ text, color }: { text: string; color: string }) {
   const [visible, setVisible] = useState(false)
 
@@ -43,6 +43,7 @@ export function HeroSection() {
   const [visibleLines, setVisibleLines] = useState(0)
   const [showContent, setShowContent] = useState(false)
   const [showTag, setShowTag] = useState(false)
+  const [showProfilePic, setShowProfilePic] = useState(false)
   const [showTagline, setShowTagline] = useState(false)
   const [showCTAs, setShowCTAs] = useState(false)
   const primaryBtnRef = useRef<HTMLAnchorElement>(null)
@@ -55,12 +56,12 @@ export function HeroSection() {
     })
     timers.push(setTimeout(() => setShowContent(true), 2800))
     timers.push(setTimeout(() => setShowTag(true), 2850))
+    timers.push(setTimeout(() => setShowProfilePic(true), 2870))
     timers.push(setTimeout(() => setShowTagline(true), 3200))
     timers.push(setTimeout(() => setShowCTAs(true), 3500))
     return () => timers.forEach(clearTimeout)
   }, [])
 
-  // Magnetic button effect
   const handleMagnet = (e: React.MouseEvent, ref: React.RefObject<HTMLAnchorElement | null>) => {
     if (!ref.current) return
     const rect = ref.current.getBoundingClientRect()
@@ -76,10 +77,10 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-[88dvh] items-center justify-center px-6 py-20 md:px-12 md:py-24 lg:px-24"
+      className="relative flex min-h-[88dvh] flex-col items-center justify-center gap-6 px-6 py-20 md:px-12 md:py-24 lg:px-24"
       aria-label="Introduction"
     >
-      {/* Ambient glow — now animated */}
+      {/* Ambient glow */}
       <div
         className="pointer-events-none absolute left-1/4 top-1/3 -z-10 h-[350px] w-[350px] rounded-full opacity-25 blur-[100px] animate-float-gentle"
         style={{ background: "radial-gradient(circle, rgba(0,255,135,0.12), transparent 70%)", animationDuration: "6s" }}
@@ -91,7 +92,7 @@ export function HeroSection() {
         aria-hidden="true"
       />
 
-      {/* Geometric accent — now slowly spinning */}
+      {/* Geometric accent */}
       <div className="pointer-events-none absolute right-8 top-1/4 hidden select-none lg:block animate-geo-spin" style={{ animationDuration: "30s" }} aria-hidden="true">
         <svg width="120" height="120" viewBox="0 0 120 120" fill="none" className="opacity-[0.07]">
           <rect x="10" y="10" width="100" height="100" stroke="#00FF87" strokeWidth="0.5" />
@@ -104,7 +105,7 @@ export function HeroSection() {
         </svg>
       </div>
 
-      {/* Second geometric accent opposite corner */}
+      {/* Second geometric accent */}
       <div className="pointer-events-none absolute left-8 bottom-1/4 hidden select-none lg:block animate-geo-spin" style={{ animationDuration: "40s", animationDirection: "reverse" }} aria-hidden="true">
         <svg width="80" height="80" viewBox="0 0 80 80" fill="none" className="opacity-[0.05]">
           <circle cx="40" cy="40" r="35" stroke="#00C2FF" strokeWidth="0.5" />
@@ -115,69 +116,97 @@ export function HeroSection() {
         </svg>
       </div>
 
-      <div className="relative z-10 w-full max-w-4xl text-center">
-        {/* Terminal boot sequence */}
-        <div className="mb-10 flex flex-col items-center gap-1.5 font-mono text-xs text-muted-foreground sm:text-sm">
-          {bootLines.map((line, i) => (
-            <p
-              key={i}
-              style={{
-                opacity: visibleLines > i ? 1 : 0,
-                transform: visibleLines > i ? "translateY(0)" : "translateY(4px)",
-                transition: "opacity 0.4s ease, transform 0.4s ease",
-              }}
-            >
-              <span className="text-terminal-green/70">{">"}</span>
-              {" "}
-              {i === 4 ? (
-                <>
-                  {"status: "}
-                  <span className="text-terminal-green">{"online"}</span>
-                </>
-              ) : (
-                line.text
-              )}
-            </p>
-          ))}
-        </div>
-
-        {/* Main content */}
-        <div
-          style={{
-            opacity: showContent ? 1 : 0,
-            transition: "opacity 0.6s ease",
-          }}
-        >
-          {/* Available tag — slides down */}
-          <div
-            className="mb-6 inline-flex items-center gap-2.5 rounded-md border border-terminal-green/25 bg-surface-1 px-3.5 py-1.5"
+      {/* ── BOOT LINES: full-width, truly centered ── */}
+      <div className="relative z-10 w-full flex flex-col items-center gap-1.5 font-mono text-xs text-muted-foreground sm:text-sm">
+        {bootLines.map((line, i) => (
+          <p
+            key={i}
             style={{
-              opacity: showTag ? 1 : 0,
-              transform: showTag ? "translateY(0)" : "translateY(-8px)",
-              transition: "opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)",
+              opacity: visibleLines > i ? 1 : 0,
+              transform: visibleLines > i ? "translateY(0)" : "translateY(4px)",
+              transition: "opacity 0.4s ease, transform 0.4s ease",
             }}
           >
-            <span className="animate-pulse-available size-2 rounded-full bg-terminal-green" />
-            <span className="font-mono text-[10px] tracking-[0.2em] text-terminal-white uppercase">
-              {"Available for hire"}
-            </span>
-          </div>
+            <span className="text-terminal-green/70">{">"}</span>
+            {" "}
+            {i === 4 ? (
+              <>{"status: "}<span className="text-terminal-green">{"online"}</span></>
+            ) : (
+              line.text
+            )}
+          </p>
+        ))}
+      </div>
 
-          {/* Name — letter-by-letter stagger */}
+      {/* ── AVAILABLE FOR HIRE: full-width, truly centered ── */}
+      <div className="relative z-10 w-full flex justify-center">
+        <div
+          className="inline-flex items-center gap-2.5 rounded-md border border-terminal-green/25 bg-surface-1 px-3.5 py-1.5"
+          style={{
+            opacity: showTag ? 1 : 0,
+            transform: showTag ? "translateY(0)" : "translateY(-8px)",
+            transition: "opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)",
+          }}
+        >
+          <span className="animate-pulse-available size-2 rounded-full bg-terminal-green" />
+          <span className="font-mono text-[10px] tracking-[0.2em] text-terminal-white uppercase">
+            {"Available for hire"}
+          </span>
+        </div>
+      </div>
+
+      {/* ── PIC + CONTENT: shifted right as a unit ── */}
+      <div
+        className="relative z-10 flex w-full max-w-4xl flex-col items-center gap-10 lg:flex-row lg:items-center lg:justify-center lg:gap-14"
+        style={{
+          opacity: showContent ? 1 : 0,
+          transition: "opacity 0.6s ease",
+          transform: "translateX(6%)",
+        }}
+      >
+        {/* LEFT — Profile picture */}
+        <div
+          className="flex-shrink-0"
+          style={{
+            opacity: showProfilePic ? 1 : 0,
+            transform: showProfilePic ? "translateX(0) scale(1)" : "translateX(-24px) scale(0.95)",
+            transition: "opacity 0.7s ease, transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)",
+          }}
+        >
+          <div
+            className="relative overflow-hidden rounded-2xl border border-terminal-green/20 bg-surface-1"
+            style={{
+              width: "240px",
+              height: "300px",
+              boxShadow: "0 0 0 1px rgba(0,255,135,0.08), 0 16px 48px rgba(0,0,0,0.5), 0 0 40px rgba(0,255,135,0.07)",
+            }}
+          >
+            <span className="pointer-events-none absolute left-2 top-2 h-4 w-4 border-l border-t border-terminal-green/50 z-10" aria-hidden="true" />
+            <span className="pointer-events-none absolute right-2 top-2 h-4 w-4 border-r border-t border-terminal-green/50 z-10" aria-hidden="true" />
+            <span className="pointer-events-none absolute bottom-2 left-2 h-4 w-4 border-b border-l border-terminal-green/50 z-10" aria-hidden="true" />
+            <span className="pointer-events-none absolute bottom-2 right-2 h-4 w-4 border-b border-r border-terminal-green/50 z-10" aria-hidden="true" />
+            <Image
+              src="/profile_pic.png"
+              alt={`${personalInfo.name} profile picture`}
+              fill
+              className="object-cover object-top"
+              priority
+            />
+          </div>
+        </div>
+
+        {/* RIGHT — Name, tagline, CTAs */}
+        <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+
+          {/* Name */}
           <h1 className="leading-[0.9]" style={{ perspective: "600px" }}>
-            <AnimatedName
-              text={personalInfo.name.split(" ")[0]}
-              color="var(--terminal-green)"
-            />
-            <AnimatedName
-              text={personalInfo.name.split(" ").slice(1).join(" ")}
-              color="var(--foreground)"
-            />
+            <AnimatedName text={personalInfo.name.split(" ")[0]} color="var(--terminal-green)" />
+            <AnimatedName text={personalInfo.name.split(" ").slice(1).join(" ")} color="var(--foreground)" />
           </h1>
 
-          {/* Tagline — slides up with delay */}
+          {/* Tagline */}
           <div
-            className="mt-6 flex items-center justify-center gap-3"
+            className="mt-6 flex items-center justify-center gap-3 lg:justify-start"
             style={{
               opacity: showTagline ? 1 : 0,
               transform: showTagline ? "translateY(0)" : "translateY(10px)",
@@ -189,22 +218,17 @@ export function HeroSection() {
               {personalInfo.role.split(" / ").map((part, i, arr) => (
                 <span key={part}>
                   <span className="text-secondary-foreground">{part}</span>
-                  {i < arr.length - 1 && (
-                    <span className="mx-2 text-terminal-dim">{"/"}</span>
-                  )}
+                  {i < arr.length - 1 && <span className="mx-2 text-terminal-dim">{"/"}</span>}
                 </span>
               ))}
-              <span
-                className="animate-blink ml-1 inline-block h-[1em] w-[8px] translate-y-[1px] bg-terminal-green"
-                aria-hidden="true"
-              />
+              <span className="animate-blink ml-1 inline-block h-[1em] w-[8px] translate-y-[1px] bg-terminal-green" aria-hidden="true" />
             </p>
             <div className="h-px w-8 bg-terminal-green/40" aria-hidden="true" />
           </div>
 
-          {/* CTAs — scale in with magnetic hover */}
+          {/* CTAs */}
           <div
-            className="mt-10 flex flex-wrap justify-center gap-4"
+            className="mt-10 flex flex-wrap justify-center gap-4 lg:justify-start"
             style={{
               opacity: showCTAs ? 1 : 0,
               transform: showCTAs ? "translateY(0)" : "translateY(12px)",
@@ -219,7 +243,6 @@ export function HeroSection() {
               onMouseMove={(e) => handleMagnet(e, primaryBtnRef)}
               onMouseLeave={() => resetMagnet(primaryBtnRef)}
             >
-              {/* Sweep shine on hover */}
               <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-terminal-green/8 to-transparent transition-transform duration-700 group-hover:translate-x-full" aria-hidden="true" />
               <span className="relative z-10 flex items-center gap-2.5">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:translate-x-1">
@@ -247,7 +270,7 @@ export function HeroSection() {
 
           {/* Scroll hint */}
           <div
-            className="mt-10 flex items-center justify-center gap-2 text-muted-foreground/40"
+            className="mt-10 flex items-center justify-center gap-2 text-muted-foreground/40 lg:justify-start"
             style={{
               opacity: showCTAs ? 1 : 0,
               transition: "opacity 0.6s ease 0.3s",
