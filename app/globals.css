@@ -108,54 +108,33 @@
 }
 
 /* ================================================================
-   GLOBAL BACKGROUND
+   GLOBAL BACKGROUND + ANIMATED GRID
    ================================================================ */
 
 body {
   background: #000000;
 }
 
-/* Fine green grid — drifts diagonally */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(0, 255, 135, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 135, 0.045) 1px, transparent 1px);
-  background-size: 40px 40px;
-  animation: grid-drift 20s linear infinite;
-}
-
-/* Larger cyan overlay grid — drifts in reverse for parallax depth */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
+  /* Fine grid */
   background-image:
-    linear-gradient(rgba(0, 194, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 194, 255, 0.03) 1px, transparent 1px);
-  background-size: 120px 120px;
-  animation: grid-drift-slow 35s linear infinite reverse;
+    linear-gradient(rgb(255, 255, 255) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.953) 1px, transparent 1px),
+    /* Large grid overlay */
+    linear-gradient(rgba(244, 246, 246, 0.989) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(216, 213, 221) 1px, transparent 1px);
+  background-size:
+    32px 32px,
+    32px 32px,
+    128px 128px,
+    128px 128px;
 }
 
-/* ================================================================
-   KEYFRAMES
-   ================================================================ */
-
-@keyframes grid-drift {
-  0%   { background-position: 0 0; }
-  100% { background-position: 40px 40px; }
-}
-
-@keyframes grid-drift-slow {
-  0%   { background-position: 0 0; }
-  100% { background-position: 120px 120px; }
-}
 
 @keyframes blink {
   0%, 100% { opacity: 1; }
