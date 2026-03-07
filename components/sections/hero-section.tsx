@@ -21,7 +21,7 @@ function AnimatedName({ text, color }: { text: string; color: string }) {
   }, [])
 
   return (
-    <span style={{ color }} className="block font-mono text-5xl font-bold tracking-tighter sm:text-7xl md:text-8xl lg:text-[7rem]">
+    <span style={{ color }} className="inline font-mono text-5xl font-bold tracking-tighter sm:text-7xl md:text-8xl lg:text-[7rem]">
       {text.split("").map((char, i) => (
         <span
           key={i}
@@ -157,7 +157,7 @@ export function HeroSection() {
 
       {/* ── PIC + CONTENT: shifted right as a unit ── */}
       <div
-        className="relative z-10 flex w-full max-w-4xl flex-col items-center gap-10 lg:flex-row lg:items-center lg:justify-center lg:gap-14"
+        className="relative z-10 flex w-full max-w-5xl flex-col items-center gap-10 lg:flex-row lg:items-center lg:justify-center lg:gap-14"
         style={{
           opacity: showContent ? 1 : 0,
           transition: "opacity 0.6s ease",
@@ -198,9 +198,10 @@ export function HeroSection() {
         {/* RIGHT — Name, tagline, CTAs */}
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
 
-          {/* Name */}
-          <h1 className="leading-[0.9]" style={{ perspective: "600px" }}>
+          {/* Name — single line */}
+          <h1 className="leading-none whitespace-nowrap" style={{ perspective: "600px" }}>
             <AnimatedName text={personalInfo.name.split(" ")[0]} color="var(--terminal-green)" />
+            <span className="inline font-mono text-5xl font-bold tracking-tighter sm:text-7xl md:text-8xl lg:text-[7rem]">&nbsp;</span>
             <AnimatedName text={personalInfo.name.split(" ").slice(1).join(" ")} color="var(--foreground)" />
           </h1>
 
