@@ -92,7 +92,7 @@ const cardBase: React.CSSProperties = {
 
 export function LeetCodeSection() {
   return (
-    <section id="leetcode" className="relative py-24 overflow-hidden">
+    <section id="leetcode" className="relative py-24 overflow-hidden px-6 md:px-12 lg:px-24">
       {/* Ambient glow */}
       <div
         className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[500px] opacity-20"
@@ -116,7 +116,7 @@ export function LeetCodeSection() {
 
       {/* ── Stat Cards ── */}
       <div className="flex justify-center mb-5">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 w-full max-w-4xl">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 w-full max-w-5xl">
           {statCards.map((s) => {
             const Icon = s.icon;
             return (
@@ -156,7 +156,7 @@ export function LeetCodeSection() {
 
       {/* ── Badges ── */}
       <div className="flex justify-center mb-5">
-        <div className="w-full max-w-4xl rounded-2xl border border-white/[0.07] px-6 py-4" style={cardBase}>
+        <div className="w-full max-w-5xl rounded-2xl border border-white/[0.07] px-6 py-4" style={cardBase}>
           <div className="flex flex-wrap justify-center gap-2">
             {badges.map((b) => (
               <span
@@ -178,7 +178,7 @@ export function LeetCodeSection() {
 
       {/* ── Heatmap ── */}
       <div className="flex justify-center mb-6">
-        <div className="w-full max-w-4xl rounded-2xl border border-white/[0.07] px-6 py-6" style={cardBase}>
+        <div className="w-full max-w-5xl rounded-2xl border border-white/[0.07] px-6 py-6" style={cardBase}>
           <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
             <p className="text-[10px] uppercase tracking-[0.25em] text-white/35 font-mono">Submission Activity · Last Year</p>
             <div className="flex items-center gap-4 text-xs font-mono">

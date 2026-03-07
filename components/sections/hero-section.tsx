@@ -155,13 +155,12 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* ── PIC + CONTENT: shifted right as a unit ── */}
+      {/* ── PIC + CONTENT: same width as projects section ── */}
       <div
-        className="relative z-10 flex w-full max-w-5xl flex-col items-center gap-10 lg:flex-row lg:items-center lg:justify-center lg:gap-14"
+        className="relative z-10 flex w-full max-w-6xl flex-col items-center gap-10 lg:flex-row lg:items-center lg:justify-start lg:gap-14 px-4"
         style={{
           opacity: showContent ? 1 : 0,
           transition: "opacity 0.6s ease",
-          transform: "translateX(6%)",
         }}
       >
         {/* LEFT — Profile picture */}
@@ -176,8 +175,8 @@ export function HeroSection() {
           <div
             className="relative overflow-hidden rounded-2xl border border-terminal-green/20 bg-surface-1"
             style={{
-              width: "240px",
-              height: "300px",
+              width: "320px",
+              height: "400px",
               boxShadow: "0 0 0 1px rgba(0,255,135,0.08), 0 16px 48px rgba(0,0,0,0.5), 0 0 40px rgba(0,255,135,0.07)",
             }}
           >
