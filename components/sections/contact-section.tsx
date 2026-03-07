@@ -146,7 +146,7 @@ export function ContactSection() {
               transition: "opacity 0.6s ease 0.35s",
             }}
           >
-            {"Open for collaboration & freelance work.     Always excited to talk ML."}
+            {"Open for collaboration & freelance work. Always excited to talk ML."}
           </p>
         </div>
 

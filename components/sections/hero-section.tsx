@@ -12,14 +12,16 @@ const bootLines = [
   { text: "status: online", delay: 2200 },
 ]
 
-function AnimatedName({ text, color }: { text: string; color: string }) {
-  const [visible, setVisible] = useState(false)
+// Shared entrance animation — every element uses this same style
+function enterStyle(visible: boolean, delayMs: number): React.CSSProperties {
+  return {
+    opacity: visible ? 1 : 0,
+    transform: visible ? "translateY(0)" : "translateY(20px)",
+    transition: `opacity 0.55s ease ${delayMs}ms, transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) ${delayMs}ms`,
+  }
+}
 
-  useEffect(() => {
-    const t = setTimeout(() => setVisible(true), 2900)
-    return () => clearTimeout(t)
-  }, [])
-
+function AnimatedName({ text, color, visible }: { text: string; color: string; visible: boolean }) {
   return (
     <span style={{ color }} className="inline font-mono text-5xl font-bold tracking-tighter sm:text-7xl md:text-8xl lg:text-[7rem]">
       {text.split("").map((char, i) => (
@@ -28,7 +30,7 @@ function AnimatedName({ text, color }: { text: string; color: string }) {
           className="inline-block"
           style={{
             opacity: visible ? 1 : 0,
-            transform: visible ? "translateY(0) rotateX(0deg)" : "translateY(30px) rotateX(-40deg)",
+            transform: visible ? "translateY(0) rotateX(0deg)" : "translateY(20px) rotateX(-40deg)",
             transition: `opacity 0.5s ease ${i * 40}ms, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) ${i * 40}ms`,
           }}
         >
@@ -41,11 +43,7 @@ function AnimatedName({ text, color }: { text: string; color: string }) {
 
 export function HeroSection() {
   const [visibleLines, setVisibleLines] = useState(0)
-  const [showContent, setShowContent] = useState(false)
-  const [showTag, setShowTag] = useState(false)
-  const [showProfilePic, setShowProfilePic] = useState(false)
-  const [showTagline, setShowTagline] = useState(false)
-  const [showCTAs, setShowCTAs] = useState(false)
+  const [showAll, setShowAll] = useState(false)
   const primaryBtnRef = useRef<HTMLAnchorElement>(null)
   const secondaryBtnRef = useRef<HTMLAnchorElement>(null)
 
@@ -54,11 +52,8 @@ export function HeroSection() {
     bootLines.forEach((_, i) => {
       timers.push(setTimeout(() => setVisibleLines(i + 1), bootLines[i].delay))
     })
-    timers.push(setTimeout(() => setShowContent(true), 2800))
-    timers.push(setTimeout(() => setShowTag(true), 2850))
-    timers.push(setTimeout(() => setShowProfilePic(true), 2870))
-    timers.push(setTimeout(() => setShowTagline(true), 3200))
-    timers.push(setTimeout(() => setShowCTAs(true), 3500))
+    // Single trigger — all content animates in with staggered CSS delays
+    timers.push(setTimeout(() => setShowAll(true), 2800))
     return () => timers.forEach(clearTimeout)
   }, [])
 
@@ -116,7 +111,7 @@ export function HeroSection() {
         </svg>
       </div>
 
-      {/* ── BOOT LINES: full-width, truly centered ── */}
+      {/* ── BOOT LINES ── */}
       <div className="relative z-10 w-full flex flex-col items-center gap-1.5 font-mono text-xs text-muted-foreground sm:text-sm">
         {bootLines.map((line, i) => (
           <p
@@ -138,16 +133,9 @@ export function HeroSection() {
         ))}
       </div>
 
-      {/* ── AVAILABLE FOR HIRE: full-width, truly centered ── */}
-      <div className="relative z-10 w-full flex justify-center">
-        <div
-          className="inline-flex items-center gap-2.5 rounded-md border border-terminal-green/25 bg-surface-1 px-3.5 py-1.5"
-          style={{
-            opacity: showTag ? 1 : 0,
-            transform: showTag ? "translateY(0)" : "translateY(-8px)",
-            transition: "opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)",
-          }}
-        >
+      {/* ── AVAILABLE FOR HIRE — delay 0ms ── */}
+      <div className="relative z-10 w-full flex justify-center" style={enterStyle(showAll, 0)}>
+        <div className="inline-flex items-center gap-2.5 rounded-md border border-terminal-green/25 bg-surface-1 px-3.5 py-1.5">
           <span className="animate-pulse-available size-2 rounded-full bg-terminal-green" />
           <span className="font-mono text-[10px] tracking-[0.2em] text-terminal-white uppercase">
             {"Available for hire"}
@@ -155,23 +143,11 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* ── PIC + CONTENT: same width as projects section ── */}
-      <div
-        className="relative z-10 flex w-full max-w-6xl flex-col items-center gap-10 lg:flex-row lg:items-center lg:justify-start lg:gap-14 px-4"
-        style={{
-          opacity: showContent ? 1 : 0,
-          transition: "opacity 0.6s ease",
-        }}
-      >
-        {/* LEFT — Profile picture */}
-        <div
-          className="flex-shrink-0"
-          style={{
-            opacity: showProfilePic ? 1 : 0,
-            transform: showProfilePic ? "translateX(0) scale(1)" : "translateX(-24px) scale(0.95)",
-            transition: "opacity 0.7s ease, transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)",
-          }}
-        >
+      {/* ── PIC + CONTENT ── */}
+      <div className="relative z-10 flex w-full max-w-6xl flex-col items-center gap-10 lg:flex-row lg:items-center lg:justify-start lg:gap-14 px-4">
+
+        {/* LEFT — Profile picture — delay 80ms */}
+        <div className="flex-shrink-0" style={enterStyle(showAll, 80)}>
           <div
             className="relative overflow-hidden rounded-2xl border border-terminal-green/20 bg-surface-1"
             style={{
@@ -197,21 +173,19 @@ export function HeroSection() {
         {/* RIGHT — Name, tagline, CTAs */}
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
 
-          {/* Name — single line */}
-          <h1 className="leading-none whitespace-nowrap" style={{ perspective: "600px" }}>
-            <AnimatedName text={personalInfo.name.split(" ")[0]} color="var(--terminal-green)" />
-            <span className="inline font-mono text-5xl font-bold tracking-tighter sm:text-7xl md:text-8xl lg:text-[7rem]">&nbsp;</span>
-            <AnimatedName text={personalInfo.name.split(" ").slice(1).join(" ")} color="var(--foreground)" />
-          </h1>
+          {/* Name — delay 160ms */}
+          <div style={enterStyle(showAll, 160)}>
+            <h1 className="leading-none whitespace-nowrap" style={{ perspective: "600px" }}>
+              <AnimatedName text={personalInfo.name.split(" ")[0]} color="var(--terminal-green)" visible={showAll} />
+              <span className="inline font-mono text-5xl font-bold tracking-tighter sm:text-7xl md:text-8xl lg:text-[7rem]">&nbsp;</span>
+              <AnimatedName text={personalInfo.name.split(" ").slice(1).join(" ")} color="var(--foreground)" visible={showAll} />
+            </h1>
+          </div>
 
-          {/* Tagline */}
+          {/* Tagline — delay 260ms */}
           <div
             className="mt-6 flex items-center justify-center gap-3 lg:justify-start"
-            style={{
-              opacity: showTagline ? 1 : 0,
-              transform: showTagline ? "translateY(0)" : "translateY(10px)",
-              transition: "opacity 0.5s ease, transform 0.5s ease",
-            }}
+            style={enterStyle(showAll, 260)}
           >
             <div className="h-px w-8 bg-terminal-green/40" aria-hidden="true" />
             <p className="font-mono text-sm tracking-wide text-muted-foreground sm:text-base">
@@ -226,14 +200,10 @@ export function HeroSection() {
             <div className="h-px w-8 bg-terminal-green/40" aria-hidden="true" />
           </div>
 
-          {/* CTAs */}
+          {/* CTAs — delay 360ms */}
           <div
             className="mt-10 flex flex-wrap justify-center gap-4 lg:justify-start"
-            style={{
-              opacity: showCTAs ? 1 : 0,
-              transform: showCTAs ? "translateY(0)" : "translateY(12px)",
-              transition: "opacity 0.5s ease, transform 0.5s ease",
-            }}
+            style={enterStyle(showAll, 360)}
           >
             <a
               ref={primaryBtnRef}
@@ -268,13 +238,10 @@ export function HeroSection() {
             </a>
           </div>
 
-          {/* Scroll hint */}
+          {/* Scroll hint — delay 460ms */}
           <div
             className="mt-10 flex items-center justify-center gap-2 text-muted-foreground/40 lg:justify-start"
-            style={{
-              opacity: showCTAs ? 1 : 0,
-              transition: "opacity 0.6s ease 0.3s",
-            }}
+            style={enterStyle(showAll, 460)}
           >
             <div className="h-8 w-px bg-terminal-dim" aria-hidden="true" />
             <span className="font-mono text-[10px] tracking-widest uppercase">{"scroll"}</span>
