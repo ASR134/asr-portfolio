@@ -66,7 +66,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Economia font via Bunny Fonts (GDPR-friendly Google Fonts alternative) */}
         <link rel="preconnect" href="https://fonts.bunny.net" />
         <link
           href="https://fonts.bunny.net/css?family=economia:400&display=swap"
