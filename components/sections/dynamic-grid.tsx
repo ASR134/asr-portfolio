@@ -29,7 +29,6 @@ export default function StarField() {
 
     function randomStar(): Star {
       const roll = Math.random();
-      // Mostly white, rare green/cyan accent
       const color =
         roll < 0.04 ? "0,255,135"
         : roll < 0.07 ? "0,194,255"
@@ -42,7 +41,6 @@ export default function StarField() {
         size: 0.4 + size * 1.2,
         baseOpacity: 0.08 + size * 0.35,
         opacity: 0.08 + size * 0.35,
-        // Very slow twinkle — matches the screenshot feel
         twinkleSpeed: 0.08 + Math.random() * 0.18,
         twinkleOffset: Math.random() * Math.PI * 2,
         color,
@@ -62,12 +60,10 @@ export default function StarField() {
       ctx.clearRect(0, 0, width, height);
 
       stars.forEach((s) => {
-        // Very slow sine wave twinkle
         s.opacity =
           s.baseOpacity *
           (0.6 + 0.4 * Math.sin(elapsed * 0.001 * s.twinkleSpeed + s.twinkleOffset));
 
-        // Tiny glow for slightly bigger stars
         if (s.size > 1.0) {
           const glow = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.size * 3.5);
           glow.addColorStop(0, `rgba(${s.color},${s.opacity * 0.4})`);

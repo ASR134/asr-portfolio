@@ -109,17 +109,11 @@
   }
 }
 
-/* ================================================================
-   GLOBAL BACKGROUND + GRID
-   ================================================================ */
 
 body {
   background: #0d0d0d;
 }
 
-/* ================================================================
-   ECONOMIA — body text only, headings + mono untouched
-   ================================================================ */
 
 p,
 li,
@@ -135,13 +129,12 @@ em {
   font-family: var(--font-economia);
 }
 
-/* Anchors and spans that are NOT inside a .font-mono context */
 a:not(.font-mono, .font-mono *),
 span:not(.font-mono, .font-mono *) {
   font-family: var(--font-economia);
 }
 
-/* Headings explicitly inherit — never get Economia */
+
 h1,
 h2,
 h3,
@@ -157,9 +150,7 @@ h6 {
   font-family: 'Geist Mono', 'Geist Mono Fallback', monospace !important;
 }
 
-/* ================================================================
-   KEYFRAMES
-   ================================================================ */
+
 
 @keyframes blink {
   0%, 100% { opacity: 1; }
@@ -275,9 +266,6 @@ h6 {
   50% { text-shadow: 0 0 20px rgba(0, 255, 135, 0.15); }
 }
 
-/* ================================================================
-   ANIMATION CLASSES
-   ================================================================ */
 
 .animate-hire-pulse { animation: hire-pulse 2.5s ease-in-out infinite; }
 .hero-cta-primary { animation: cta-glow 3s ease-in-out infinite; }
@@ -293,9 +281,7 @@ h6 {
 .animate-geo-spin { animation: geo-spin 20s linear infinite; }
 .animate-header-glow { animation: header-glow 4s ease-in-out infinite; }
 
-/* ================================================================
-   DELAY UTILITIES
-   ================================================================ */
+
 
 .delay-0 { animation-delay: 0ms; }
 .delay-50 { animation-delay: 50ms; }
@@ -314,9 +300,7 @@ h6 {
 .delay-1300 { animation-delay: 1300ms; }
 .delay-1500 { animation-delay: 1500ms; }
 
-/* ================================================================
-   HOVER UTILITIES
-   ================================================================ */
+
 
 .hover-card-lift {
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
@@ -380,9 +364,7 @@ h6 {
   transform: scale(1.07) translateY(-1px);
 }
 
-/* ================================================================
-   NAV UNDERLINE
-   ================================================================ */
+
 
 .nav-link-underline {
   position: relative;
@@ -424,9 +406,6 @@ h6 {
   width: 100%;
 }
 
-/* ================================================================
-   FOCUS VISIBLE
-   ================================================================ */
 
 :focus-visible {
   outline: 2px solid var(--terminal-green);
@@ -435,9 +414,7 @@ h6 {
   transition: outline-offset 0.15s ease;
 }
 
-/* ================================================================
-   SECTION DIVIDER
-   ================================================================ */
+
 
 .section-divider {
   position: relative;
@@ -460,9 +437,7 @@ h6 {
   animation: float-gentle 3s ease-in-out infinite;
 }
 
-/* ================================================================
-   SCROLLBAR
-   ================================================================ */
+
 
 .scrollbar-terminal::-webkit-scrollbar {
   height: 3px;
@@ -482,9 +457,7 @@ h6 {
   scrollbar-color: #00FF87 var(--surface-1);
 }
 
-/* ================================================================
-   NOISE TEXTURE
-   ================================================================ */
+
 
 .noise-texture {
   position: relative;
@@ -492,9 +465,7 @@ h6 {
   background: var(--surface-2);
 }
 
-/* ================================================================
-   SCROLL REVEAL
-   ================================================================ */
+
 
 .reveal-on-scroll {
   opacity: 0;
@@ -507,9 +478,6 @@ h6 {
   transform: translateY(0);
 }
 
-/* ================================================================
-   TEXT SHIMMER
-   ================================================================ */
 
 .text-shimmer {
   background: linear-gradient(90deg, var(--terminal-green) 0%, #afffda 40%, var(--terminal-green) 60%, #00c2ff 100%);
@@ -520,9 +488,7 @@ h6 {
   animation: text-shimmer 4s linear infinite;
 }
 
-/* ================================================================
-   CURSOR GLOW
-   ================================================================ */
+
 
 .cursor-glow {
   position: fixed;
@@ -536,17 +502,11 @@ h6 {
   transition: opacity 0.3s ease;
 }
 
-/* ================================================================
-   MAGNETIC BUTTON
-   ================================================================ */
 
 .magnetic-btn {
   transition: transform 0.15s ease;
 }
 
-/* ================================================================
-   STAGGER CHILDREN
-   ================================================================ */
 
 .stagger-children>* {
   opacity: 0;
