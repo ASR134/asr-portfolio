@@ -12,7 +12,6 @@ const bootLines = [
   { text: "status: online", delay: 2200 },
 ]
 
-// Shared entrance animation — every element uses this same style
 function enterStyle(visible: boolean, delayMs: number): React.CSSProperties {
   return {
     opacity: visible ? 1 : 0,
@@ -52,7 +51,6 @@ export function HeroSection() {
     bootLines.forEach((_, i) => {
       timers.push(setTimeout(() => setVisibleLines(i + 1), bootLines[i].delay))
     })
-    // Single trigger — all content animates in with staggered CSS delays
     timers.push(setTimeout(() => setShowAll(true), 2800))
     return () => timers.forEach(clearTimeout)
   }, [])
@@ -75,6 +73,21 @@ export function HeroSection() {
       className="relative flex min-h-[88dvh] flex-col items-center justify-center gap-6 px-6 py-20 md:px-12 md:py-24 lg:px-24"
       aria-label="Introduction"
     >
+      {/* ── GRID BACKGROUND — hero section only ── */}
+      <div
+        className="pointer-events-none absolute inset-0 -z-10"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(0, 200, 180, 0.09) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 200, 180, 0.09) 1px, transparent 1px)
+          `,
+          backgroundSize: '72px 72px',
+          WebkitMaskImage: 'radial-gradient(ellipse 90% 70% at 50% 40%, black 25%, transparent 100%)',
+          maskImage: 'radial-gradient(ellipse 90% 70% at 50% 40%, black 25%, transparent 100%)',
+        }}
+        aria-hidden="true"
+      />
+
       {/* Ambient glow */}
       <div
         className="pointer-events-none absolute left-1/4 top-1/3 -z-10 h-[350px] w-[350px] rounded-full opacity-25 blur-[100px] animate-float-gentle"
@@ -133,7 +146,7 @@ export function HeroSection() {
         ))}
       </div>
 
-      {/* ── AVAILABLE FOR HIRE — delay 0ms ── */}
+      {/* ── AVAILABLE FOR HIRE ── */}
       <div className="relative z-10 w-full flex justify-center" style={enterStyle(showAll, 0)}>
         <div className="inline-flex items-center gap-2.5 rounded-md border border-terminal-green/25 bg-surface-1 px-3.5 py-1.5">
           <span className="animate-pulse-available size-2 rounded-full bg-terminal-green" />
@@ -146,7 +159,7 @@ export function HeroSection() {
       {/* ── PIC + CONTENT ── */}
       <div className="relative z-10 flex w-full max-w-6xl flex-col items-center gap-10 lg:flex-row lg:items-center lg:justify-start lg:gap-14 px-4">
 
-        {/* LEFT — Profile picture — delay 80ms */}
+        {/* LEFT — Profile picture */}
         <div className="flex-shrink-0" style={enterStyle(showAll, 80)}>
           <div
             className="relative overflow-hidden rounded-2xl border border-terminal-green/20 bg-surface-1"
@@ -173,7 +186,7 @@ export function HeroSection() {
         {/* RIGHT — Name, tagline, CTAs */}
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
 
-          {/* Name — delay 160ms */}
+          {/* Name */}
           <div style={enterStyle(showAll, 160)}>
             <h1 className="leading-none whitespace-nowrap" style={{ perspective: "600px" }}>
               <AnimatedName text={personalInfo.name.split(" ")[0]} color="var(--terminal-green)" visible={showAll} />
@@ -182,11 +195,8 @@ export function HeroSection() {
             </h1>
           </div>
 
-          {/* Tagline — delay 260ms */}
-          <div
-            className="mt-6 flex items-center justify-center gap-3 lg:justify-start"
-            style={enterStyle(showAll, 260)}
-          >
+          {/* Tagline */}
+          <div className="mt-6 flex items-center justify-center gap-3 lg:justify-start" style={enterStyle(showAll, 260)}>
             <div className="h-px w-8 bg-terminal-green/40" aria-hidden="true" />
             <p className="font-mono text-sm tracking-wide text-muted-foreground sm:text-base">
               {personalInfo.role.split(" / ").map((part, i, arr) => (
@@ -200,11 +210,8 @@ export function HeroSection() {
             <div className="h-px w-8 bg-terminal-green/40" aria-hidden="true" />
           </div>
 
-          {/* CTAs — delay 360ms */}
-          <div
-            className="mt-10 flex flex-wrap justify-center gap-4 lg:justify-start"
-            style={enterStyle(showAll, 360)}
-          >
+          {/* CTAs */}
+          <div className="mt-10 flex flex-wrap justify-center gap-4 lg:justify-start" style={enterStyle(showAll, 360)}>
             <a
               ref={primaryBtnRef}
               href="#projects"
@@ -238,11 +245,8 @@ export function HeroSection() {
             </a>
           </div>
 
-          {/* Scroll hint — delay 460ms */}
-          <div
-            className="mt-10 flex items-center justify-center gap-2 text-muted-foreground/40 lg:justify-start"
-            style={enterStyle(showAll, 460)}
-          >
+          {/* Scroll hint */}
+          <div className="mt-10 flex items-center justify-center gap-2 text-muted-foreground/40 lg:justify-start" style={enterStyle(showAll, 460)}>
             <div className="h-8 w-px bg-terminal-dim" aria-hidden="true" />
             <span className="font-mono text-[10px] tracking-widest uppercase">{"scroll"}</span>
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="animate-bounce opacity-50">

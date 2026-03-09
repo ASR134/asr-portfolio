@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import StarField from '@/components/sections/dynamic-grid'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -73,7 +74,10 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans antialiased overflow-x-hidden">
-        {children}
+        <StarField />
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          {children}
+        </div>
         <Analytics />
       </body>
     </html>

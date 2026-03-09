@@ -117,20 +117,6 @@ body {
   background: #0d0d0d;
 }
 
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(80, 120, 220, 0.12) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(80, 120, 220, 0.12) 1px, transparent 1px);
-  background-size:
-    40px 40px,
-    40px 40px;
-}
-
 /* ================================================================
    ECONOMIA — body text only, headings + mono untouched
    ================================================================ */
